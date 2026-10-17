@@ -3,7 +3,7 @@
 (the icons now come from the press kit: tools/build_media.py):
 
   public/art/vein-frost.png, vein-ember.png  160x11 tiles for the section bars (shown x2)
-  public/og-farstrand.png     1200x630 TEMPORARY social card: title backdrop x4 + logo + lockup
+  public/og-farstrand.png     1200x630 TEMPORARY social card: title backdrop x4 + logo + lockup (superseded by press-kit/social)
                               (replace with farstrand-press-kit/press-kit/social/ when it exists)
 
   python3 tools/build_extras.py --game <snapshot>        (Python 3, Pillow, NumPy)
@@ -69,7 +69,7 @@ def og(game: Path) -> None:
     d = ImageDraw.Draw(win)
     d.fontmode = "1"
     font = ImageFont.truetype(str(game / "art/src/fonts/PublicPixel.ttf"), 8)
-    text = "A HELIOBANE METROIDVANIA"
+    text = "AS THE SUN GOES OUT"
     x = (300 - 8 * len(text)) // 2
     d.text((x + 1, 55), text, font=font, fill=P["void"])
     d.text((x, 54), text, font=font, fill=P["ice"])

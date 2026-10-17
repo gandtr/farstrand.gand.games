@@ -26,7 +26,7 @@ Sizes are Steamworks' current ones (Store Assets / Library Assets pages, 2026).
 | `steam/event_header.png` | Events & Announcements → Header image | 1920×622 |
 | `steam-screenshots/` | Store Assets → Screenshots (see that folder) | 1920×1080 each |
 
-The capsules carry the logo only. The line "A HELIOBANE METROIDVANIA" is on the key art and the logo lockup
+The capsules carry the logo only. The line "AS THE SUN GOES OUT" is on the key art and the logo lockup
 files, not on the capsules, so the logo stays readable at the small capsule's 231×87 display size.
 
 Library logo placement: the logo is the in-game logo at ×5 (1200×200), centred on the transparent 1280×720. In the

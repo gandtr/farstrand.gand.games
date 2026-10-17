@@ -14,7 +14,7 @@ The press page is `doc.html` (English, 日本語 and Türkçe in one file). The 
 | `doc.html` | the press page: fact sheet, features, trailer, history, screenshots, art and logos, contact (EN / 日本語 / TÜRKÇE) |
 | `factsheet.md`, `factsheet.ja.md`, `factsheet.tr.md` | the same facts as plain text, in three languages |
 | `key-art/` | `key_art.png` 1920×1080 and `key_art_4k.png` 3840×2160 (Hesper, with the logo and lockup), `key_art_no_logo.png`, `key_art_vertical.png` 1200×1800 (and `_no_logo`), `key_art_road*.png` (the *Plumbline* on a strand), `key_art_mott*.png` (Old Mott's stall) |
-| `logo/` | the logo, transparent PNG at ×1 to ×8; `farstrand_lockup_*` with the line A HELIOBANE METROIDVANIA; on dark |
+| `logo/` | the logo, transparent PNG at ×1 to ×8; `farstrand_lockup_*` with the line AS THE SUN GOES OUT (`_2line_` sets it as two lines); on dark |
 | `screenshots/` | 22 in-game frames at 1920×1080 (the twelve on the Steam page and ten more); `native/` has the 320×180 originals, `native/demo/` the demo's |
 | `steam-screenshots/` | the twelve Steam screenshots in store order, 1920×1080; `demo/` for the demo's eight |
 | `steam/` | Steam capsules, library images, icons and event images; `steam/demo/` for the demo. Sizes in `steam/ASSETS.md` |

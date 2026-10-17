@@ -70,7 +70,7 @@ public/
 - **Hero**: the press kit's key art without its logo (Hesper and Bob before the red dwarf, the beam and a frozen
   plain; the left half is dark sky) at an exact x6-derived native, taken back to 320x180 by sampling the centre of
   every 6x6 block (the script refuses a file that is not an exact scale). The page draws the logo (the game's
-  `logo.png`), the lockup `A HELIOBANE METROIDVANIA` and the tagline in that dark half, and the Steam card over the
+  `logo.png`), the lockup `AS THE SUN GOES OUT` and the tagline in that dark half, and the Steam card over the
   ice below them. On phones the tall key art (240x360, x5-exact) fills a 600 px band cropped to its lower part, with
   the logo over its sky and the lockup, tagline and card below. The edges fade out in eight steps, as HELIOBANE's hero
   does. To change the art, edit `.hero-art` and `--iw/--ih`.
@@ -133,7 +133,8 @@ python3 -m unittest discover -s tests  # the font test fails if a glyph is missi
 ## Content sources (do not invent)
 
 - Words: `farstrand-press-kit/copy/{en,ja,tr}.md`, the "website" sections by section id, as of press-kit commit
-  `2621b61` (lockup `A HELIOBANE METROIDVANIA` and tagline 1 approved by Arda on 2026-10-17).
+  `8354593` (lockup `AS THE SUN GOES OUT`, which replaced `A HELIOBANE METROIDVANIA`, and tagline 1 approved by Arda
+  on 2026-10-17).
 - Key art, screenshots, icons: `farstrand-press-kit/press-kit/` (key art and icons at commit `fe8bae5`, the twelve
   screenshots at `6ebd27b`; their README says how they are made). The trailer: `farstrand-trailer` commit `b0182a7`
   (`output/farstrand-trailer.mp4`, `output/farstrand-trailer.srt`, `review/poster.jpg`).
@@ -201,7 +202,7 @@ the game's `i18n` names. The press kit's rule for spoilers applies (no cocoons, 
 ## Social preview
 
 `public/og-farstrand.png` is still the temporary 1200x630 card: the old title backdrop at x4 (a 300x158 window, one
-pixel row cut top and bottom), the logo and `A HELIOBANE METROIDVANIA` in Public Pixel at x4, all palette colours. The
+pixel row cut top and bottom), the logo and the lockup in Public Pixel at x4, all palette colours. The
 press kit's `social/` is empty so far. **Expected: `press-kit/social/og_1200x630.png` copied over
 `public/og-farstrand.png`** (same name, so the meta tags and JSON-LD stay); if it must be renamed (cache busting, as
 HELIOBANE did with `-v2`), change `og:image`, `twitter:image` and the VideoGame `image` to the new URL. Open Graph
