@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-"""Build public/ media from a git-archive snapshot of the game (never its working tree).
+"""Build public/ media from a git-archive snapshot of the game (never its working tree) and the press kit.
 
   git -C ~/projects/games/farstrand/farstrand archive 2e08e64 | tar -x -C <snap>
-  python3 tools/build_media.py --game <snap> [--shots-dir DIR]
+  python3 tools/build_media.py --game <snap> [--press-kit DIR]
 
-Pixel art is copied unchanged or composed on its native grid; nothing is resampled.
-Extras (frost-vein bars, favicons, social card): tools/build_extras.py. Python 3, Pillow, NumPy.
+The press kit (farstrand-press-kit/press-kit) supplies the key art, the screenshots and the icons. Pixel art is
+copied unchanged, or taken back to its native grid (every Nth pixel's centre of an exact xN scale, checked), and
+shown at whole-number scales; nothing is resampled. Extras (frost-vein bars, social card): tools/build_extras.py.
+The trailer is encoded by hand (PROJECT.md). Python 3, Pillow, NumPy.
 """
 import argparse
 import json
@@ -19,11 +21,25 @@ ROOT = Path(__file__).resolve().parents[1]
 PUB = ROOT / "public"
 # the sister game's own art, for the "After HELIOBANE" tile (copied unchanged from its site)
 HELIOBANE_ART = Path.home() / "projects/games/heliobane/heliobane.gand.games/public/art"
+PRESS_KIT = Path.home() / "projects/games/farstrand/farstrand-press-kit/press-kit"
+
+# press-kit file -> (native file in public/art, the scale it is an exact multiple of)
+KEY_ART = {
+    "key-art/key_art_no_logo.png": ("key_art.png", 6),               # the hero, 320x180
+    "key-art/key_art_vertical_no_logo.png": ("key_art_vertical.png", 5),  # the hero for phones, 240x360
+    "key-art/key_art_road_no_logo.png": ("key_art_road.png", 6),     # the Plumbline on the strand, 320x180
+}
+# press-kit icons -> public (the .ico, the 64 px favicon and the 256 px touch icon are used as they are)
+ICONS = {
+    "icons/farstrand.ico": "favicon.ico",
+    "icons/farstrand_icon_64.png": "favicon-64.png",
+    "icons/farstrand_icon_256.png": "apple-touch-icon.png",
+    "icons/farstrand_icon_32_native.png": "art/icon-32.png",
+}
 
 # the game's own copies of the art the site shows at whole-number scales
 COPIES = {
     "assets/ui/logo.png": "art/logo.png",
-    "assets/backgrounds/bg_title.png": "art/bg_title.png",
     "assets/ui/portrait_hesper.png": "art/portrait_hesper.png",
     "assets/ui/portrait_mott.png": "art/portrait_mott.png",
     "assets/ui/portrait_warden.png": "art/portrait_warden.png",
@@ -73,17 +89,35 @@ def save_png(img: Image.Image, dst: Path) -> None:
         Image.fromarray(rgb).save(dst, optimize=True)
 
 
-def build_shots(shots_dir: Path) -> None:
-    entries = json.loads((ROOT / "tools/shots.json").read_text())["shots"]
-    for slug, name in entries:
-        a = np.array(Image.open(shots_dir / name).convert("RGB"))
-        assert a.shape == (1080, 1920, 3), (name, a.shape)
-        small = a[3::6, 3::6]  # the centre of every 6x6 block
-        exact = np.array_equal(np.repeat(np.repeat(small, 6, 0), 6, 1), a)
-        print(f"  shot {slug:16s} from {name}: exact x6 = {exact}")
-        assert exact, f"{name} is not an exact x6 scale of 320x180"
-        save_png(Image.fromarray(a), PUB / "shots" / f"{slug}.png")
-        save_png(Image.fromarray(small), PUB / "shots/1x" / f"{slug}.png")
+def x6_to_native(path: Path, k: int = 6) -> np.ndarray:
+    """The native picture of an exact xk scale (each block's centre); fails if it is not exact."""
+    a = np.array(Image.open(path).convert("RGB"))
+    small = a[k // 2::k, k // 2::k]
+    assert np.array_equal(np.repeat(np.repeat(small, k, 0), k, 1), a), f"{path.name} is not an exact x{k} scale"
+    return small
+
+
+def build_shots(shots_dir: Path, spares_dir: Path) -> None:
+    """tools/shots.json: the gallery (shots) and pictures used elsewhere on the page (extras)."""
+    doc = json.loads((ROOT / "tools/shots.json").read_text())
+    for group, folder in (("shots", shots_dir), ("extras", spares_dir)):
+        for slug, name in doc[group]:
+            a = np.array(Image.open(folder / name).convert("RGB"))
+            assert a.shape == (1080, 1920, 3), (name, a.shape)
+            small = x6_to_native(folder / name)
+            print(f"  {group[:-1]:5s} {slug:20s} from {name}: exact x6")
+            save_png(Image.fromarray(a), PUB / "shots" / f"{slug}.png")
+            save_png(Image.fromarray(small), PUB / "shots/1x" / f"{slug}.png")
+
+
+def press_kit_art(kit: Path) -> None:
+    for src, (dst, k) in KEY_ART.items():
+        small = x6_to_native(kit / src, k)
+        save_png(Image.fromarray(small), PUB / "art" / dst)
+        print(f"  key art {dst}: {small.shape[1]}x{small.shape[0]} (x{k})")
+    for src, dst in ICONS.items():
+        shutil.copy(kit / src, PUB / dst)
+        print(f"  icon {dst}")
 
 
 def thornling_states(game: Path) -> None:
@@ -151,13 +185,10 @@ def stage(game: Path) -> None:
     img.convert("RGB").save(PUB / "art/stage.png", optimize=True)
 
 
-def trailer_placeholder(game: Path) -> None:
-    """Until the trailer exists: a 320x180 crop of the title backdrop (x6 for the poster)."""
-    still = Image.open(game / "assets/backgrounds/bg_title.png").convert("RGB").crop((0, 14, 320, 194))
-    still.save(PUB / "art/trailer-still.png", optimize=True)
-    still.resize((1920, 1080), Image.NEAREST).save(PUB / "trailer-poster.jpg", quality=90, subsampling=0)
+def site_bits(game: Path) -> None:
+    """The tile for #after: Hesper's idle frame, and the sister game's logo and ship, copied unchanged."""
     icon = Image.open(game / "assets/sprites/hesper_idle.png").convert("RGBA").crop((0, 0, 16, 32))
-    icon.save(PUB / "art/hesper-icon.png", optimize=True)
+    icon.save(PUB / "art/hesper-icon.png", optimize=True)  # the tile's Hesper (idle frame 0), 16x32
     for src, dst in (("logo.png", "heliobane-logo.png"), ("ship.png", "heliobane-ship.png")):
         if (HELIOBANE_ART / src).exists():
             shutil.copy(HELIOBANE_ART / src, PUB / "art" / dst)
@@ -166,7 +197,7 @@ def trailer_placeholder(game: Path) -> None:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--game", required=True, type=Path, help="snapshot of the game (git archive 2e08e64)")
-    ap.add_argument("--shots-dir", type=Path)
+    ap.add_argument("--press-kit", type=Path, default=PRESS_KIT)
     a = ap.parse_args()
     game = a.game.resolve()
     pal = hexes(game / "assets/palette.hex")
@@ -176,11 +207,13 @@ def main() -> None:
         shutil.copy(game / src, PUB / dst)
         bad = off_palette(Image.open(PUB / dst), pal)
         print(f"  copy {dst}" + (f"  ({bad} off-palette colours)" if bad else ""))
-    build_shots((a.shots_dir or game / "marketing/steam/screenshots").resolve())
+    kit = a.press_kit.resolve()
+    press_kit_art(kit)
+    build_shots(kit / "steam-screenshots", kit / "screenshots")
     thornling_states(game)
     pips(game)
     stage(game)
-    trailer_placeholder(game)
+    site_bits(game)
     for f in ("art/thornling_states.png", "art/pips.png", "art/stage.png"):
         print(f"  built {f}: off-palette colours {off_palette(Image.open(PUB / f), pal)}")
 

@@ -1,16 +1,14 @@
 #!/usr/bin/env python3
-"""Draw the site's own small art on a native grid, palette colours only, scaled by whole numbers:
+"""Draw the site's own small art on a native grid, palette colours only, scaled by whole numbers
+(the icons now come from the press kit: tools/build_media.py):
 
   public/art/vein-frost.png, vein-ember.png  160x11 tiles for the section bars (shown x2)
-  public/favicon.ico, favicon-64.png, apple-touch-icon.png   a 16x16 icon (sun, beam, Hesper, ledge)
   public/og-farstrand.png     1200x630 TEMPORARY social card: title backdrop x4 + logo + lockup
                               (replace with farstrand-press-kit/press-kit/social/ when it exists)
 
   python3 tools/build_extras.py --game <snapshot>        (Python 3, Pillow, NumPy)
 """
 import argparse
-import struct
-from io import BytesIO
 from pathlib import Path
 
 import numpy as np
@@ -62,54 +60,6 @@ def vein_tile(ramp, vein, glint, seed) -> Image.Image:
     return Image.fromarray(img)
 
 
-ICON = [  # 16x16, one character per palette colour (see KEY)
-    "................",
-    "............w...",
-    "............i...",
-    "............i...",
-    ".....bbbb...i...",
-    "...bbooOObb.i...",
-    "..bboorrrrb.i...",
-    "..booorrrrB.i...",
-    "..boorrrrrBBi...",
-    "..brrrrrrrBBi...",
-    "..bBrrrrrBB.i...",
-    "...bBBrrBB..i...",
-    "SSSSSSSSSSSSwSSS",
-    "tttttttttttttttt",
-    "nnnnnnnnnnnnnnnn",
-    "kkkkkkkkkkkkkkkk",
-]
-KEY = {".": "void", "w": "white", "i": "ice", "b": "blood0", "B": "blood1", "r": "red", "o": "fire", "O": "flame",
-       "S": "steel4", "t": "steel2", "n": "steel1", "k": "black"}
-
-
-def icon16() -> Image.Image:
-    a = np.zeros((16, 16, 3), np.uint8)
-    for y, row in enumerate(ICON):
-        for x, ch in enumerate(row):
-            a[y, x] = P[KEY[ch]]
-    for (x, y), c in {(3, 8): "steel3", (4, 8): "cyan", (3, 9): "steel2", (4, 9): "steel3", (3, 10): "steel2",
-                      (4, 10): "steel2", (3, 11): "steel1", (4, 11): "steel1"}.items():
-        a[y, x] = P[c]  # Hesper on the ledge
-    return Image.fromarray(a)
-
-
-def ico(path: Path, img16: Image.Image) -> None:
-    """favicon.ico with whole-number scales of the 16x16 icon: 16, 32, 48, 64 (PNG entries)."""
-    sizes, blobs = (16, 32, 48, 64), []
-    for s in sizes:
-        b = BytesIO()
-        img16.resize((s, s), Image.NEAREST).save(b, "PNG")
-        blobs.append(b.getvalue())
-    out = struct.pack("<HHH", 0, 1, len(sizes))
-    off = 6 + 16 * len(sizes)
-    for s, b in zip(sizes, blobs):
-        out += struct.pack("<BBBBHHII", s, s, 0, 0, 1, 32, len(b), off)
-        off += len(b)
-    path.write_bytes(out + b"".join(blobs))
-
-
 def og(game: Path) -> None:
     """Title backdrop at x4 (native 300x158 window, 1 px cut top and bottom) with the logo and lockup."""
     bg = Image.open(game / "assets/backgrounds/bg_title.png").convert("RGBA")
@@ -133,14 +83,8 @@ def main() -> None:
     game = ap.parse_args().game.resolve()
     vein_tile(FROST, (P["umber3"], P["amber"], P["gold"]), P["white"], 7).save(PUB / "art/vein-frost.png")
     vein_tile(EMBER, (P["pale"], P["white"], P["gold"]), P["pale"], 11).save(PUB / "art/vein-ember.png")
-    ic = icon16()
-    ico(PUB / "favicon.ico", ic)
-    ic.resize((64, 64), Image.NEAREST).save(PUB / "favicon-64.png", optimize=True)
-    touch = Image.new("RGB", (180, 180), P["void"])  # 16 x 11 = 176, a 2 px palette border
-    touch.paste(ic.resize((176, 176), Image.NEAREST), (2, 2))
-    touch.save(PUB / "apple-touch-icon.png", optimize=True)
     og(game)
-    print("wrote veins, favicon.ico, favicon-64.png, apple-touch-icon.png, og-farstrand.png")
+    print("wrote veins and og-farstrand.png")
 
 
 if __name__ == "__main__":

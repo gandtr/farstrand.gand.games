@@ -13,7 +13,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PAGES = [ROOT / "index.html", ROOT / "privacy/index.html"]
 # Referenced on purpose before the file exists (the lead drops them in; see PROJECT.md).
-PENDING = {"public/trailer.mp4", "public/trailer.en.vtt", "press-kit/"}
+PENDING = {"press-kit/"}
 
 
 class Collect(HTMLParser):
@@ -85,7 +85,9 @@ class SiteTests(unittest.TestCase):
         self.assertEqual(d["inLanguage"], ["en", "ja", "tr"])
         self.assertLessEqual(len(d["description"]), 155)
 
-    def test_any_video_object_has_a_dated_timezone(self):
+    def test_trailer_video_object(self):
+        """The VideoObject names the real files. Its uploadDate is left out until the trailer is published
+        (the lead sets it, see the TODO above the JSON-LD); when present it must carry a timezone and be past."""
         def videos(v):
             if isinstance(v, dict):
                 if v.get("@type") == "VideoObject":
@@ -95,12 +97,16 @@ class SiteTests(unittest.TestCase):
             elif isinstance(v, list):
                 for c in v:
                     yield from videos(c)
-        for page in PAGES:
-            for doc in parse(page).ld:
-                for v in videos(doc):
-                    stamp = v.get("uploadDate", "")
-                    self.assertRegex(stamp, r"^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(Z|[+-]\d\d:\d\d)$")
-                    self.assertLess(dt.datetime.fromisoformat(stamp.replace("Z", "+00:00")), dt.datetime.now(dt.timezone.utc))
+        found = [v for doc in parse(ROOT / "index.html").ld for v in videos(doc)]
+        self.assertEqual(len(found), 1)
+        v = found[0]
+        for key in ("thumbnailUrl", "contentUrl"):
+            self.assertTrue((ROOT / v[key].replace("https://farstrand.gand.games/", "")).exists(), v[key])
+        if "uploadDate" in v:
+            self.assertRegex(v["uploadDate"], r"^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(Z|[+-]\d\d:\d\d)$")
+            self.assertLess(dt.datetime.fromisoformat(v["uploadDate"].replace("Z", "+00:00")), dt.datetime.now(dt.timezone.utc))
+        else:
+            print("  (trailer VideoObject: uploadDate not set yet, see the TODO in index.html)")
 
     def test_three_languages_side_by_side(self):
         classes = parse(ROOT / "index.html").classes

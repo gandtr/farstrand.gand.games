@@ -22,20 +22,25 @@ CNAME, robots.txt, sitemap.xml, .nojekyll, .gitignore
 tests/test_site.py          references resolve, JSON-LD, three languages in step, Steam switch, public-text rules,
                             palette of the art, font coverage (python3 -m unittest discover -s tests)
 tools/
-  build_media.py            public/ art and screenshots from a snapshot of the game
-  build_extras.py           vein bars, favicons, temporary social card
+  build_media.py            public/ art, key art, screenshots and icons, from a snapshot of the game and the press kit
+  build_extras.py           vein bars, temporary social card
   subset_fonts.sh           Public Pixel (Latin + Turkish) and PixelMplus12 (Japanese) subsets
-  shots.json                gallery order: slug -> file name in the screenshots folder
+  shots.json                gallery order and extras: slug -> file name in the press kit's screenshots
   palette.hex               the game's 32 colours, for the palette test
 public/
-  og-farstrand.png          1200x630 social card, TEMPORARY (title backdrop x4, logo, lockup)
-  favicon.ico, favicon-64.png, apple-touch-icon.png   a hand-drawn 16x16 icon at x1/x2/x3/x4/x11, TEMPORARY
-  trailer-poster.jpg        1920x1080 poster, TEMPORARY (the title backdrop crop at x6)
-  (trailer.mp4, trailer.en.vtt are not there yet: the page copes, see Trailer)
-  shots/<slug>.png          1920x1080 frames (exact x6 of 320x180), indexed PNG
-  shots/1x/<slug>.png       320x180, the centre of every 6x6 block; shown at x1 and as the viewer's x2..x5
-  art/                      game art copied unchanged (logo, bg_title, portraits, Bob, Hesper, fx, glyphs, six
-                            strand-end views in worlds/) and built here (see Art)
+  og-farstrand.png          1200x630 social card, TEMPORARY (title backdrop x4, logo, lockup); the press kit's
+                            social/ is empty so far, its card replaces this file (see Social preview)
+  favicon.ico, favicon-64.png, apple-touch-icon.png (256 px)   press-kit/icons, unchanged
+  trailer.mp4, trailer-poster.jpg, trailer.en.vtt   the trailer, its poster and captions (see Trailer)
+  shots/<slug>.png          1920x1080 frames (exact x6 of 320x180), indexed PNG: the press kit's twelve store
+                            screenshots plus two spares used elsewhere on the page (halm-map, the-six)
+  shots/1x/<slug>.png       320x180, the centre of every 6x6 block (identical to the press kit's native/ files);
+                            shown at x1 and as the viewer's x2..x5
+  art/key_art.png           the hero, 320x180 (an exact x6 of press-kit key_art_no_logo.png); key_art_vertical.png
+                            240x360 for phones (x5); key_art_road.png 320x180 for #after (the Plumbline on the strand)
+  art/                      also game art copied unchanged (logo, portraits, Bob, Hesper, fx, glyphs, lamp-heart, six
+                            strand-end views in worlds/), icon-32.png (press-kit icon, the header brand) and the
+                            pieces built here (frost-vein bars, toy sprites and stage)
   fonts/                    Public Pixel (CC0), Fira Sans Condensed (OFL), PixelMplus12 subset (M+ licence)
 ```
 
@@ -56,14 +61,21 @@ public/
   `İ ı Ş ş Ğ ğ`; this site subsets the full TTF (`tools/subset_fonts.sh`) with them. The font stack falls back to
   Fira Sans Condensed per glyph, never to tofu. The capital `İ`, `Ş` and `Ğ` are squeezed under their marks (the
   game's own bitmap fonts do the same), so `İ` reads like a small `i` in all caps.
-- **Pixel art is shown only at whole-number scales** with `image-rendering: pixelated`: hero backdrop and logo at
-  x3 (x4 on a tall desktop, x5 on a very large one, x2 on phones; the logo x1 below 560 px), trailer still x3/x2/x1,
+- **Pixel art is shown only at whole-number scales** with `image-rendering: pixelated`: the hero key art x3 (x4 from
+  1260 px wide and 780 high, x5 from 1600x960, x6 from 1920x1140; the tall key art x2 on phones) with the logo one
+  step smaller, the trailer's fallback still x3/x2/x1, the road art x2/x1,
   screenshots x1 in the gallery and x1..x5 in the viewer (x6 file at x6), world views and portraits x1/x2, the
   toy stage x2/x3/x4. A scripted check measures every `img.px` at 14 widths from 320 to 1920: all whole numbers
   from 360 px up; a 320 px screen is narrower than a x1 picture, so it shows them pixelated at a fraction.
-- **Hero**: the title backdrop (320x208) is TEMPORARY hero art until the key art exists. The logo and tagline sit in
-  its calm sky (rows 0 to 84, which the game keeps clear for the logo), the Steam card over its dark ground. The
-  edges fade out in eight steps, as HELIOBANE's hero does. To change the art, edit `.hero-art` and `--iw/--ih`.
+- **Hero**: the press kit's key art without its logo (Hesper and Bob before the red dwarf, the beam and a frozen
+  plain; the left half is dark sky) at an exact x6-derived native, taken back to 320x180 by sampling the centre of
+  every 6x6 block (the script refuses a file that is not an exact scale). The page draws the logo (the game's
+  `logo.png`), the lockup `A HELIOBANE METROIDVANIA` and the tagline in that dark half, and the Steam card over the
+  ice below them. On phones the tall key art (240x360, x5-exact) fills a 600 px band cropped to its lower part, with
+  the logo over its sky and the lockup, tagline and card below. The edges fade out in eight steps, as HELIOBANE's hero
+  does. To change the art, edit `.hero-art` and `--iw/--ih`.
+- **#after** puts the road art (the *Plumbline* riding a frozen strand, Aurel going out behind it) over the
+  HELIOBANE tile (logo, then the HB gunship turning into Hesper on foot), both next to the text.
 - **Motion** (all off under `prefers-reduced-motion`): the logo drops in and shines once, one glint travels along the
   vein bars every 11 s, and the heat ladder's enemy patrols, Hesper breathes, pips flash and the fx play. The
   toy loop runs only while the toy is on screen and the tab visible.
@@ -122,14 +134,17 @@ python3 -m unittest discover -s tests  # the font test fails if a glyph is missi
 
 - Words: `farstrand-press-kit/copy/{en,ja,tr}.md`, the "website" sections by section id, as of press-kit commit
   `2621b61` (lockup `A HELIOBANE METROIDVANIA` and tagline 1 approved by Arda on 2026-10-17).
+- Key art, screenshots, icons: `farstrand-press-kit/press-kit/` (key art and icons at commit `fe8bae5`, the twelve
+  screenshots at `6ebd27b`; their README says how they are made). The trailer: `farstrand-trailer` commit `b0182a7`
+  (`output/farstrand-trailer.mp4`, `output/farstrand-trailer.srt`, `review/poster.jpg`).
 - Facts and art: the game at commit `2e08e64`, from a `git archive` snapshot, never its working tree. No patch was
   needed, and no Godot was run: the build only reads PNG, JSON and the palette. The toy's rules are
   `sim/heat_ladder.gd`, `game/player/graft.gd`, `sim/material_state.gd`, `game/world/burst.gd`; its captions are
   `i18n/{en,ja,tr}.json` (`nudge.*`); the privacy facts are `steam/README.md`, `game/core/steam_service.gd`,
   `game/ui/end_card.gd` and a search of `game/` and `sim/` for any network code (there is none beyond Steam).
-- Written here, not in the copy (alt texts, captions of the ten screenshots, nav labels, the skip link, the
+- Written here, not in the copy (alt texts, captions of the twelve screenshots, nav labels, the skip link, the
   `Language / 言語 / Dil` group name, the page titles and the privacy page): functional text in the game's own
-  terms (`i18n` names for worlds, Heralds and the Hollow Bell; the in-game nudges for two captions). Review the
+  terms (`i18n` names for worlds, rooms, Heralds and the network tab; in-game strings for four captions). Review the
   Japanese and Turkish of these first.
 
 Spoilers are out of every piece (the list in the launch kit's `common.md`): no Hespers twist, no Hesper who said
@@ -148,58 +163,63 @@ page is public. JSON-LD `sameAs` already names the Steam page.
 
 ## Trailer
 
-Source (when it exists): `../farstrand-trailer/` (`output/` master and captions, `review/` poster). The site copies
-are re-encoded for the web the way HELIOBANE's are:
+`farstrand-trailer/output/farstrand-trailer.mp4` (87.2 s, 1920x1080 at 60 fps) re-encoded for the web, its
+`review/poster.jpg` copied, its `.srt` converted:
 
 ```sh
 T=../farstrand-trailer
 ffmpeg -i $T/output/farstrand-trailer.mp4 -map 0:v -map 0:a -c:v libx264 -profile:v high \
   -pix_fmt yuv420p -preset slow -crf 20 -tune animation -c:a aac -b:a 160k \
-  -movflags +faststart public/trailer.mp4
-ffmpeg -i $T/review/poster.jpg -q:v 4 public/trailer-poster.jpg
+  -movflags +faststart public/trailer.mp4                  # 29 MB
+cp $T/review/poster.jpg public/trailer-poster.jpg
 ffmpeg -i $T/output/farstrand-trailer.srt public/trailer.en.vtt
 ```
 
-The `<video>` in `#trailer` has `preload="none"`, native controls, the poster and an English captions `<track>`. The
-script sends a `HEAD` for `trailer.mp4` and falls back to a still with a "Trailer coming" label when it is missing or
-not served as `video/*` (checked: missing, and present with a temporary 2 s clip that was deleted again). Then
-add the `trailer` VideoObject to the JSON-LD (the note above it says how; `tests/test_site.py` checks that any
-VideoObject has a dated, timezone-carrying `uploadDate`).
+The `<video>` in `#trailer` has `preload="none"`, native controls, the poster and an English captions `<track>` (eight
+cues). The script sends a `HEAD` for `trailer.mp4` and falls back to a still (the key art) with a "Trailer coming"
+label when it is missing or not served as `video/*` (checked both ways). The JSON-LD `trailer` VideoObject names
+these files and has **no `uploadDate` yet**: put the real publication instant (with its timezone) there when the
+site and the trailer are live; `tests/test_site.py` accepts its absence and, once present, checks it.
 
 ## Rebuilding
 
 ```sh
 SNAP=<empty dir>
 git -C ~/projects/games/farstrand/farstrand archive 2e08e64 | tar -x -C $SNAP
-python3 tools/build_media.py --game $SNAP        # art, shots, toy sprites; prints exact-x6 and palette checks
-python3 tools/build_extras.py --game $SNAP       # veins, icons, social card
+python3 tools/build_media.py --game $SNAP        # art, key art, shots, icons, toy sprites (prints each exact-scale and palette check)
+                                                 #   --press-kit DIR if the press kit is not at ~/projects/games/farstrand/farstrand-press-kit/press-kit
+python3 tools/build_extras.py --game $SNAP       # veins, temporary social card
 tools/subset_fonts.sh $SNAP                      # fonts
 ```
 
-Screenshots: the ten frames of `marketing/steam/screenshots/` (1920x1080, each an exact x6 of 320x180: the script
-refuses a frame that is not). When `farstrand-press-kit/press-kit/screenshots/` fills up, edit `tools/shots.json`
-(slugs stay, file names change) and run with `--shots-dir <that folder>`; the markup needs only a caption and
-alt text per new slug.
+Screenshots: the twelve of `press-kit/steam-screenshots/` (1920x1080, each an exact x6 of 320x180: the script refuses
+a frame that is not, and the 1x files equal the press kit's `screenshots/native/`), in the order of
+`tools/shots.json`, plus two spares from `press-kit/screenshots/` (`halm-map` for the map pillar, `the-six` for the
+Heralds). A new frame needs a slug in `shots.json` and a caption and alt text (EN/JA/TR) in the markup; captions use
+the game's `i18n` names. The press kit's rule for spoilers applies (no cocoons, no earlier Hespers in alt texts).
 
 ## Social preview
 
-`public/og-farstrand.png` is a temporary 1200x630 card: the title backdrop at x4 (a 300x158 window, one pixel row cut
-top and bottom), the logo and `A HELIOBANE METROIDVANIA` in Public Pixel at x4, all palette colours. When the key
-art and `press-kit/social/` exist, replace it and, if the file name changes, the `og:image` and `twitter:image`
-URLs and the VideoGame `image` (HELIOBANE versioned the name to bust caches). Open Graph carries the real size and
-type, Twitter explicit title, description and alt text, all absolute HTTPS URLs.
+`public/og-farstrand.png` is still the temporary 1200x630 card: the old title backdrop at x4 (a 300x158 window, one
+pixel row cut top and bottom), the logo and `A HELIOBANE METROIDVANIA` in Public Pixel at x4, all palette colours. The
+press kit's `social/` is empty so far. **Expected: `press-kit/social/og_1200x630.png` copied over
+`public/og-farstrand.png`** (same name, so the meta tags and JSON-LD stay); if it must be renamed (cache busting, as
+HELIOBANE did with `-v2`), change `og:image`, `twitter:image` and the VideoGame `image` to the new URL. Open Graph
+carries the real size and type, Twitter explicit title, description and alt text, all absolute HTTPS URLs; the alt
+text describes the old card and should be reread against the new one.
 
 ## Validation done
 
 `html-validate@9` clean on `index.html` and `privacy/index.html`; `tests/test_site.py` green (a skip of the font test
-only under a Python without fontTools); every `public/` reference resolves (the trailer files and `press-kit/` are
-the declared exceptions); a headless Chrome (155, no window, software rendering) at 1920, 1440, 1280, 1024, 800,
-768, 720, 640, 560, 420, 390, 375, 360 and 320 px in EN, JA and TR for horizontal overflow (none from 360 up, at any
-language), every pixel image's scale (whole numbers from 360 up), the toy with mouse and the `Q` and `K` keys (every
-rung of the ladder and every caption, and that keys do nothing off screen), the viewer with mouse, arrows and Escape
-(focus returns to the current thumbnail; x4, x5, x3, x1 and the x6 file at 1440, 1920, 1280, 390 and 2560 px), the
-trailer missing and present, and `prefers-reduced-motion` (no animation, the toy holds still). Full-page screenshots
-were read at 1440 in all three languages and at 360 and 390.
+only under a Python without fontTools; run it with `/usr/bin/python3` too); every `public/` reference resolves
+(`press-kit/` is the one declared exception); a headless Chrome (155, no window, software rendering) at 1920, 1440,
+1280, 1024, 800, 768, 700, 560, 420, 390, 375, 360 and 320 px in EN, JA and TR for horizontal overflow (none at any
+width), every pixel image's scale at 22 widths (whole numbers), the toy with mouse and the `Q` and `K` keys (every
+rung of the ladder, the lamp-heart and every caption, and that keys do nothing off screen), the viewer with mouse,
+arrows and Escape (focus returns to the current thumbnail; x4, x5, x3, x1 and the x6 file at 1440, 1920, 1280, 390 and
+2560 px), the trailer present (87.2 s, 1920x1080, eight caption cues) and missing (the still and the label), and
+`prefers-reduced-motion` (no animation, the toy holds still). Full-page screenshots were read at 1440 in all three
+languages and at 360 and 390.
 
 ## Press kit
 

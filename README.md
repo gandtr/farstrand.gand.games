@@ -23,55 +23,59 @@ Nothing here is committed, pushed or deployed; DNS is untouched.
 ## How it was made, how to rebuild
 
 Everything is made from a snapshot of the game at commit `2e08e64` (`git archive`, never the working tree; no Godot
-was run) and the lead's copy (`farstrand-press-kit/copy/`, press-kit commit `2621b61`):
+was run), the press kit's key art, screenshots and icons (`farstrand-press-kit/press-kit/`), the trailer
+(`farstrand-trailer`, encode lines in `PROJECT.md`) and the lead's copy (`farstrand-press-kit/copy/`):
 
 ```sh
 SNAP=<empty dir>
 git -C ~/projects/games/farstrand/farstrand archive 2e08e64 | tar -x -C $SNAP
-python3 tools/build_media.py --game $SNAP     # copies art unchanged, builds the toy sprites, shots (x6 -> x1), stage
-python3 tools/build_extras.py --game $SNAP    # frost-vein bars, icons, temporary social card
+python3 tools/build_media.py --game $SNAP     # art, key art and shots (x6 -> native), icons, toy sprites, stage
+python3 tools/build_extras.py --game $SNAP    # frost-vein bars, temporary social card
 tools/subset_fonts.sh $SNAP                   # Public Pixel with Turkish, PixelMplus12 for the Japanese in index.html
 npx --yes html-validate@9 index.html privacy/index.html
 python3 -m unittest discover -s tests
 ```
 
 Every pixel is one of the game's 32 colours (`tools/palette.hex`, the test checks every file in `public/art/`), shown
-only at whole-number scales (measured at 14 widths).
+only at whole-number scales (measured at 22 widths).
 
 ## What was checked
 
-html-validate@9 clean on both pages; the unit tests green; every `public/` reference resolves (declared exceptions:
-`trailer.mp4`, `trailer.en.vtt`, `press-kit/`); headless Chrome 155 (no window, no GPU) at 1920, 1440, 1280, 1024,
+html-validate@9 clean on both pages; the unit tests green; every `public/` reference resolves (declared exception:
+`press-kit/`); headless Chrome 155 (no window, no GPU) at 1920, 1440, 1280, 1024,
 800, 768, 720, 640, 560, 420, 390, 375, 360 and 320 px in EN, JA and TR: no horizontal scroll from 360 up (320: no
 overflow either, but pictures show at a fraction), every pixel image at a whole-number scale from 360 up; the heat
 ladder with mouse and with `Q`/`K` (all rungs, all captions); the viewer with mouse, arrows and Escape; the trailer
-missing and present (a temporary 2 s clip, deleted again); `prefers-reduced-motion`; the Steam switch flipped on a
+present (87 s, captions load) and missing (the fallback); `prefers-reduced-motion`; the Steam switch flipped on a
 copy. Not checked: Safari and Firefox (Chrome only), a real touch device, a screen reader, any network but loopback.
 
 ## TODOs left in the pages
 
 Visible (privacy page, dashed boxes): Steam Cloud wording to confirm; other storefronts if any. In `index.html`, as HTML
-comments (nothing visible): the trailer's JSON-LD VideoObject; the demo link under the Steam button; `press-kit/`.
+comments (nothing visible): the trailer's `uploadDate` (left out on purpose); the demo link under the Steam button; `press-kit/`.
 `python3 -m unittest discover -s tests -v` prints them all.
 
 ## Open for the lead
 
 1. **Steam**: set `STEAM_LIVE = true` in the script when the store page is public (one line; the UTM URLs are in the
    `STEAM` object above it). The demo line under the button stays plain text until you link it.
-2. **Trailer**: drop in `public/trailer.mp4`, `trailer-poster.jpg` (now a temporary x6 crop of the title backdrop)
-   and `trailer.en.vtt` (encode lines in `PROJECT.md`); then add the `trailer` VideoObject to the JSON-LD with the
-   real publication instant. The page names only an English caption track: if the trailer has Japanese or Turkish
-   narration, say so and I add the tracks.
-3. **Key art, social card, icons**: the hero is the title backdrop (x3/x4/x5, x2 on phones) and the social card
-   `public/og-farstrand.png` and the icons are temporary (built here). Swap in `press-kit/{key-art,social,icons}`;
-   a changed card file name needs the `og:image` / `twitter:image` / JSON-LD `image` URLs updated.
-4. **Screenshots**: ten frames from `marketing/steam/screenshots/`. To use `press-kit/screenshots/`, edit
-   `tools/shots.json` and run `build_media.py --shots-dir`; new slugs need a caption and alt text in the markup.
-5. **Text I wrote, not in the copy** (review the Japanese and Turkish first): the ten screenshot captions and alt
-   texts, every other alt text (portraits, hero still, pillar art, viewer), nav labels (Graft, Worlds, Heralds,
+2. **Trailer** is in (`public/trailer.mp4` 29 MB, `trailer-poster.jpg`, `trailer.en.vtt`; encode lines in `PROJECT.md`). The
+   JSON-LD `VideoObject` has **no `uploadDate`** yet; add the real publication instant with its timezone when the
+   trailer is published (the test accepts it missing and checks it once present). The page names only an English
+   caption track; if the trailer gets Japanese or Turkish captions, give me the files.
+3. **Key art, icons, screenshots** are the press kit's now (hero: `key_art_no_logo` at x3 to x6, the tall one on
+   phones; `key_art_road` in `#after`; the twelve store screenshots, plus `halm_map` and `the_six` from the spares; icons
+   from `icons/`). **Social card, expected path: `press-kit/social/og_1200x630.png`**, which I copy over
+   `public/og-farstrand.png` (the temporary card keeps that name, so no meta tag changes; tell me if it ships under
+   another name). The card's alt text in the head describes the old one: reread it.
+4. **To refresh the media** run `build_media.py` (it refuses any picture that is not an exact x6 or x5 scale); a new
+   screenshot slug needs a caption and alt text in the markup (`tools/shots.json`).
+5. **Text I wrote, not in the copy** (review the Japanese and Turkish first): the twelve screenshot captions and alt
+   texts, every other alt text (portraits, trailer still, road art, pillar art, viewer), nav labels (Graft, Worlds, Heralds,
    Screens, Facts and their JA/TR forms), the skip link, `Language / 言語 / Dil`, the three page titles, the
-   Open Graph text, and the whole privacy page. Two captions are the game's own strings (`Kindle it, quench it,
-   climb on`, `Halm, the glass forest`).
+   Open Graph text, and the whole privacy page. Four captions are the game's own strings (`Kindle it, quench it, climb on`,
+   `Halm, the glass forest`, `overfeed one on the plating`, `The network`); the rest use its world, room and Herald
+   names. The alt texts avoid the cocoons and the earlier Hespers.
 6. **Copy gaps**: the fact sheets are level in all three languages now (Engine, Players, the fuller Platforms row).
    The privacy page is English only, as HELIOBANE's. No `#pillars` heading in the copy: each pillar's title is a
    heading.

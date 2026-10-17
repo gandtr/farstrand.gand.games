@@ -1,15 +1,63 @@
 {
-  "_doc": "slug -> file name in the shots folder (default: the game's marketing/steam/screenshots). Order is the gallery order. When farstrand-press-kit/press-kit/screenshots fills up, point --shots-dir at it and change the file names here; the slugs (and so the markup) stay.",
-  "shots": [
-    ["halm-anchor", "01_halm_anchor.png"],
-    ["overfeed", "02_overfeed.png"],
-    ["bob", "03_bob.png"],
-    ["frigate", "04_frigate.png"],
-    ["quench-platform", "05_quench_platform.png"],
-    ["the-six", "06_the_six.png"],
-    ["map", "07_map.png"],
-    ["strand", "08_strand.png"],
-    ["hollow-bell", "09_hollow_bell.png"],
-    ["gantry", "10_gantry.png"]
+ "_doc": "slug -> file name. shots: the gallery, in order (press-kit/steam-screenshots; the 320x180 copies in press-kit/screenshots/native are the same pixels, checked). extras: pictures used elsewhere on the page (press-kit/screenshots, the spares). Change file names here, the slugs (and so the markup) stay.",
+ "shots": [
+  [
+   "halm-anchor",
+   "01_halm_anchor.png"
+  ],
+  [
+   "quench-platform",
+   "02_quench_platform.png"
+  ],
+  [
+   "kindle-bridge",
+   "03_kindle_bridge.png"
+  ],
+  [
+   "overfeed-burst",
+   "04_overfeed_burst.png"
+  ],
+  [
+   "the-undertow",
+   "05_the_undertow.png"
+  ],
+  [
+   "old-mott",
+   "06_old_mott.png"
+  ],
+  [
+   "sunder-alidade",
+   "07_sunder_alidade.png"
+  ],
+  [
+   "the-sexton",
+   "08_the_sexton.png"
+  ],
+  [
+   "bob-vent",
+   "09_bob_vent.png"
+  ],
+  [
+   "the-gantry",
+   "10_the_gantry.png"
+  ],
+  [
+   "ninth-light-baseline",
+   "11_ninth_light_baseline.png"
+  ],
+  [
+   "network-map",
+   "12_network_map.png"
   ]
+ ],
+ "extras": [
+  [
+   "halm-map",
+   "halm_map.png"
+  ],
+  [
+   "the-six",
+   "the_six.png"
+  ]
+ ]
 }

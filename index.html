@@ -25,16 +25,16 @@
 <meta name="twitter:description" content="Seven years after HELIOBANE, the roads between the stars have frozen into glass. A sci-fi metroidvania: map six worlds with an arm that moves heat.">
 <meta name="twitter:image" content="https://farstrand.gand.games/public/og-farstrand.png">
 <meta name="twitter:image:alt" content="The FARSTRAND logo above a surveyor on a frozen cliff, facing a red dwarf and a thin beam of light, with the words A HELIOBANE METROIDVANIA.">
-<link rel="icon" href="public/favicon.ico" sizes="16x16 32x32 48x48 64x64">
+<link rel="icon" href="public/favicon.ico" sizes="any">
 <link rel="icon" href="public/favicon-64.png" type="image/png" sizes="64x64">
-<link rel="apple-touch-icon" href="public/apple-touch-icon.png">
+<link rel="apple-touch-icon" href="public/apple-touch-icon.png" sizes="256x256">
 <link rel="preload" href="public/fonts/PublicPixel.woff2" as="font" type="font/woff2" crossorigin>
-<!-- TODO (lead): when the trailer exists, add a "trailer" VideoObject to this JSON-LD (name, description, thumbnailUrl
-     https://farstrand.gand.games/public/trailer-poster.jpg, contentUrl .../public/trailer.mp4, duration, and an uploadDate
-     with a timezone that matches the real publication time; tests/test_site.py checks it). sameAs below points at the
-     Steam page: fine once the page is public, a dead link until then. -->
+<!-- TODO (lead): the trailer's VideoObject below has no uploadDate on purpose (Google wants one): add
+     "uploadDate":"YYYY-MM-DDThh:mm:ss+09:00" with the real publication instant once the site and trailer are live.
+     tests/test_site.py accepts its absence and prints this note. sameAs points at the Steam page: fine once the
+     page is public, a dead link until then. -->
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"VideoGame","name":"FARSTRAND","url":"https://farstrand.gand.games/","sameAs":["https://store.steampowered.com/app/5461390/"],"description":"A sci-fi metroidvania set seven years after HELIOBANE: map six worlds on frozen star roads with an arm that moves heat.","image":"https://farstrand.gand.games/public/og-farstrand.png","genre":["Metroidvania","Action platformer","Science fiction"],"playMode":"SinglePlayer","gamePlatform":["PC","Mac","Steam Deck"],"operatingSystem":"Windows, macOS, Linux, SteamOS","applicationCategory":"Game","inLanguage":["en","ja","tr"],"author":{"@type":"Organization","name":"Gand","url":"https://gand.tr/"},"publisher":{"@type":"Organization","name":"Gand","url":"https://gand.games/"}}
+{"@context":"https://schema.org","@type":"VideoGame","name":"FARSTRAND","url":"https://farstrand.gand.games/","sameAs":["https://store.steampowered.com/app/5461390/"],"description":"A sci-fi metroidvania set seven years after HELIOBANE: map six worlds on frozen star roads with an arm that moves heat.","image":"https://farstrand.gand.games/public/og-farstrand.png","genre":["Metroidvania","Action platformer","Science fiction"],"playMode":"SinglePlayer","gamePlatform":["PC","Mac","Steam Deck"],"operatingSystem":"Windows, macOS, Linux, SteamOS","applicationCategory":"Game","inLanguage":["en","ja","tr"],"author":{"@type":"Organization","name":"Gand","url":"https://gand.tr/"},"publisher":{"@type":"Organization","name":"Gand","url":"https://gand.games/"},"trailer":{"@type":"VideoObject","name":"FARSTRAND trailer","description":"Seven years after HELIOBANE, the roads between the stars have frozen into glass. The FARSTRAND trailer.","thumbnailUrl":"https://farstrand.gand.games/public/trailer-poster.jpg","contentUrl":"https://farstrand.gand.games/public/trailer.mp4","duration":"PT1M27S","inLanguage":"en"}}
 </script>
 <style>
 /* FARSTRAND · the game's 32-colour master palette (assets/palette.hex at 2e08e64) */
@@ -68,7 +68,7 @@
 *,*::before,*::after{box-sizing:border-box}
 html{background:var(--void);color:var(--ice);-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:72px;scrollbar-color:var(--steel3) var(--night)}
 body{margin:0;font:400 19px/1.55 var(--body);overflow-x:hidden}
-html[data-lang=ja] body{font-family:var(--ja-body);font-size:17px;line-height:1.8}
+html[data-lang=ja] body{font-family:var(--ja-body);font-size:17px;line-height:1.8;word-break:auto-phrase}
 img{max-width:100%;height:auto;display:block}
 .px{image-rendering:pixelated;image-rendering:crisp-edges}
 ::selection{background:var(--gold);color:var(--void)}
@@ -122,7 +122,7 @@ h3.pix:lang(ja){font-size:24px}
 .bar{position:sticky;top:0;z-index:20;background:var(--void);border-bottom:2px solid var(--steel1)}
 .bar .wrap{display:flex;align-items:center;gap:20px;min-height:56px}
 .brand{display:flex;align-items:center;gap:10px;color:var(--ice);text-decoration:none;flex:none}
-.brand img{width:16px;height:32px}
+.brand img{width:32px;height:32px}
 .brand span{font-family:var(--px);font-size:16px}
 .nav{display:flex;gap:4px 20px;margin-left:auto;flex-wrap:wrap;justify-content:flex-end}
 .nav a{font-family:var(--px);font-size:16px;line-height:24px;color:var(--steel4);text-decoration:none;text-transform:uppercase}
@@ -138,21 +138,22 @@ h3.pix:lang(ja){font-size:24px}
 @media (max-width:420px){.bar .wrap{gap:8px}.brand span{font-size:8px}}
 
 /* ── hero ────────────────────────────────────────────── */
-/* The title backdrop (320x208) at a whole-number scale, k = 3, 4 or 5 on desktop and 2 on phones,
-   and the logo at the same scale. Where the page runs past the picture its edge fades out in eight steps. */
-.hero{padding:0;--k:3;--lk:3;--iw:calc(320px*var(--k));--ih:calc(208px*var(--k));position:relative;background:var(--black);overflow:hidden}
-.hero-art{position:absolute;top:0;left:0;right:0;height:var(--ih);background:url(public/art/bg_title.png) no-repeat 50% 0/var(--iw) var(--ih);image-rendering:pixelated}
+/* The key art (320x180, no logo; the page draws the logo, lockup and tagline in its dark left half) at a
+   whole-number scale k = 3 to 6, the logo one step smaller. Phones get the tall key art (240x360) at x2.
+   Where the page runs past the picture its edge fades out in eight steps. */
+.hero{padding:0;--k:3;--lk:2;--iw:calc(320px*var(--k));--ih:calc(180px*var(--k));position:relative;background:var(--black);overflow:hidden}
+.hero-art{position:absolute;top:0;left:0;right:0;height:var(--ih);background:url(public/art/key_art.png) no-repeat 50% 0/var(--iw) var(--ih);image-rendering:pixelated}
 .hero-art::before,.hero-art::after{content:"";position:absolute;top:0;bottom:0;width:64px;pointer-events:none}
 .hero-art::before{left:calc(50% - var(--iw)/2);background:linear-gradient(90deg,#000 0 8px,rgb(0 0 0/.85) 8px 16px,rgb(0 0 0/.71) 16px 24px,rgb(0 0 0/.57) 24px 32px,rgb(0 0 0/.42) 32px 40px,rgb(0 0 0/.28) 40px 48px,rgb(0 0 0/.14) 48px 56px,rgb(0 0 0/0) 56px 64px)}
 .hero-art::after{right:calc(50% - var(--iw)/2);background:linear-gradient(270deg,#000 0 8px,rgb(0 0 0/.85) 8px 16px,rgb(0 0 0/.71) 16px 24px,rgb(0 0 0/.57) 24px 32px,rgb(0 0 0/.42) 32px 40px,rgb(0 0 0/.28) 40px 48px,rgb(0 0 0/.14) 48px 56px,rgb(0 0 0/0) 56px 64px)}
-.hero-in{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;min-height:var(--ih);padding:20px 0 24px}
+.hero-in{position:relative;z-index:1;display:flex;flex-direction:column;align-items:flex-start;text-align:left;width:min(var(--iw),100%);margin-inline:auto;min-height:var(--ih);padding:calc(var(--k)*6px) 0 calc(var(--k)*6px) calc(var(--k)*10px)}
 .logo{position:relative;width:calc(240px*var(--lk));margin:0 0 10px}
 .logo img{width:100%;height:auto}
 .logo::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;
   background:linear-gradient(100deg,transparent 42%,var(--ice) 46%,var(--white) 49%,var(--ice) 52%,transparent 56%) no-repeat;background-size:300% 100%;background-position:120% 0;
   -webkit-mask:url(public/art/logo.png) 0 0/100% 100% no-repeat;mask:url(public/art/logo.png) 0 0/100% 100% no-repeat}
 .lockup{margin:0 0 12px;max-width:none;color:var(--amber);text-shadow:0 2px 0 var(--black)}
-.tagline{margin:0;max-width:1000px;font-size:24px;line-height:1.4;color:var(--white);text-shadow:0 2px 0 var(--black),0 0 14px rgb(0 0 0/.85)}
+.tagline{margin:0;max-width:calc(150px*var(--k));font-size:24px;line-height:1.4;color:var(--white);text-shadow:0 2px 0 var(--black),0 0 14px rgb(0 0 0/.85)}
 .tagline:lang(ja){font-size:22px;line-height:1.6}
 .hero-card{margin-top:auto;width:fit-content;max-width:100%;padding:20px 28px 18px;background:rgb(11 11 26/.9);border:2px solid var(--black);box-shadow:inset 2px 2px 0 var(--steel2),inset -2px -2px 0 var(--black)}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:48px;padding:12px 20px;font:16px/1.2 var(--px);text-transform:uppercase;text-decoration:none;color:var(--void);background:var(--amber);border:2px solid var(--black);box-shadow:inset 2px 2px 0 var(--pale),inset -2px -2px 0 var(--umber3);cursor:pointer}
@@ -163,16 +164,17 @@ a.btn:hover{color:var(--void);background:var(--pale)}
 .hero-card .sub{margin:14px 0 0;max-width:none;color:var(--ice)}
 .hero-card .plat{margin:6px 0 0;max-width:none;font-size:16px;color:var(--steel4);text-transform:none}
 .hero-card .plat:lang(ja){font-size:12px}
-@media (min-width:1260px) and (min-height:900px){.hero{--k:4;--lk:4}.lockup{font-size:24px}.tagline{font-size:28px}.tagline:lang(ja){font-size:26px}}
-@media (min-width:1900px) and (min-height:1120px){.hero{--k:5;--lk:5}.lockup{font-size:32px}.tagline{font-size:32px}.tagline:lang(ja){font-size:30px}}
+@media (min-width:1260px) and (min-height:780px){.hero{--k:4;--lk:3}.lockup{font-size:24px}.tagline{font-size:28px}.tagline:lang(ja){font-size:26px}}
+@media (min-width:1600px) and (min-height:960px){.hero{--k:5;--lk:4}.lockup{font-size:32px}.tagline{font-size:32px}.tagline:lang(ja){font-size:30px}}
+@media (min-width:1920px) and (min-height:1140px){.hero{--k:6;--lk:5}.lockup{font-size:40px}.tagline{font-size:36px}.tagline:lang(ja){font-size:34px}}
 @media (max-width:799px){
-  .hero{--k:2;--lk:2}
+  .hero{--k:2;--lk:2;--iw:480px;--ih:600px}
+  .hero-art{background-image:url(public/art/key_art_vertical.png);background-size:480px 720px;background-position:50% 100%}
   .hero-art::before{display:none}
   .hero-art::after{left:0;right:0;top:auto;bottom:0;width:auto;height:64px;background:linear-gradient(0deg,#000 0 8px,rgb(0 0 0/.85) 8px 16px,rgb(0 0 0/.71) 16px 24px,rgb(0 0 0/.57) 24px 32px,rgb(0 0 0/.42) 32px 40px,rgb(0 0 0/.28) 40px 48px,rgb(0 0 0/.14) 48px 56px,rgb(0 0 0/0) 56px 64px)}
-  .hero-art{background-position:38% 0}
-  .hero-in{min-height:0;padding:calc(var(--ih) + 4px) 0 32px}
+  .hero-in{width:min(var(--max),100% - 2*var(--gut));align-items:center;text-align:center;min-height:0;padding:calc(var(--ih) + 4px) 0 32px}
   .logo{position:absolute;top:18px;left:0;right:0;margin:0 auto}
-  .tagline{font-size:21px}
+  .tagline{font-size:21px;max-width:none}
   .hero-card{margin-top:24px}
 }
 @media (max-width:560px){.hero{--lk:1}.hero-card{width:100%;padding:18px 16px 16px}.hero-card .btn{width:100%}}
@@ -206,7 +208,10 @@ html.no-trailer .tv .still{display:grid;place-items:center;position:relative;bac
 /* after HELIOBANE */
 #after{background:var(--night);border-block:2px solid var(--steel1)}
 .after{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:48px;align-items:start}
-.hb-tile{display:flex;flex-direction:column;align-items:center;gap:20px;padding:28px 32px 24px;text-decoration:none;color:var(--ice)}
+.after-art{display:flex;flex-direction:column;gap:24px;width:664px}
+.road{padding:10px}
+.road img{width:640px;height:360px}
+.hb-tile{display:flex;flex-direction:column;align-items:center;gap:20px;width:100%;padding:28px 32px 24px;text-decoration:none;color:var(--ice)}
 .hb-tile:hover,.hb-tile:focus-visible{background:var(--steel1)}
 .hb-tile .hb-logo{width:512px}
 .hb-tile .swap{display:flex;align-items:flex-end;gap:24px;min-height:96px}
@@ -214,7 +219,9 @@ html.no-trailer .tv .still{display:grid;place-items:center;position:relative;bac
 .hb-tile .ship{height:96px}
 .hb-tile .hb-hesper{height:96px}
 .hb-tile .arrow{flex:none;margin-bottom:36px;color:var(--steel4)}
-@media (max-width:1100px){.after{grid-template-columns:minmax(0,1fr)}.hb-tile{width:fit-content;max-width:100%}}
+@media (max-width:1180px){.after{grid-template-columns:minmax(0,1fr)}.after-art{width:100%;max-width:664px}}
+@media (max-width:695px){.road{width:fit-content;max-width:100%}.road img{width:320px;height:180px}}
+@media (max-width:392px){.road{padding:0}}
 @media (max-width:640px){.hb-tile{padding:20px 16px;gap:16px}.hb-tile .hb-logo{width:256px}}
 
 /* pillars */
@@ -398,7 +405,7 @@ dialog.viewer::backdrop{background:rgb(0 0 0 / .92)}
 
 <header class="bar">
   <div class="wrap">
-    <a class="brand" href="#top" aria-label="FARSTRAND"><img class="px" src="public/art/hesper-icon.png" width="16" height="32" alt=""><span>FARSTRAND</span></a>
+    <a class="brand" href="#top" aria-label="FARSTRAND"><img class="px" src="public/art/icon-32.png" width="32" height="32" alt=""><span>FARSTRAND</span></a>
     <nav class="nav" aria-label="Sections">
       <a href="#trailer"><span class="l-en">Trailer</span><span class="l-ja" lang="ja">トレーラー</span><span class="l-tr" lang="tr">Fragman</span></a>
       <a href="#graft"><span class="l-en">Graft</span><span class="l-ja" lang="ja">接ぎ木</span><span class="l-tr" lang="tr">Aşı</span></a>
@@ -418,7 +425,7 @@ dialog.viewer::backdrop{background:rgb(0 0 0 / .92)}
 <main id="main">
 <section class="hero" id="top" aria-label="FARSTRAND">
   <div class="hero-art" aria-hidden="true"></div>
-  <div class="hero-in wrap">
+  <div class="hero-in">
     <h1 class="logo" data-anim><img class="px" src="public/art/logo.png" width="240" height="40" alt="FARSTRAND"></h1>
     <p class="lockup pix" lang="en">A HELIOBANE METROIDVANIA</p>
     <p class="tagline l-en">Seven years after HELIOBANE, the roads between the stars have frozen into glass.</p>
@@ -449,7 +456,7 @@ dialog.viewer::backdrop{background:rgb(0 0 0 / .92)}
         <source src="public/trailer.mp4" type="video/mp4">
         <track kind="captions" src="public/trailer.en.vtt" srclang="en" label="English">
       </video>
-      <div class="still"><img class="px" src="public/art/trailer-still.png" width="320" height="180" alt="Hesper on a frozen cliff at the edge of a forest, facing a red dwarf and a thin beam of light that runs up into the sky." data-alt-ja="凍った崖の上に立つヘスパー。森のへりで、赤色矮星と空へ伸びる細い光の筋を見つめている。" data-alt-tr="Donmuş bir uçurumun kenarında, ormanın yanında duran Hesper; karşısında bir kızıl cüce ve gökyüzüne uzanan ince bir ışık hüzmesi.">
+      <div class="still"><img class="px" src="public/art/key_art.png" width="320" height="180" alt="Hesper Lind in her survey suit on a dark ridge, her glass arm veined with gold and Bob floating beside her, before a huge red dwarf; a thin beam of light and a frozen plain behind her." data-alt-ja="巨大な赤色矮星を背に、暗い尾根に立つ測量服のヘスパー・リンド。金の筋が走るガラスの腕、そばに浮かぶボブ。背後には細い光の筋と凍った平原。" data-alt-tr="Devasa bir kızıl cücenin önünde, karanlık bir sırtta keşif giysisiyle Hesper Lind; altın damarlı cam kolu ve yanında süzülen Bob; arkasında ince bir ışık hüzmesi ve donmuş bir ova.">
         <span class="pending pix"><span class="l-en">Trailer coming</span><span class="l-ja" lang="ja">トレーラーは近日公開</span><span class="l-tr" lang="tr">Fragman yakında</span></span></div>
     </figure>
   </div>
@@ -466,6 +473,10 @@ dialog.viewer::backdrop{background:rgb(0 0 0 / .92)}
       <p class="l-ja" lang="ja">FARSTRANDは、まったく違う種類のゲームです。コクピットを降りて測量服を着て、ガラスの腕を軸にしたメトロイドヴァニアで、六つの世界を自分の足で渡っていきます。ヘリオベインを遊んでいなくても大丈夫です。遊んだことがあるなら、知った顔に会い、ストランドの中にあの無線を聞くでしょう。</p>
       <p class="l-tr" lang="tr">FARSTRAND bambaşka bir oyun: kokpitten inip keşif giysisini giyiyor, camdan bir kolun etrafında kurulmuş bir metroidvania'da altı dünyayı yürüyerek aşıyorsun. HELIOBANE'i oynamış olman gerekmiyor. Oynadıysan tanıdık yüzlerle karşılaşacak, ipliklerin içinde onun telsizini duyacaksın.</p>
     </div>
+    <div class="after-art">
+    <figure class="road panel">
+      <img class="px" src="public/art/key_art_road.png" width="320" height="180" loading="lazy" alt="The Plumbline, a survey ship, rides a frozen strand of glass veined with gold, with Aurel, a small pale sun, going out behind it." data-alt-ja="金の筋が走る凍ったガラスのストランドを渡る測量船プラムライン号。背後には消えかけた小さな白い太陽、オーレル。" data-alt-tr="Altın damarlı, donmuş cam bir ipliğin üstünde ilerleyen keşif gemisi Plumbline; arkasında sönmekte olan küçük soluk bir güneş, Aurel.">
+    </figure>
     <a class="hb-tile panel" href="https://heliobane.gand.games/">
       <img class="px hb-logo" src="public/art/heliobane-logo.png" width="256" height="64" alt="HELIOBANE">
       <span class="swap" aria-hidden="true">
@@ -474,6 +485,7 @@ dialog.viewer::backdrop{background:rgb(0 0 0 / .92)}
         <img class="px hb-hesper" src="public/art/hesper-icon.png" width="16" height="32" alt="">
       </span>
     </a>
+    </div>
   </div>
 </section>
 
@@ -495,7 +507,7 @@ dialog.viewer::backdrop{background:rgb(0 0 0 / .92)}
       </div>
       <div class="pillar p2 panel">
         <figure class="shot-art panel">
-          <img class="px" src="public/shots/1x/map.png" width="320" height="180" loading="lazy" alt="The map screen zoomed in on Halm: rooms, doors, beacons and finds drawn in thin blue lines, with MAP 78% and ITEMS 4/7 at the bottom." data-alt-ja="ハルムを拡大した地図画面。部屋、扉、ビーコン、発見物が細い青線で描かれ、下に MAP 78% と ITEMS 4/7。" data-alt-tr="Halm'a yakınlaştırılmış harita ekranı: odalar, kapılar, fenerler ve buluntular ince mavi çizgilerle çizilmiş; altta MAP 78% ve ITEMS 4/7.">
+          <img class="px" src="public/shots/1x/halm-map.png" width="320" height="180" loading="lazy" alt="The map screen zoomed in on Halm: rooms, doors, beacons and finds drawn in thin blue lines, with MAP 78% and ITEMS 4/7 at the bottom." data-alt-ja="ハルムを拡大した地図画面。部屋、扉、ビーコン、発見物が細い青線で描かれ、下に MAP 78% と ITEMS 4/7。" data-alt-tr="Halm'a yakınlaştırılmış harita ekranı: odalar, kapılar, fenerler ve buluntular ince mavi çizgilerle çizilmiş; altta MAP 78% ve ITEMS 4/7.">
         </figure>
         <h2 class="pix"><span class="l-en">The map is her work</span><span class="l-ja" lang="ja">地図は彼女の仕事</span><span class="l-tr" lang="tr">Harita onun işi</span></h2>
         <p class="l-en">Hesper is a surveyor. Rooms are pencilled in as you enter them and inked when you rest at a beacon. The old marks scratched into the glass are the hint system, and you can turn them off.</p>
@@ -694,15 +706,17 @@ dialog.viewer::backdrop{background:rgb(0 0 0 / .92)}
     </div>
     <div class="grid" id="gallery">
       <a href="public/shots/halm-anchor.png" data-shot="halm-anchor"><img class="px" src="public/shots/1x/halm-anchor.png" width="320" height="180" loading="lazy" alt="Hesper beside a survey beacon at the foot of the strand, under a huge red dwarf above a forest of glass trees." data-alt-ja="ガラスの木々の森の上に巨大な赤色矮星。ストランドのふもとの測量ビーコンのそばに立つヘスパー。" data-alt-tr="Cam ağaçlardan bir ormanın üstünde kocaman bir kızıl cücenin altında, ipliğin dibinde bir keşif fenerinin yanında Hesper."><span class="cap"><span class="l-en">Halm, the glass forest</span><span class="l-ja" lang="ja">ハルム、ガラスの森</span><span class="l-tr" lang="tr">Halm, cam orman</span></span></a>
-      <a href="public/shots/overfeed.png" data-shot="overfeed"><img class="px" src="public/shots/1x/overfeed.png" width="320" height="180" loading="lazy" alt="A sunfed enemy bursts in a ball of fire over the glass forest; the prompt reads OVERFEED IT." data-alt-ja="ガラスの森の上で、陽喰いの敵が火の玉になって破裂する。表示は「OVERFEED IT」。" data-alt-tr="Cam ormanın üstünde güneşbesili bir düşman ateş topuna dönüp patlıyor; ekrandaki yazı OVERFEED IT."><span class="cap"><span class="l-en">Overfeed: a sunfed enemy bursts</span><span class="l-ja" lang="ja">過剰供給：陽喰いの敵が破裂する</span><span class="l-tr" lang="tr">Aşırı besle: güneşbesili düşman patlıyor</span></span></a>
-      <a href="public/shots/bob.png" data-shot="bob"><img class="px" src="public/shots/1x/bob.png" width="320" height="180" loading="lazy" alt="Bob, the survey drone, inside a vent in a wall of an icy cavern; the prompt reads HOLD LB: FLY BOB THROUGH THE VENT." data-alt-ja="氷の洞窟の壁の通気口の中にいる測量ドローンのボブ。表示は「HOLD LB: FLY BOB THROUGH THE VENT」。" data-alt-tr="Buzlu bir mağaranın duvarındaki havalandırmanın içinde keşif dronu Bob; ekrandaki yazı HOLD LB: FLY BOB THROUGH THE VENT."><span class="cap"><span class="l-en">Bob in the vent</span><span class="l-ja" lang="ja">通気口のボブ</span><span class="l-tr" lang="tr">Bob havalandırmada</span></span></a>
-      <a href="public/shots/frigate.png" data-shot="frigate"><img class="px" src="public/shots/1x/frigate.png" width="320" height="180" loading="lazy" alt="A Concord frigate wrapped in black strands, filling the Knot's sky; Hesper stands on the floor below." data-alt-ja="黒いストランドに巻かれたコンコードのフリゲートが、ノットの空いっぱいに浮かぶ。その下の床にヘスパー。" data-alt-tr="Siyah ipliklere sarılmış bir Concord fırkateyni Düğüm'ün gökyüzünü dolduruyor; aşağıdaki zeminde Hesper."><span class="cap"><span class="l-en">The Knot: a Concord frigate</span><span class="l-ja" lang="ja">ノット：コンコードのフリゲート</span><span class="l-tr" lang="tr">Düğüm: bir Concord fırkateyni</span></span></a>
       <a href="public/shots/quench-platform.png" data-shot="quench-platform"><img class="px" src="public/shots/1x/quench-platform.png" width="320" height="180" loading="lazy" alt="Hesper on top of a creature hanging from a thread that she has frozen into glass, a step up; the prompt reads KINDLE IT, QUENCH IT, CLIMB ON." data-alt-ja="糸にぶら下がった生き物をガラスに凍らせ、その上に乗るヘスパー。表示は「KINDLE IT, QUENCH IT, CLIMB ON」。" data-alt-tr="İpte sallanan bir yaratığı cama dondurup üstüne çıkan Hesper; ekrandaki yazı KINDLE IT, QUENCH IT, CLIMB ON."><span class="cap"><span class="l-en">Kindle it, quench it, climb on</span><span class="l-ja" lang="ja">点火して冷却、上に乗れ</span><span class="l-tr" lang="tr">Tutuştur, söndür, üstüne çık</span></span></a>
-      <a href="public/shots/the-six.png" data-shot="the-six"><img class="px" src="public/shots/1x/the-six.png" width="320" height="180" loading="lazy" alt="A boss bar named THE SIX across the top of a frozen mess hall; Hesper fires at four crew grown into one body." data-alt-ja="凍った食堂の上部に「THE SIX」のボスゲージ。ヘスパーが、一つの体に育った四人の乗員を撃つ。" data-alt-tr="Donmuş bir yemekhanenin üstünde THE SIX adlı bir patron çubuğu; Hesper tek bir bedene dönüşmüş dört mürettebata ateş ediyor."><span class="cap"><span class="l-en">The Knot: the Six</span><span class="l-ja" lang="ja">ノット：シックス</span><span class="l-tr" lang="tr">Düğüm: Altılar</span></span></a>
-      <a href="public/shots/map.png" data-shot="map"><img class="px" src="public/shots/1x/map.png" width="320" height="180" loading="lazy" alt="The map screen zoomed in on Halm: rooms, doors, beacons and finds drawn in thin blue lines, with MAP 78% and ITEMS 4/7 at the bottom." data-alt-ja="ハルムを拡大した地図画面。部屋、扉、ビーコン、発見物が細い青線で描かれ、下に MAP 78% と ITEMS 4/7。" data-alt-tr="Halm'a yakınlaştırılmış harita ekranı: odalar, kapılar, fenerler ve buluntular ince mavi çizgilerle çizilmiş; altta MAP 78% ve ITEMS 4/7."><span class="cap"><span class="l-en">Halm, the map</span><span class="l-ja" lang="ja">ハルムの地図</span><span class="l-tr" lang="tr">Halm haritası</span></span></a>
-      <a href="public/shots/strand.png" data-shot="strand"><img class="px" src="public/shots/1x/strand.png" width="320" height="180" loading="lazy" alt="Hesper hopping along ledges down the outside of a huge twist of black glass, with golden sunfed knots to work and VERRIN in the corner." data-alt-ja="巨大な黒いガラスのねじれの外側を、足場を跳びながら降りるヘスパー。点火して使う金色の結び目と、隅に「VERRIN」。" data-alt-tr="Kocaman bir kara cam bükümünün dışında çıkıntılardan sekerek inen Hesper; üzerinde çalışılacak altın renkli güneşbesili düğümler ve köşede VERRIN."><span class="cap"><span class="l-en">The strand, the Knot to Verrin</span><span class="l-ja" lang="ja">ストランド、ノットからヴェリンへ</span><span class="l-tr" lang="tr">İplik, Düğüm'den Verrin'e</span></span></a>
-      <a href="public/shots/hollow-bell.png" data-shot="hollow-bell"><img class="px" src="public/shots/1x/hollow-bell.png" width="320" height="180" loading="lazy" alt="Under the ice of Verrin, Hesper looks up at the Hollow Bell, a violet glass bell hung in a ribbed cavern." data-alt-ja="ヴェリンの氷の下、あばら骨のような洞窟に吊られた紫のガラスの鐘、うつろの鐘を見上げるヘスパー。" data-alt-tr="Verrin'in buzunun altında, kaburga gibi kemerli bir mağarada asılı mor camdan çan olan Oyuk Çan'a bakan Hesper."><span class="cap"><span class="l-en">Verrin, the Hollow Bell</span><span class="l-ja" lang="ja">ヴェリン、うつろの鐘</span><span class="l-tr" lang="tr">Verrin, Oyuk Çan</span></span></a>
-      <a href="public/shots/gantry.png" data-shot="gantry"><img class="px" src="public/shots/1x/gantry.png" width="320" height="180" loading="lazy" alt="THE GANTRY in its foundry: a steel gantry frame above a press, with Hesper's Charge Mortar shell bursting on it." data-alt-ja="鋳造所の「THE GANTRY」。プレスの上の鋼のガントリー枠に、ヘスパーのチャージ・モーターの砲弾が炸裂する。" data-alt-tr="Dökümhanede THE GANTRY: bir presin üstünde çelik bir vinç çerçevesi; Hesper'in Charge Mortar mermisi üzerinde patlıyor."><span class="cap"><span class="l-en">Carcanet, the Gantry</span><span class="l-ja" lang="ja">カーカネット、ガントリー</span><span class="l-tr" lang="tr">Carcanet, Gezer Vinç</span></span></a>
+      <a href="public/shots/kindle-bridge.png" data-shot="kindle-bridge"><img class="px" src="public/shots/1x/kindle-bridge.png" width="320" height="180" loading="lazy" alt="In Halm's chasm, Hesper has kindled a bud into a glowing stalk of flesh that bridges the gap in front of her." data-alt-ja="ハルムの裂け目。ヘスパーが芽に点火し、目の前の裂け目に光る肉の橋が伸びている。" data-alt-tr="Halm'ın uçurumunda Hesper bir tomurcuğu tutuşturmuş; önündeki boşluğun üstüne ışıyan etten bir köprü uzanıyor."><span class="cap"><span class="l-en">Halm, the chasm: a bud grown into a bridge</span><span class="l-ja" lang="ja">ハルム、裂け目：芽を育てて橋に</span><span class="l-tr" lang="tr">Halm, uçurum: tomurcuktan köprü</span></span></a>
+      <a href="public/shots/overfeed-burst.png" data-shot="overfeed-burst"><img class="px" src="public/shots/1x/overfeed-burst.png" width="320" height="180" loading="lazy" alt="In Verrin's brood, a sunfed creature kindled past full bursts in a ball of fire among red coral; the prompt reads OVERFEED ONE ON THE PLATING." data-alt-ja="ヴェリンのブルード。点火を重ねた陽喰いの生き物が、赤い珊瑚の間で火の玉になって破裂する。表示は「OVERFEED ONE ON THE PLATING」。" data-alt-tr="Verrin'in Kuluçka'sında, taşana dek tutuşturulan güneşbesili bir yaratık kızıl mercanların arasında ateş topuna dönüp patlıyor; ekrandaki yazı OVERFEED ONE ON THE PLATING."><span class="cap"><span class="l-en">Verrin, the brood: overfeed one on the plating</span><span class="l-ja" lang="ja">ヴェリン、ブルード：装甲板の上のやつに過剰に与えろ</span><span class="l-tr" lang="tr">Verrin, Kuluçka: kaplamanın üstündekini aşırı besle</span></span></a>
+      <a href="public/shots/the-undertow.png" data-shot="the-undertow"><img class="px" src="public/shots/1x/the-undertow.png" width="320" height="180" loading="lazy" alt="The Undertow, a red segmented eel, lunges past Hesper through a field of steaming vents; a boss bar reads THE UNDERTOW." data-alt-ja="噴出孔の野を、節のある赤いウナギ、アンダートウがヘスパーのそばを突進する。上部に「THE UNDERTOW」のボスゲージ。" data-alt-tr="Kırmızı, boğumlu yılan balığı Çekinti, buharlar tüten baca tarlasında Hesper'in yanından atılıyor; üstte THE UNDERTOW yazan bir patron çubuğu."><span class="cap"><span class="l-en">Verrin: the Undertow</span><span class="l-ja" lang="ja">ヴェリン：アンダートウ</span><span class="l-tr" lang="tr">Verrin: Çekinti</span></span></a>
+      <a href="public/shots/old-mott.png" data-shot="old-mott"><img class="px" src="public/shots/1x/old-mott.png" width="320" height="180" loading="lazy" alt="Old Mott's stall among the black strands of the Knot, with a survey beacon beside it; his talk box reads New star, same Aurum. Gold-glass is gold-glass." data-alt-ja="ノットの黒いストランドの間にあるオールド・モットの店と、そばの測量ビーコン。会話枠には「新しい星、同じオーラム。金ガラスは金ガラスだ。」" data-alt-tr="Düğüm'ün kara iplikleri arasında Yaşlı Mott'un tezgâhı ve yanında bir keşif feneri; konuşma kutusunda: «Yeni yıldız, aynı Aurum. Altın cam altın camdır.»"><span class="cap"><span class="l-en">The Knot: Mott's stall</span><span class="l-ja" lang="ja">ノット：モットの店</span><span class="l-tr" lang="tr">Düğüm: Mott'un tezgâhı</span></span></a>
+      <a href="public/shots/sunder-alidade.png" data-shot="sunder-alidade"><img class="px" src="public/shots/1x/sunder-alidade.png" width="320" height="180" loading="lazy" alt="Inside the Alidade on Sunder, Survey One's cabin lit in amber: a FLY LIKE WREN poster on the wall, bunks and a chart table, and someone firing at Hesper." data-alt-ja="サンダーのアリダード号、第一測量隊の船室。琥珀色の灯り、壁の「FLY LIKE WREN」のポスター、寝台と海図台、そしてヘスパーに向けて撃ってくる者。" data-alt-tr="Sunder'daki Alidad'ın içi, Birinci Keşif'in kamarası, kehribar renkli ışık: duvarda «FLY LIKE WREN» posteri, ranzalar, harita masası ve Hesper'e ateş eden biri."><span class="cap"><span class="l-en">Sunder: the Alidade</span><span class="l-ja" lang="ja">サンダー：アリダード号</span><span class="l-tr" lang="tr">Sunder: Alidad</span></span></a>
+      <a href="public/shots/the-sexton.png" data-shot="the-sexton"><img class="px" src="public/shots/1x/the-sexton.png" width="320" height="180" loading="lazy" alt="In Ninth Light's belfry, the Sexton, a violet bell-shaped Herald, sends a white ring across the floor; the prompt reads ITS RINGS BREAK GLASS. KINDLE A BELL TO DULL IT." data-alt-ja="第九の光の鐘楼。鐘の形をした紫のヘラルド、墓守が白い輪を床いっぱいに広げる。表示は「ITS RINGS BREAK GLASS. KINDLE A BELL TO DULL IT」。" data-alt-tr="Dokuzuncu Işık'ın çan kulesinde, çan biçimli mor Haberci Zangoç zeminde geniş beyaz bir halka yayıyor; ekrandaki yazı ITS RINGS BREAK GLASS. KINDLE A BELL TO DULL IT."><span class="cap"><span class="l-en">Ninth Light: the Sexton</span><span class="l-ja" lang="ja">第九の光：墓守</span><span class="l-tr" lang="tr">Dokuzuncu Işık: Zangoç</span></span></a>
+      <a href="public/shots/bob-vent.png" data-shot="bob-vent"><img class="px" src="public/shots/1x/bob-vent.png" width="320" height="180" loading="lazy" alt="Bob, the survey drone, inside a vent in a wall of an icy cavern; the prompt reads HOLD LB: FLY BOB THROUGH THE VENT." data-alt-ja="氷の洞窟の壁の通気口の中にいる測量ドローンのボブ。表示は「HOLD LB: FLY BOB THROUGH THE VENT」。" data-alt-tr="Buzlu bir mağaranın duvarındaki havalandırmanın içinde keşif dronu Bob; ekrandaki yazı HOLD LB: FLY BOB THROUGH THE VENT."><span class="cap"><span class="l-en">Bob in the vent</span><span class="l-ja" lang="ja">通気口のボブ</span><span class="l-tr" lang="tr">Bob havalandırmada</span></span></a>
+      <a href="public/shots/the-gantry.png" data-shot="the-gantry"><img class="px" src="public/shots/1x/the-gantry.png" width="320" height="180" loading="lazy" alt="The Gantry in its foundry: a steel frame hung above a press, a boss bar reading THE GANTRY, and Hesper below it with the Charge Mortar." data-alt-ja="鋳造所のガントリー。プレスの上に吊られた鋼の枠、「THE GANTRY」のボスゲージ、その下でチャージ・モーターを構えるヘスパー。" data-alt-tr="Dökümhanede Gezer Vinç: bir presin üstünde asılı çelik çerçeve, THE GANTRY yazan patron çubuğu ve altında Charge Mortar'ı tutan Hesper."><span class="cap"><span class="l-en">Carcanet, the Gantry</span><span class="l-ja" lang="ja">カーカネット、ガントリー</span><span class="l-tr" lang="tr">Carcanet, Gezer Vinç</span></span></a>
+      <a href="public/shots/ninth-light-baseline.png" data-shot="ninth-light-baseline"><img class="px" src="public/shots/1x/ninth-light-baseline.png" width="320" height="180" loading="lazy" alt="Ninth Light, the Baseline: Survey Five's ship with its hull torn open to a dark red dawn, and Hesper walking its floor." data-alt-ja="第九の光、ベースライン号。裂けた船体の向こうに暗い赤の夜明け、その床を歩くヘスパー。" data-alt-tr="Dokuzuncu Işık, Baseline: Beşinci Keşif'in gemisi, yırtılmış gövdesinin ardında koyu kızıl bir şafak; zeminde yürüyen Hesper."><span class="cap"><span class="l-en">Ninth Light: the Baseline</span><span class="l-ja" lang="ja">第九の光：ベースライン号</span><span class="l-tr" lang="tr">Dokuzuncu Işık: Baseline</span></span></a>
+      <a href="public/shots/network-map.png" data-shot="network-map"><img class="px" src="public/shots/1x/network-map.png" width="320" height="180" loading="lazy" alt="The network chart: Halm at 78 per cent, Verrin at 81 and the Knot at 32, joined by thin lines; the tabs read MAP, NETWORK, JOURNAL." data-alt-ja="航路図。ハルム78%、ヴェリン81%、ノット32%を細い線がつなぐ。タブは「MAP」「NETWORK」「JOURNAL」。" data-alt-tr="Ağ haritası: Halm %78, Verrin %81 ve Düğüm %32, ince çizgilerle bağlı; sekmeler MAP, NETWORK, JOURNAL."><span class="cap"><span class="l-en">The network: Halm, the Knot, Verrin</span><span class="l-ja" lang="ja">航路図：ハルム、ノット、ヴェリン</span><span class="l-tr" lang="tr">Ağ: Halm, Düğüm, Verrin</span></span></a>
     </div>
   </div>
 </section>
@@ -745,7 +759,7 @@ dialog.viewer::backdrop{background:rgb(0 0 0 / .92)}
 
 <footer class="foot">
   <div class="wrap">
-    <a class="brand" href="#top" aria-label="FARSTRAND"><img class="px" src="public/art/hesper-icon.png" width="16" height="32" alt=""><span>FARSTRAND</span></a>
+    <a class="brand" href="#top" aria-label="FARSTRAND"><img class="px" src="public/art/icon-32.png" width="32" height="32" alt=""><span>FARSTRAND</span></a>
     <p>© 2026 Gand.</p>
   </div>
 </footer>
