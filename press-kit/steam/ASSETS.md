@@ -56,8 +56,11 @@ library logo reads FARSTRAND with DEMO under its right end, outlined so it holds
 
 - Header, main, event cover: Hesper Lind on a ridge of black glass, the Graft (her glass left arm, veined with dull
   gold) against the red dwarf, Bob at her shoulder, the strand rising into the dark.
-- Small capsule, event header, library hero: the same scene cut wide (Hesper at the far right on the small capsule,
-  right of centre on the event header, dead centre on the library hero).
+- Small capsule: the logo fills the width (460 of 462 px, which Steam asks the uploader to confirm) along the bottom,
+  and Hesper stands above it with her legs behind the logo, the Graft held out against the red dwarf. The demo's has
+  DEMO in the top left corner.
+- Event header, library hero: the same scene cut wide (Hesper right of centre on the event header, dead centre on the
+  library hero).
 - Vertical and library capsule: the same scene tall, the strand climbing to the logo.
 
 ## Checks done
@@ -68,4 +71,5 @@ library logo reads FARSTRAND with DEMO under its right end, outlined so it holds
   header, vertical, event cover), ×4 (main), ×5 (page background, library logo), ×6 (event header) or ×8 (library
   hero) of a native canvas; the icons are ×4 of 46 px (community) and ×1 to ×8 of the 32 px icon.
 - Legibility: the small capsule was checked at 462×174 and at 231×87 (its 1× display size): the logo reads, and
-  Hesper, the cyan visor slit and the gold on the Graft read.
+  Hesper, the cyan visor slit and the gold on the Graft read. Its logo's ink is 230 of 231 native pixels wide (460 of 462),
+  the width Steam asks for; the demo's DEMO is legible in its corner.
