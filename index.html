@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FARSTRAND · a sci-fi metroidvania, seven years after HELIOBANE</title>
+<meta name="description" content="A sci-fi metroidvania set seven years after HELIOBANE: map six worlds on frozen star roads with an arm that moves heat.">
+<link rel="canonical" href="https://farstrand.gand.games/">
+<meta name="theme-color" content="#0b0b1a">
+<meta name="color-scheme" content="dark">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FARSTRAND">
+<meta property="og:title" content="FARSTRAND · A HELIOBANE metroidvania">
+<meta property="og:description" content="Seven years after HELIOBANE, the roads between the stars have frozen into glass. A sci-fi metroidvania: map six worlds with an arm that moves heat.">
+<meta property="og:url" content="https://farstrand.gand.games/">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://farstrand.gand.games/public/og-farstrand.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The FARSTRAND logo above a surveyor on a frozen cliff, facing a red dwarf and a thin beam of light, with the words A HELIOBANE METROIDVANIA.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="FARSTRAND · A HELIOBANE metroidvania">
+<meta name="twitter:description" content="Seven years after HELIOBANE, the roads between the stars have frozen into glass. A sci-fi metroidvania: map six worlds with an arm that moves heat.">
+<meta name="twitter:image" content="https://farstrand.gand.games/public/og-farstrand.png">
+<meta name="twitter:image:alt" content="The FARSTRAND logo above a surveyor on a frozen cliff, facing a red dwarf and a thin beam of light, with the words A HELIOBANE METROIDVANIA.">
+<link rel="icon" href="public/favicon.ico" sizes="16x16 32x32 48x48 64x64">
+<link rel="icon" href="public/favicon-64.png" type="image/png" sizes="64x64">
+<link rel="apple-touch-icon" href="public/apple-touch-icon.png">
+<link rel="preload" href="public/fonts/PublicPixel.woff2" as="font" type="font/woff2" crossorigin>
+<!-- TODO (lead): when the trailer exists, add a "trailer" VideoObject to this JSON-LD (name, description, thumbnailUrl
+     https://farstrand.gand.games/public/trailer-poster.jpg, contentUrl .../public/trailer.mp4, duration, and an uploadDate
+     with a timezone that matches the real publication time; tests/test_site.py checks it). sameAs below points at the
+     Steam page: fine once the page is public, a dead link until then. -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"VideoGame","name":"FARSTRAND","url":"https://farstrand.gand.games/","sameAs":["https://store.steampowered.com/app/5461390/"],"description":"A sci-fi metroidvania set seven years after HELIOBANE: map six worlds on frozen star roads with an arm that moves heat.","image":"https://farstrand.gand.games/public/og-farstrand.png","genre":["Metroidvania","Action platformer","Science fiction"],"playMode":"SinglePlayer","gamePlatform":["PC","Mac","Steam Deck"],"operatingSystem":"Windows, macOS, Linux, SteamOS","applicationCategory":"Game","inLanguage":["en","ja","tr"],"author":{"@type":"Organization","name":"Gand","url":"https://gand.tr/"},"publisher":{"@type":"Organization","name":"Gand","url":"https://gand.games/"}}
+</script>
+<style>
+/* FARSTRAND · the game's 32-colour master palette (assets/palette.hex at 2e08e64) */
+@font-face{font-family:"Public Pixel";src:url(public/fonts/PublicPixel.woff2) format("woff2");font-display:swap}
+@font-face{font-family:"PixelMplus12";src:url(public/fonts/PixelMplus12-ja.woff2) format("woff2");font-display:swap}
+@font-face{font-family:"Fira Sans Condensed";src:url(public/fonts/FiraSansCondensed-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Fira Sans Condensed";src:url(public/fonts/FiraSansCondensed-Italic.woff2) format("woff2");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"Fira Sans Condensed";src:url(public/fonts/FiraSansCondensed-SemiBold.woff2) format("woff2");font-weight:600;font-display:swap}
+
+:root{
+  --black:#000000; --void:#0b0b1a; --night:#1a1c2c;
+  --steel1:#2b2f4a; --steel2:#3e4a6b; --steel3:#5b6ea0; --steel4:#8aa4d6; --ice:#cfe0ff; --white:#ffffff;
+  --umber0:#1b1410; --umber1:#3a2616; --umber2:#6b3e12; --umber3:#a8641a; --amber:#e09a2a; --gold:#ffd24a; --pale:#fff3a8;
+  --sea0:#0e2a24; --sea1:#16503e; --sea2:#2f8a5a; --sea3:#7ad08a;
+  --blood0:#3b0d14; --blood1:#7a1a1a; --red:#c8321e; --fire:#ff6a1a; --flame:#ff9e3d;
+  --dusk0:#2a1a3a; --dusk1:#5a2e7a; --violet:#a45ad8;
+  --grey0:#3a3a3a; --grey1:#6e6e6e; --grey2:#a8a8a8; --cyan:#20e0ff;
+  --px:"Public Pixel","Fira Sans Condensed",ui-monospace,monospace;
+  --body:"Fira Sans Condensed","Arial Narrow",sans-serif;
+  --ja-px:"PixelMplus12","Hiragino Sans","Noto Sans JP","Yu Gothic",sans-serif;
+  --ja-body:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic","Meiryo",sans-serif;
+  --gut:16px; --max:1216px;
+  /* Stepped ramps straight off the palette, dark-light-dark, for the world cards' top bars. */
+  --r-halm:linear-gradient(var(--blood0) 0 2px,var(--blood1) 2px 4px,var(--red) 4px 6px,var(--fire) 6px 8px,var(--flame) 8px 10px,var(--fire) 10px 12px,var(--red) 12px 14px,var(--blood1) 14px 16px,var(--blood0) 16px 18px);
+  --r-knot:linear-gradient(var(--black) 0 2px,var(--dusk0) 2px 4px,var(--dusk1) 4px 6px,var(--violet) 6px 8px,var(--steel4) 8px 10px,var(--violet) 10px 12px,var(--dusk1) 12px 14px,var(--dusk0) 14px 16px,var(--black) 16px 18px);
+  --r-verrin:linear-gradient(var(--void) 0 2px,var(--steel1) 2px 4px,var(--steel2) 4px 6px,var(--steel4) 6px 8px,var(--ice) 8px 10px,var(--steel4) 10px 12px,var(--steel2) 12px 14px,var(--steel1) 14px 16px,var(--void) 16px 18px);
+  --r-carcanet:linear-gradient(var(--umber0) 0 2px,var(--umber1) 2px 4px,var(--umber2) 4px 6px,var(--umber3) 6px 8px,var(--amber) 8px 10px,var(--umber3) 10px 12px,var(--umber2) 12px 14px,var(--umber1) 14px 16px,var(--umber0) 16px 18px);
+  --r-sunder:linear-gradient(var(--umber3) 0 2px,var(--amber) 2px 4px,var(--gold) 4px 6px,var(--pale) 6px 8px,var(--white) 8px 10px,var(--pale) 10px 12px,var(--gold) 12px 14px,var(--amber) 14px 16px,var(--umber3) 16px 18px);
+  --r-ninth:linear-gradient(var(--black) 0 2px,var(--dusk0) 2px 4px,var(--dusk1) 4px 6px,var(--blood1) 6px 8px,var(--red) 8px 10px,var(--blood1) 10px 12px,var(--dusk1) 12px 14px,var(--dusk0) 14px 16px,var(--black) 16px 18px);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{background:var(--void);color:var(--ice);-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:72px;scrollbar-color:var(--steel3) var(--night)}
+body{margin:0;font:400 19px/1.55 var(--body);overflow-x:hidden}
+html[data-lang=ja] body{font-family:var(--ja-body);font-size:17px;line-height:1.8}
+img{max-width:100%;height:auto;display:block}
+.px{image-rendering:pixelated;image-rendering:crisp-edges}
+::selection{background:var(--gold);color:var(--void)}
+a{color:var(--amber);text-underline-offset:4px;text-decoration-thickness:2px}
+a:hover{color:var(--pale)}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+p{margin:0 0 1em;max-width:62ch}
+h1,h2,h3{margin:0;font-weight:400}
+b,strong{font-weight:600;color:var(--white)}
+em{font-style:italic}
+.wrap{width:min(var(--max),100% - 2*var(--gut));margin-inline:auto}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.cap1::first-letter{text-transform:uppercase}
+
+/* Language: all three are in the document, one is shown. */
+html:not([data-lang=en]) .l-en{display:none!important}
+html:not([data-lang=ja]) .l-ja{display:none!important}
+html:not([data-lang=tr]) .l-tr{display:none!important}
+/* Steam: the store page is not public yet (see STEAM_LIVE in the script). */
+html:not(.steam-live) .if-live{display:none!important}
+html.steam-live .if-soon{display:none!important}
+
+/* Pixel type sits on its 8 px grid; the Japanese face sits on 12. */
+.pix{font-family:var(--px);font-size:16px;line-height:1.5;letter-spacing:0;text-transform:uppercase;overflow-wrap:anywhere}
+.pix:lang(ja){font-family:var(--ja-px);font-size:24px;line-height:1.35;text-transform:none}
+h2.pix{font-size:32px;line-height:1.25;color:var(--ice);text-shadow:0 4px 0 var(--steel1)}
+h2.pix:lang(ja){font-size:36px;text-shadow:0 3px 0 var(--steel1)}
+/* the Graft's gold vein under every section heading */
+h2.pix::after{content:"";display:block;width:96px;height:4px;margin-top:14px;background:linear-gradient(90deg,var(--amber) 0 32px,var(--umber3) 32px 64px,var(--umber2) 64px 96px)}
+h3.pix{font-size:16px;line-height:1.5;color:var(--ice)}
+h3.pix:lang(ja){font-size:24px}
+@media (max-width:640px){
+  h2.pix{font-size:24px;text-shadow:0 3px 0 var(--steel1)}
+  h2.pix:lang(ja){font-size:24px}
+}
+
+/* Bevelled steel panel: the game's own frame. */
+.panel{background:var(--night);border:2px solid var(--black);box-shadow:inset 2px 2px 0 var(--steel3),inset -2px -2px 0 var(--steel1)}
+
+/* The section bar: frost glass with a gold vein through it, one glint along it now and then. */
+.vein{display:block;position:relative;overflow:hidden;height:22px;background:url(public/art/vein-frost.png) repeat-x 0 0/320px 22px;image-rendering:pixelated}
+.vein.ember{background-image:url(public/art/vein-ember.png)}
+@media (prefers-reduced-motion:no-preference){
+  .vein::after{content:"";position:absolute;top:0;bottom:0;left:0;width:96px;pointer-events:none;
+    background:linear-gradient(90deg,rgb(255 255 255/0) 0 16px,rgb(255 255 255/.14) 16px 32px,rgb(255 255 255/.3) 32px 48px,rgb(255 255 255/.14) 48px 64px,rgb(255 255 255/0) 64px 96px);
+    transform:translateX(-96px);animation:glint 11s steps(60) infinite}
+}
+@keyframes glint{0%{transform:translateX(-96px)}22%,100%{transform:translateX(100vw)}}
+
+/* ── top bar ─────────────────────────────────────────── */
+.bar{position:sticky;top:0;z-index:20;background:var(--void);border-bottom:2px solid var(--steel1)}
+.bar .wrap{display:flex;align-items:center;gap:20px;min-height:56px}
+.brand{display:flex;align-items:center;gap:10px;color:var(--ice);text-decoration:none;flex:none}
+.brand img{width:16px;height:32px}
+.brand span{font-family:var(--px);font-size:16px}
+.nav{display:flex;gap:4px 20px;margin-left:auto;flex-wrap:wrap;justify-content:flex-end}
+.nav a{font-family:var(--px);font-size:16px;line-height:24px;color:var(--steel4);text-decoration:none;text-transform:uppercase}
+.nav a:lang(ja){font-family:var(--ja-px);font-size:12px}
+.nav a:hover{color:var(--amber)}
+.langs{display:flex;flex:none;border:2px solid var(--steel2)}
+.langs button{font:16px/1 var(--px);color:var(--steel4);background:none;border:0;padding:6px 8px;min-width:44px;min-height:36px;cursor:pointer}
+.langs button:lang(ja){font:12px/1 var(--ja-px)}
+.langs button[aria-pressed=true]{background:var(--steel2);color:var(--white)}
+.langs button:hover{color:var(--amber)}
+@media (max-width:1240px){.nav{display:none}.langs{margin-left:auto}}
+@media (max-width:520px){.langs button{font-size:8px;padding:6px 6px}.langs button:lang(ja){font-size:12px}}
+@media (max-width:420px){.bar .wrap{gap:8px}.brand span{font-size:8px}}
+
+/* ── hero ────────────────────────────────────────────── */
+/* The title backdrop (320x208) at a whole-number scale, k = 3, 4 or 5 on desktop and 2 on phones,
+   and the logo at the same scale. Where the page runs past the picture its edge fades out in eight steps. */
+.hero{padding:0;--k:3;--lk:3;--iw:calc(320px*var(--k));--ih:calc(208px*var(--k));position:relative;background:var(--black);overflow:hidden}
+.hero-art{position:absolute;top:0;left:0;right:0;height:var(--ih);background:url(public/art/bg_title.png) no-repeat 50% 0/var(--iw) var(--ih);image-rendering:pixelated}
+.hero-art::before,.hero-art::after{content:"";position:absolute;top:0;bottom:0;width:64px;pointer-events:none}
+.hero-art::before{left:calc(50% - var(--iw)/2);background:linear-gradient(90deg,#000 0 8px,rgb(0 0 0/.85) 8px 16px,rgb(0 0 0/.71) 16px 24px,rgb(0 0 0/.57) 24px 32px,rgb(0 0 0/.42) 32px 40px,rgb(0 0 0/.28) 40px 48px,rgb(0 0 0/.14) 48px 56px,rgb(0 0 0/0) 56px 64px)}
+.hero-art::after{right:calc(50% - var(--iw)/2);background:linear-gradient(270deg,#000 0 8px,rgb(0 0 0/.85) 8px 16px,rgb(0 0 0/.71) 16px 24px,rgb(0 0 0/.57) 24px 32px,rgb(0 0 0/.42) 32px 40px,rgb(0 0 0/.28) 40px 48px,rgb(0 0 0/.14) 48px 56px,rgb(0 0 0/0) 56px 64px)}
+.hero-in{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;min-height:var(--ih);padding:20px 0 24px}
+.logo{position:relative;width:calc(240px*var(--lk));margin:0 0 10px}
+.logo img{width:100%;height:auto}
+.logo::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;
+  background:linear-gradient(100deg,transparent 42%,var(--ice) 46%,var(--white) 49%,var(--ice) 52%,transparent 56%) no-repeat;background-size:300% 100%;background-position:120% 0;
+  -webkit-mask:url(public/art/logo.png) 0 0/100% 100% no-repeat;mask:url(public/art/logo.png) 0 0/100% 100% no-repeat}
+.lockup{margin:0 0 12px;max-width:none;color:var(--amber);text-shadow:0 2px 0 var(--black)}
+.tagline{margin:0;max-width:1000px;font-size:24px;line-height:1.4;color:var(--white);text-shadow:0 2px 0 var(--black),0 0 14px rgb(0 0 0/.85)}
+.tagline:lang(ja){font-size:22px;line-height:1.6}
+.hero-card{margin-top:auto;width:fit-content;max-width:100%;padding:20px 28px 18px;background:rgb(11 11 26/.9);border:2px solid var(--black);box-shadow:inset 2px 2px 0 var(--steel2),inset -2px -2px 0 var(--black)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:48px;padding:12px 20px;font:16px/1.2 var(--px);text-transform:uppercase;text-decoration:none;color:var(--void);background:var(--amber);border:2px solid var(--black);box-shadow:inset 2px 2px 0 var(--pale),inset -2px -2px 0 var(--umber3);cursor:pointer}
+.btn:lang(ja){font:24px/1.2 var(--ja-px);text-transform:none}
+a.btn:hover{color:var(--void);background:var(--pale)}
+.btn:active{box-shadow:inset -2px -2px 0 var(--pale),inset 2px 2px 0 var(--umber3)}
+.btn.soon{color:var(--steel4);background:var(--night);box-shadow:inset 2px 2px 0 var(--steel2),inset -2px -2px 0 var(--black);cursor:default}
+.hero-card .sub{margin:14px 0 0;max-width:none;color:var(--ice)}
+.hero-card .plat{margin:6px 0 0;max-width:none;font-size:16px;color:var(--steel4);text-transform:none}
+.hero-card .plat:lang(ja){font-size:12px}
+@media (min-width:1260px) and (min-height:900px){.hero{--k:4;--lk:4}.lockup{font-size:24px}.tagline{font-size:28px}.tagline:lang(ja){font-size:26px}}
+@media (min-width:1900px) and (min-height:1120px){.hero{--k:5;--lk:5}.lockup{font-size:32px}.tagline{font-size:32px}.tagline:lang(ja){font-size:30px}}
+@media (max-width:799px){
+  .hero{--k:2;--lk:2}
+  .hero-art::before{display:none}
+  .hero-art::after{left:0;right:0;top:auto;bottom:0;width:auto;height:64px;background:linear-gradient(0deg,#000 0 8px,rgb(0 0 0/.85) 8px 16px,rgb(0 0 0/.71) 16px 24px,rgb(0 0 0/.57) 24px 32px,rgb(0 0 0/.42) 32px 40px,rgb(0 0 0/.28) 40px 48px,rgb(0 0 0/.14) 48px 56px,rgb(0 0 0/0) 56px 64px)}
+  .hero-art{background-position:38% 0}
+  .hero-in{min-height:0;padding:calc(var(--ih) + 4px) 0 32px}
+  .logo{position:absolute;top:18px;left:0;right:0;margin:0 auto}
+  .tagline{font-size:21px}
+  .hero-card{margin-top:24px}
+}
+@media (max-width:560px){.hero{--lk:1}.hero-card{width:100%;padding:18px 16px 16px}.hero-card .btn{width:100%}}
+
+/* ── sections ─────────────────────────────────────────── */
+section{padding:96px 0}
+.sec-head{margin-bottom:40px}
+.sec-head p{margin-top:20px;color:var(--steel4)}
+.lead{font-size:24px;line-height:1.45;color:var(--white)}
+.lead:lang(ja){font-size:20px}
+.fine{font-size:16px;color:var(--steel4)}
+.fine:lang(ja){font-size:14px}
+figure{margin:0}
+@media (max-width:640px){section{padding:64px 0}.lead{font-size:21px}}
+.cap{font-family:var(--px);font-size:8px;line-height:16px;color:var(--steel4);margin-top:10px;text-transform:uppercase}
+.cap:lang(ja){font-family:var(--ja-px);font-size:12px;line-height:18px;text-transform:none}
+
+/* trailer */
+#trailer{padding-top:80px;background:var(--void)}
+.tv{margin:0;padding:10px;position:relative}
+.tv video{display:block;width:100%;height:auto;aspect-ratio:16/9;background:var(--black)}
+.tv .still{display:none}
+html.no-trailer .tv video{display:none}
+html.no-trailer .tv .still{display:grid;place-items:center;position:relative;background:var(--black);padding:24px 0}
+.still img{width:960px}
+.still .pending{position:absolute;top:20px;left:20px;background:var(--void);border:2px solid var(--steel2);padding:10px 14px;color:var(--amber)}
+@media (max-width:1040px){.still img{width:640px}}
+@media (max-width:392px){.tv{padding:0}}
+@media (max-width:720px){.still img{width:320px}html.no-trailer .tv .still{padding:48px 0 12px}.still .pending{top:8px;left:8px;padding:4px 8px}}
+
+/* after HELIOBANE */
+#after{background:var(--night);border-block:2px solid var(--steel1)}
+.after{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:48px;align-items:start}
+.hb-tile{display:flex;flex-direction:column;align-items:center;gap:20px;padding:28px 32px 24px;text-decoration:none;color:var(--ice)}
+.hb-tile:hover,.hb-tile:focus-visible{background:var(--steel1)}
+.hb-tile .hb-logo{width:512px}
+.hb-tile .swap{display:flex;align-items:flex-end;gap:24px;min-height:96px}
+.hb-tile .swap img{width:auto;image-rendering:pixelated}
+.hb-tile .ship{height:96px}
+.hb-tile .hb-hesper{height:96px}
+.hb-tile .arrow{flex:none;margin-bottom:36px;color:var(--steel4)}
+@media (max-width:1100px){.after{grid-template-columns:minmax(0,1fr)}.hb-tile{width:fit-content;max-width:100%}}
+@media (max-width:640px){.hb-tile{padding:20px 16px;gap:16px}.hb-tile .hb-logo{width:256px}}
+
+/* pillars */
+.pillars{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px}
+.pillar{display:flex;flex-direction:column;gap:16px}
+.pillar h2{color:var(--amber);font-size:24px;line-height:1.35;text-shadow:none}
+.pillar h2::after{display:none}
+.pillar h2:lang(ja){font-size:36px}
+.pillar p{color:var(--ice);margin:0}
+.p1{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,560px) minmax(0,1fr);gap:12px 56px;align-items:center;padding:0}
+.p1 .art{grid-row:span 2}
+.p1 h2{align-self:end;font-size:32px}
+.p1 h2:lang(ja){font-size:36px}
+.p1 p{align-self:start;font-size:21px}
+.p1 p:lang(ja){font-size:17px}
+.p2,.p3{padding:24px}
+.art{display:flex;align-items:center}
+@media (max-width:1100px){.p1{grid-template-columns:minmax(0,1fr)}.p1 .art{grid-row:auto}.p1 h2,.p1 h2:lang(ja){font-size:24px}.p1 p{font-size:19px}}
+@media (max-width:899px){.pillars{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:620px){.p2,.p3{padding:0 0 20px}.p2 h2,.p2 p,.p3 h2,.p3 p{padding-inline:20px}.pillar h2:lang(ja){font-size:24px}
+  .pillar .shot-art,.pillar .glyphs{padding:0;border:0;box-shadow:none;background:none;width:100%;display:grid;place-items:center}}
+.states{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;width:100%;max-width:560px}
+.state{display:flex;flex-direction:column;align-items:center;gap:8px;padding:12px 4px 10px;background:var(--void);border:2px solid var(--black)}
+.state.sf i{--r:2}.state.fl i{--r:0}.state.gl i{--r:1}
+.state i{display:block;width:calc(18px*var(--s));height:calc(18px*var(--s));background:url(public/art/thornling_states.png) calc(-18px*var(--s)) calc(var(--r)*-18px*var(--s))/calc(72px*var(--s)) calc(72px*var(--s));image-rendering:pixelated}
+.states{--s:6}
+.state span{font:8px/16px var(--px);color:var(--steel4);text-transform:uppercase}
+.state span:lang(ja){font:12px/16px var(--ja-px);text-transform:none}
+.state.sf span{color:var(--amber)}
+.state.gl span{color:var(--ice)}
+.state.fl span{color:var(--red)}
+@media (min-width:1101px){.states{--s:8}}
+@media (max-width:420px){.states{--s:4;gap:8px}}
+.shot-art{width:fit-content;max-width:100%;padding:10px}
+.shot-art img{width:320px;height:180px}
+.glyphs{--gs:3;width:fit-content;max-width:100%;padding:12px 14px}
+.glyphs img{width:calc(144px*var(--gs));height:calc(12px*var(--gs))}
+@media (max-width:1100px){.glyphs{--gs:2}}
+@media (min-width:700px) and (max-width:899px){.glyphs{--gs:4}}
+@media (min-width:621px) and (max-width:699px){.glyphs{--gs:3}}
+@media (max-width:620px){.glyphs{--gs:2}}
+
+/* the heat ladder */
+#graft{background:var(--night);border-block:2px solid var(--steel1)}
+.split{display:grid;grid-template-columns:auto 1fr;gap:48px;align-items:start}
+#graft .split{grid-template-columns:minmax(0,1fr) auto;align-items:center}
+.demo{--k:2;padding:10px;width:calc(160px*var(--k) + 24px)}
+@media (min-width:561px){.demo{--k:3}}
+@media (min-width:720px) and (max-width:1180px),(min-width:1280px){.demo{--k:4}}
+.stage{position:relative;width:calc(160px*var(--k));height:calc(112px*var(--k));overflow:hidden;background:var(--black) url(public/art/stage.png) 0 0/calc(160px*var(--k)) calc(112px*var(--k));image-rendering:pixelated}
+.hud{position:absolute;left:calc(6px*var(--k));top:calc(6px*var(--k));display:flex;align-items:center}
+.pip{display:block;flex:none;width:calc(7px*var(--k));height:calc(7px*var(--k));margin-right:calc(2px*var(--k));background:url(public/art/pips.png) calc(var(--f,0)*-7px*var(--k)) 0/calc(28px*var(--k)) calc(7px*var(--k));image-rendering:pixelated}
+.hud-l{font:calc(8px*var(--k))/1 var(--px);color:var(--amber);margin-left:calc(2px*var(--k));text-transform:uppercase}
+.hud-l:lang(ja){font:calc(8px*var(--k))/1 var(--ja-px)}
+.sprite{position:absolute;image-rendering:pixelated;background-repeat:no-repeat}
+.hesper{left:calc(14px*var(--k));top:calc(48px*var(--k));width:calc(16px*var(--k));height:calc(32px*var(--k));background-image:url(public/art/hesper_idle.png);background-size:calc(64px*var(--k)) calc(32px*var(--k));background-position:calc(var(--f,0)*-16px*var(--k)) 0}
+.hesper.graft{background-image:url(public/art/hesper_graft.png);background-size:calc(48px*var(--k)) calc(32px*var(--k))}
+.enemy{left:calc(var(--x,64)*var(--k)*1px);top:calc(63px*var(--k));width:calc(18px*var(--k));height:calc(18px*var(--k));background-image:url(public/art/thornling_states.png);background-size:calc(72px*var(--k)) calc(72px*var(--k));background-position:calc(var(--fx,0)*-18px*var(--k)) calc(var(--fy,0)*-18px*var(--k))}
+.lamp{left:calc(136px*var(--k));top:calc(56px*var(--k));width:calc(16px*var(--k));height:calc(24px*var(--k));background-image:url(public/art/lamp_heart.png);background-size:calc(96px*var(--k)) calc(24px*var(--k));background-position:calc(var(--f,1)*-16px*var(--k)) 0}
+.enemy.flip{transform:scaleX(-1)}
+.enemy.gone{display:none}
+.fx{display:none;left:calc(var(--x,64)*var(--k)*1px);top:calc(65px*var(--k));width:calc(16px*var(--k));height:calc(16px*var(--k));background-size:calc(64px*var(--k)) calc(16px*var(--k));background-position:calc(var(--f,0)*-16px*var(--k)) 0}
+.fx.frost{display:block;background-image:url(public/art/fx_frost.png);margin-left:calc(1px*var(--k))}
+.fx.thaw{display:block;background-image:url(public/art/fx_thaw.png);margin-left:calc(1px*var(--k))}
+.fx.at-lamp{left:calc(136px*var(--k));top:calc(60px*var(--k));margin-left:0}
+.fx.burst{display:block;width:calc(32px*var(--k));height:calc(32px*var(--k));top:calc(57px*var(--k));margin-left:calc(-7px*var(--k));background-image:url(public/art/fx_explode_m.png);background-size:calc(256px*var(--k)) calc(32px*var(--k));background-position:calc(var(--f,0)*-32px*var(--k)) 0}
+.nudge{margin:10px 0 0;max-width:none;padding:8px 10px;min-height:64px;background:var(--void);border:2px solid var(--black);box-shadow:inset 2px 2px 0 var(--steel1);font:16px/24px var(--px);color:var(--pale);text-transform:uppercase}
+.nudge:lang(ja){font:20px/24px var(--ja-px);text-transform:none}
+.acts{display:flex;gap:12px;margin-top:12px}
+.acts .btn{flex:1}
+.btn.quench{background:var(--steel4);box-shadow:inset 2px 2px 0 var(--ice),inset -2px -2px 0 var(--steel2)}
+.btn.quench:hover{background:var(--ice)}
+.btn.kindle{background:var(--fire);box-shadow:inset 2px 2px 0 var(--flame),inset -2px -2px 0 var(--blood1)}
+.btn.kindle:hover{background:var(--flame)}
+.btn kbd{font:8px/1 var(--px);padding:4px 5px;background:var(--void);color:var(--ice);border:2px solid var(--black)}
+.btn:active{transform:translateY(2px)}
+@media (max-width:1180px){#graft .split{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:359px){.demo{--k:1}.hlist .where{white-space:normal}}
+@media (max-width:560px){.acts{flex-direction:column}.nudge{min-height:88px;font-size:8px;line-height:16px}.nudge:lang(ja){font-size:12px;line-height:18px}}
+
+/* worlds */
+.worlds{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(360px,100%),1fr));gap:24px}
+.world{padding:0 0 20px;background:var(--night)}
+.world .wbar{height:18px;background:var(--ramp);margin-bottom:16px}
+.world img{width:320px;height:208px;margin:0 auto 16px}
+.world h3{font-family:var(--px);font-size:24px;line-height:1.3;color:var(--white);text-transform:uppercase;margin:0 20px 8px;overflow-wrap:anywhere}
+.world h3:lang(ja){font-family:var(--ja-px);font-size:36px;text-transform:none}
+.world p{margin:0 20px;font-size:18px;color:var(--steel4)}
+.world p:lang(ja){font-size:15px}
+.w-halm{--ramp:var(--r-halm)}.w-knot{--ramp:var(--r-knot)}.w-verrin{--ramp:var(--r-verrin)}
+.w-carcanet{--ramp:var(--r-carcanet)}.w-sunder{--ramp:var(--r-sunder)}.w-ninth{--ramp:var(--r-ninth)}
+
+/* heralds */
+#heralds{background:var(--black)}
+.heralds{display:grid;grid-template-columns:auto 1fr;gap:48px;align-items:start}
+.shot2{width:660px;padding:10px}
+.shot2 img{width:640px;height:360px}
+.hlist{list-style:none;margin:0;padding:0;border-top:2px solid var(--steel1)}
+.hlist li{display:grid;grid-template-columns:40px 1fr;gap:4px 16px;padding:16px 0;border-bottom:2px solid var(--steel1)}
+.hlist .n{font-family:var(--px);font-size:16px;color:var(--steel3);grid-row:span 2;padding-top:4px}
+.hlist h3{font-family:var(--px);font-size:16px;color:var(--amber);text-transform:uppercase;overflow-wrap:anywhere}
+.hlist h3:lang(ja){font-family:var(--ja-px);font-size:24px;text-transform:none}
+.hlist .where{font:8px/16px var(--px);color:var(--steel4);margin-left:10px;text-transform:uppercase;white-space:nowrap}
+.hlist .where:lang(ja){font:12px/16px var(--ja-px);text-transform:none}
+.hlist p{margin:0;font-size:17px;color:var(--ice)}
+.hlist p:lang(ja){font-size:15px}
+@media (max-width:1180px){.heralds{grid-template-columns:minmax(0,1fr)}.shot2{width:auto;max-width:660px}}
+@media (max-width:700px){.shot2{width:fit-content;max-width:100%}.shot2 img{width:320px;height:180px}}
+@media (max-width:392px){.shot2{padding:0}}
+
+/* people */
+#people{background:var(--night);border-block:2px solid var(--steel1)}
+.people{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.person{display:grid;grid-template-columns:100px 1fr;gap:20px;align-items:start;padding:20px}
+.person .face{display:grid;place-items:center;width:100px;height:100px;background:var(--void);border:2px solid var(--black);box-shadow:0 0 0 2px var(--steel2)}
+.person .face img{width:96px;height:96px}
+.person .face .bob{width:96px;height:96px;background:url(public/art/bob.png) 16px 16px/256px 64px no-repeat;image-rendering:pixelated}
+.person p{margin:0;font-size:18px;color:var(--ice)}
+.person p:lang(ja){font-size:15px}
+.who{font-family:var(--px);font-size:16px;color:var(--amber);text-transform:uppercase}
+.who:lang(ja){font-family:var(--ja-px);font-size:24px;text-transform:none}
+@media (max-width:900px){.people{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:420px){.person{grid-template-columns:minmax(0,1fr);padding:16px}}
+
+/* gallery */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,320px);gap:24px 28px;justify-content:center}
+.grid a{display:block;width:320px;text-decoration:none;color:var(--steel4)}
+.grid img{width:320px;height:180px;border:0}
+.grid a:hover img,.grid a:focus-visible img{outline:2px solid var(--amber);outline-offset:2px}
+.grid .cap{display:block;margin-top:8px}
+.grid a:hover .cap{color:var(--amber)}
+@media (max-width:360px){
+  .grid{grid-template-columns:minmax(0,320px)}
+  .grid a{width:100%}
+  .grid img{width:100%;height:auto}
+}
+
+/* facts: the game's sidebar, as a fact sheet */
+#facts{background:var(--void)}
+.sheet{max-width:920px;padding:12px}
+.sheet dl{margin:0;display:grid;grid-template-columns:208px 1fr}
+.sheet dt,.sheet dd{margin:0;padding:12px 14px;border-bottom:2px solid var(--black)}
+.sheet dt{font:16px/24px var(--px);color:var(--steel4);text-transform:uppercase;background:var(--steel1)}
+.sheet dt:lang(ja){font:12px/24px var(--ja-px);text-transform:none}
+.sheet dd{background:var(--void);color:var(--ice);font-size:18px}
+.sheet dd:lang(ja){font-size:15px}
+@media (max-width:520px){.sheet dl{grid-template-columns:1fr}.sheet dt{border-bottom:0;padding-bottom:4px}}
+.links{margin:28px 0 0;max-width:none;display:flex;flex-wrap:wrap;gap:8px 20px;font:16px/24px var(--px);text-transform:uppercase}
+.links:lang(ja){font:12px/24px var(--ja-px);text-transform:none}
+.links .dim{color:var(--steel3)}
+
+/* footer */
+.foot{padding:40px 0 56px;background:var(--black);color:var(--steel4);font-size:17px}
+.foot .wrap{display:flex;flex-wrap:wrap;gap:16px 32px;align-items:center;justify-content:space-between}
+.foot p{margin:0;max-width:none}
+.foot .brand{max-width:100%}
+
+/* viewer */
+dialog.viewer{padding:0;border:0;background:transparent;color:var(--ice);max-width:100vw;max-height:100dvh;width:100vw;height:100dvh;margin:0}
+dialog.viewer::backdrop{background:rgb(0 0 0 / .92)}
+.v-in{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;width:100%;height:100%;padding:56px 12px 16px}
+.v-in img{border:2px solid var(--steel2);background:var(--black);max-width:none}
+.v-bar{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;width:100%}
+.v-bar p{margin:0 auto 0 0;font:8px/16px var(--px);text-transform:uppercase;color:var(--steel4);max-width:none}
+.v-bar p:lang(ja){font:12px/18px var(--ja-px);text-transform:none}
+.v-btn{display:inline-grid;place-items:center;font:16px/1 var(--px);color:var(--ice);background:var(--night);border:2px solid var(--black);box-shadow:inset 2px 2px 0 var(--steel2),inset -2px -2px 0 var(--black);min-width:48px;min-height:44px;padding:8px 12px;cursor:pointer}
+.v-btn:hover{color:var(--amber)}
+.v-close{position:fixed;top:10px;right:12px}
+
+@media (prefers-reduced-motion:no-preference){
+  .logo.go{animation:drop .6s steps(6) both}
+  .logo.go::after{animation:shine 1.4s steps(20) .7s 1 both}
+}
+@keyframes drop{0%{transform:translateY(-24px);opacity:0}100%{transform:none;opacity:1}}
+@keyframes shine{0%{opacity:1;background-position:120% 0}99%{opacity:1;background-position:-20% 0}100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<a class="sr-only" href="#main"><span class="l-en">Skip to content</span><span class="l-ja" lang="ja">本文へ移動</span><span class="l-tr" lang="tr">İçeriğe geç</span></a>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="FARSTRAND"><img class="px" src="public/art/hesper-icon.png" width="16" height="32" alt=""><span>FARSTRAND</span></a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#trailer"><span class="l-en">Trailer</span><span class="l-ja" lang="ja">トレーラー</span><span class="l-tr" lang="tr">Fragman</span></a>
+      <a href="#graft"><span class="l-en">Graft</span><span class="l-ja" lang="ja">接ぎ木</span><span class="l-tr" lang="tr">Aşı</span></a>
+      <a href="#worlds"><span class="l-en">Worlds</span><span class="l-ja" lang="ja">世界</span><span class="l-tr" lang="tr">Dünyalar</span></a>
+      <a href="#heralds"><span class="l-en">Heralds</span><span class="l-ja" lang="ja">ヘラルド</span><span class="l-tr" lang="tr">Haberciler</span></a>
+      <a href="#screens"><span class="l-en">Screens</span><span class="l-ja" lang="ja">画面</span><span class="l-tr" lang="tr">Ekran</span></a>
+      <a href="#facts"><span class="l-en">Facts</span><span class="l-ja" lang="ja">概要</span><span class="l-tr" lang="tr">Bilgi</span></a>
+    </nav>
+    <div class="langs" role="group" aria-label="Language / 言語 / Dil">
+      <button type="button" data-set-lang="en" aria-pressed="true" lang="en">EN</button>
+      <button type="button" data-set-lang="ja" aria-pressed="false" lang="ja">日本語</button>
+      <button type="button" data-set-lang="tr" aria-pressed="false" lang="tr">TÜRKÇE</button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+<section class="hero" id="top" aria-label="FARSTRAND">
+  <div class="hero-art" aria-hidden="true"></div>
+  <div class="hero-in wrap">
+    <h1 class="logo" data-anim><img class="px" src="public/art/logo.png" width="240" height="40" alt="FARSTRAND"></h1>
+    <p class="lockup pix" lang="en">A HELIOBANE METROIDVANIA</p>
+    <p class="tagline l-en">Seven years after HELIOBANE, the roads between the stars have frozen into glass.</p>
+    <p class="tagline l-ja" lang="ja">ヘリオベインから七年。星々を結ぶ道は、凍ってガラスになった。</p>
+    <p class="tagline l-tr" lang="tr">HELIOBANE'den yedi yıl sonra, yıldızlar arasındaki yollar donup cama döndü.</p>
+    <div class="hero-card">
+      <div class="ctas">
+        <!-- Switch to the live page: set STEAM_LIVE = true in the script (one line). -->
+        <span class="btn soon if-soon" aria-disabled="true"><span class="l-en">Coming to Steam</span><span class="l-ja" lang="ja">Steamで近日公開</span><span class="l-tr" lang="tr">Yakında Steam'de</span></span>
+        <a class="btn if-live" data-steam="store"><span class="l-en">Wishlist on Steam</span><span class="l-ja" lang="ja">Steamでウィッシュリストに追加</span><span class="l-tr" lang="tr">Steam'de istek listene ekle</span></a>
+      </div>
+      <!-- TODO (lead): when the demo page is public, this line can become a link (the demo's store URL is in the script). -->
+      <p class="sub l-en">Free demo coming to Steam</p>
+      <p class="sub l-ja" lang="ja">無料体験版、Steamで近日公開</p>
+      <p class="sub l-tr" lang="tr">Ücretsiz demo yakında Steam'de</p>
+      <p class="plat pix" lang="en">Windows · macOS · Linux · Steam Deck</p>
+    </div>
+  </div>
+</section>
+
+<div class="vein glint" aria-hidden="true"></div>
+
+<section id="trailer" aria-labelledby="trailer-h">
+  <div class="wrap">
+    <h2 id="trailer-h" class="sr-only"><span class="l-en">Trailer</span><span class="l-ja" lang="ja">トレーラー</span><span class="l-tr" lang="tr">Fragman</span></h2>
+    <figure class="tv panel">
+      <video id="trailer-video" controls playsinline preload="none" width="1920" height="1080" poster="public/trailer-poster.jpg" aria-label="FARSTRAND trailer" data-alt-ja="FARSTRANDのトレーラー" data-alt-tr="FARSTRAND fragmanı">
+        <source src="public/trailer.mp4" type="video/mp4">
+        <track kind="captions" src="public/trailer.en.vtt" srclang="en" label="English">
+      </video>
+      <div class="still"><img class="px" src="public/art/trailer-still.png" width="320" height="180" alt="Hesper on a frozen cliff at the edge of a forest, facing a red dwarf and a thin beam of light that runs up into the sky." data-alt-ja="凍った崖の上に立つヘスパー。森のへりで、赤色矮星と空へ伸びる細い光の筋を見つめている。" data-alt-tr="Donmuş bir uçurumun kenarında, ormanın yanında duran Hesper; karşısında bir kızıl cüce ve gökyüzüne uzanan ince bir ışık hüzmesi.">
+        <span class="pending pix"><span class="l-en">Trailer coming</span><span class="l-ja" lang="ja">トレーラーは近日公開</span><span class="l-tr" lang="tr">Fragman yakında</span></span></div>
+    </figure>
+  </div>
+</section>
+
+<section id="after" aria-labelledby="after-h">
+  <div class="wrap after">
+    <div>
+      <div class="sec-head"><h2 id="after-h" class="pix"><span class="l-en">After HELIOBANE</span><span class="l-ja" lang="ja">ヘリオベインのあとで</span><span class="l-tr" lang="tr">HELIOBANE'den sonra</span></h2></div>
+      <p class="lead l-en">In <a href="https://heliobane.gand.games/">HELIOBANE</a> a gunship flew into Aurel to kill what lived in it. Seven years on, Aurel is still going out and the Concord has about a century to empty its worlds. The only roads off them are the strands, the roads the hive grew between the stars. Cold now, they have turned to glass, and a road of glass still carries a ship.</p>
+      <p class="lead l-ja" lang="ja"><a href="https://heliobane.gand.games/">ヘリオベイン</a>では、一隻のガンシップがオーレルに飛び込み、そこに棲むものを殺しに行きました。七年後、オーレルはいまも消えかけていて、コンコードには世界を空にするための時間がおよそ百年しか残っていません。そこから出る道はストランドだけ。巣が星々のあいだに育てた道です。冷えたいま、道はガラスになりましたが、ガラスの道でも船は運べます。</p>
+      <p class="lead l-tr" lang="tr"><a href="https://heliobane.gand.games/">HELIOBANE</a>'de bir savaş gemisi, içinde yaşayanı öldürmek için Aurel'e daldı. Yedi yıl sonra Aurel hâlâ sönüyor ve Concord'un dünyalarını boşaltmak için yaklaşık bir yüzyılı var. Oradan çıkan tek yol iplikler: kovanın yıldızlar arasında büyüttüğü yollar. Soğuyunca cama döndüler, ama camdan bir yol da gemi taşır.</p>
+      <p class="l-en">FARSTRAND is a different kind of game: you leave the cockpit for a survey suit and cross six worlds on foot, in a metroidvania built around a glass arm. You don't need to have played HELIOBANE. If you have, you'll know some faces, and you'll hear its radio in the strands.</p>
+      <p class="l-ja" lang="ja">FARSTRANDは、まったく違う種類のゲームです。コクピットを降りて測量服を着て、ガラスの腕を軸にしたメトロイドヴァニアで、六つの世界を自分の足で渡っていきます。ヘリオベインを遊んでいなくても大丈夫です。遊んだことがあるなら、知った顔に会い、ストランドの中にあの無線を聞くでしょう。</p>
+      <p class="l-tr" lang="tr">FARSTRAND bambaşka bir oyun: kokpitten inip keşif giysisini giyiyor, camdan bir kolun etrafında kurulmuş bir metroidvania'da altı dünyayı yürüyerek aşıyorsun. HELIOBANE'i oynamış olman gerekmiyor. Oynadıysan tanıdık yüzlerle karşılaşacak, ipliklerin içinde onun telsizini duyacaksın.</p>
+    </div>
+    <a class="hb-tile panel" href="https://heliobane.gand.games/">
+      <img class="px hb-logo" src="public/art/heliobane-logo.png" width="256" height="64" alt="HELIOBANE">
+      <span class="swap" aria-hidden="true">
+        <img class="px ship" src="public/art/heliobane-ship.png" width="32" height="32" alt="">
+        <svg class="arrow" width="32" height="32" viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M0 3h5V1h1v1h1v1h1v2H7v1H6v1H5V5H0z"/></svg>
+        <img class="px hb-hesper" src="public/art/hesper-icon.png" width="16" height="32" alt="">
+      </span>
+    </a>
+  </div>
+</section>
+
+<section id="pillars">
+  <div class="wrap">
+    <div class="pillars">
+      <div class="pillar p1">
+        <div class="art">
+          <div class="states" aria-hidden="true">
+            <div class="state sf"><i></i><span><span class="l-en">Sunfed</span><span class="l-ja" lang="ja">陽喰い</span><span class="l-tr" lang="tr">Güneşbesili</span></span></div>
+            <div class="state fl"><i></i><span><span class="l-en">Flesh</span><span class="l-ja" lang="ja">肉</span><span class="l-tr" lang="tr">Et</span></span></div>
+            <div class="state gl"><i></i><span><span class="l-en">Glass</span><span class="l-ja" lang="ja">ガラス</span><span class="l-tr" lang="tr">Cam</span></span></div>
+          </div>
+        </div>
+        <h2 class="pix"><span class="l-en">The Graft moves heat</span><span class="l-ja" lang="ja">接ぎ木は熱を動かす</span><span class="l-tr" lang="tr">Aşı ısıyı taşır</span></h2>
+        <p class="l-en">Umberflesh comes in three states: sunfed, flesh and glass. Quench takes a step of heat out, Kindle puts one back, and the arm holds only so much. Freeze an enemy and stand on it, or feed it until it bursts.</p>
+        <p class="l-ja" lang="ja">アンバーフレッシュには三つの状態があります。陽喰い、肉、ガラス。冷却は熱をひと段階抜き、点火はひと段階戻します。腕が抱えられる熱には限りがあります。敵を凍らせて上に立つか、与えすぎて破裂させるか。</p>
+        <p class="l-tr" lang="tr">Umberflesh üç halde bulunur: güneşbesili, et ve cam. Söndür bir basamak ısı alır, Tutuştur bir basamak geri koyar, kol da ancak bu kadarını tutar. Bir düşmanı dondur ve üstüne çık, ya da patlayana dek besle.</p>
+      </div>
+      <div class="pillar p2 panel">
+        <figure class="shot-art panel">
+          <img class="px" src="public/shots/1x/map.png" width="320" height="180" loading="lazy" alt="The map screen zoomed in on Halm: rooms, doors, beacons and finds drawn in thin blue lines, with MAP 78% and ITEMS 4/7 at the bottom." data-alt-ja="ハルムを拡大した地図画面。部屋、扉、ビーコン、発見物が細い青線で描かれ、下に MAP 78% と ITEMS 4/7。" data-alt-tr="Halm'a yakınlaştırılmış harita ekranı: odalar, kapılar, fenerler ve buluntular ince mavi çizgilerle çizilmiş; altta MAP 78% ve ITEMS 4/7.">
+        </figure>
+        <h2 class="pix"><span class="l-en">The map is her work</span><span class="l-ja" lang="ja">地図は彼女の仕事</span><span class="l-tr" lang="tr">Harita onun işi</span></h2>
+        <p class="l-en">Hesper is a surveyor. Rooms are pencilled in as you enter them and inked when you rest at a beacon. The old marks scratched into the glass are the hint system, and you can turn them off.</p>
+        <p class="l-ja" lang="ja">ヘスパーは測量士です。部屋は入ると鉛筆書きで描かれ、ビーコンで休むとペン入れされます。ガラスに刻まれた古い印がヒントで、切ることもできます。</p>
+        <p class="l-tr" lang="tr">Hesper bir haritacı. Odalar girdiğinde kurşun kalemle çizilir, bir fenerde dinlendiğinde mürekkeplenir. Cama kazınmış eski işaretler ipucu sistemi; istersen kapatırsın.</p>
+      </div>
+      <div class="pillar p3 panel">
+        <figure class="glyphs panel">
+          <img class="px" src="public/art/glyphs_deck.png" width="144" height="12" loading="lazy" alt="The game's gamepad button prompts: A, B, X, Y, the shoulder buttons and triggers, the menu buttons and the stick." data-alt-ja="ゲーム内のパッド用ボタン表示。A、B、X、Y、ショルダーボタンとトリガー、メニューボタン、スティック。" data-alt-tr="Oyundaki kumanda düğmesi simgeleri: A, B, X, Y, omuz düğmeleri ve tetikler, menü düğmeleri ve çubuk.">
+        </figure>
+        <h2 class="pix"><span class="l-en">Built for a pad and the Deck</span><span class="l-ja" lang="ja">パッドとSteam Deckのために</span><span class="l-tr" lang="tr">Kumanda ve Deck için</span></h2>
+        <p class="l-en">Every screen was made at 1280×800 with a pad in hand: on a Steam Deck the 320×180 picture fills the screen at exactly four times size. Everything can be remapped.</p>
+        <p class="l-ja" lang="ja">すべての画面を、パッドを手に1280×800で作りました。Steam Deckでは320×180の画面がちょうど4倍で全面に映ります。すべて割り当て変更可能です。</p>
+        <p class="l-tr" lang="tr">Her ekran elde bir kumandayla, 1280×800'de tasarlandı: Steam Deck'te 320×180'lik görüntü ekranı tam dört kat büyüklükte doldurur. Her şey yeniden atanabilir.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="vein ember" aria-hidden="true"></div>
+
+<section id="graft" aria-labelledby="graft-h">
+  <div class="wrap split">
+    <div>
+      <div class="sec-head"><h2 id="graft-h" class="pix"><span class="l-en">Try the heat ladder</span><span class="l-ja" lang="ja">熱のはしごを試す</span><span class="l-tr" lang="tr">Isı merdivenini dene</span></h2></div>
+      <p class="lead l-en">One flesh enemy, the Graft and three pips of heat.</p>
+      <p class="lead l-ja" lang="ja">肉の敵がひとつ、接ぎ木、そして熱が三つ。</p>
+      <p class="lead l-tr" lang="tr">Etten bir düşman, Aşı ve üç ısı.</p>
+      <p class="fine l-en">In the game, a frozen enemy thaws after five seconds, and a sunfed one cools after six.</p>
+      <p class="fine l-ja" lang="ja">ゲームでは、凍った敵は五秒で溶け、陽喰いの敵は六秒で冷めます。</p>
+      <p class="fine l-tr" lang="tr">Oyunda donmuş bir düşman beş saniyede çözülür, güneşbesili olan altı saniyede soğur.</p>
+    </div>
+    <div class="demo panel" id="demo" role="group" aria-label="Try the heat ladder" data-alt-ja="熱のはしごを試す" data-alt-tr="Isı merdivenini dene">
+      <div class="stage" id="stage" aria-hidden="true">
+        <div class="hud"><span class="pip"></span><span class="pip"></span><span class="pip"></span><span class="hud-l pix"><span class="l-en">Heat</span><span class="l-ja" lang="ja">熱</span><span class="l-tr" lang="tr">Isı</span></span></div>
+        <div class="sprite lamp" id="lamp"></div>
+        <div class="sprite hesper" id="hesper"></div>
+        <div class="sprite enemy" id="enemy"></div>
+        <div class="sprite fx" id="fx"></div>
+      </div>
+      <p class="nudge" id="nudge" role="status"></p>
+      <div class="acts">
+        <button type="button" class="btn quench" data-act="quench" aria-keyshortcuts="Q"><span class="l-en">Quench</span><span class="l-ja" lang="ja">冷却</span><span class="l-tr" lang="tr">Söndür</span><kbd aria-hidden="true">Q</kbd></button>
+        <button type="button" class="btn kindle" data-act="kindle" aria-keyshortcuts="K"><span class="l-en">Kindle</span><span class="l-ja" lang="ja">点火</span><span class="l-tr" lang="tr">Tutuştur</span><kbd aria-hidden="true">K</kbd></button>
+      </div>
+      <p class="sr-only" id="heat-sr"></p>
+      <ul class="sr-only" id="nudges" hidden>
+        <li data-n="frozen"><span class="l-en">Frozen solid. Stand on it</span><span class="l-ja" lang="ja">凍りついた。上に乗れる</span><span class="l-tr" lang="tr">Dondu. Üstüne çık</span></li>
+        <li data-n="sunfed"><span class="l-en">Sunfed. Kindle it again to overfeed</span><span class="l-ja" lang="ja">陽喰い。もう一度点火で過剰供給</span><span class="l-tr" lang="tr">Güneşbesili. Bir kez daha tutuştur, patlasın</span></li>
+        <li data-n="burst"><span class="l-en">It burst</span><span class="l-ja" lang="ja">破裂した</span><span class="l-tr" lang="tr">Patladı</span></li>
+        <li data-n="full"><span class="l-en">The arm is full. That heat is lost</span><span class="l-ja" lang="ja">腕がいっぱい。その熱は消えた</span><span class="l-tr" lang="tr">Kol dolu. O ısı kayboldu</span></li>
+        <li data-n="noheat"><span class="l-en">No heat. Quench something first</span><span class="l-ja" lang="ja">熱がない。まず何かを冷却しろ</span><span class="l-tr" lang="tr">Isı yok. Önce bir şeyi söndür</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="worlds" aria-labelledby="worlds-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="worlds-h" class="pix"><span class="l-en">Six worlds</span><span class="l-ja" lang="ja">六つの世界</span><span class="l-tr" lang="tr">Altı dünya</span></h2>
+      <p class="l-en">Every survey beacon went silent at the same place, a tangle of strands the size of a moon that the Survey called the Knot. It is the hub, with a road out to each world.</p>
+      <p class="l-ja" lang="ja">すべての測量ビーコンは同じ場所で途絶えました。月ほどの大きさのストランドのもつれを、測量隊はノットと呼びました。ここがハブで、各世界へ道が一本ずつ延びています。</p>
+      <p class="l-tr" lang="tr">Bütün keşif fenerleri aynı yerde sustu: Keşif'in Düğüm dediği, ay büyüklüğünde bir iplik yumağı. Burası merkez; her dünyaya bir yol çıkar.</p>
+    </div>
+    <div class="worlds">
+      <article class="world w-halm panel">
+        <div class="wbar" aria-hidden="true"></div>
+        <img class="px" src="public/art/worlds/halm.png" width="320" height="208" loading="lazy" alt="">
+        <h3><span class="l-en">Halm</span><span class="l-ja" lang="ja">ハルム</span><span class="l-tr" lang="tr">Halm</span></h3>
+        <p class="cap1 l-en">a glass forest over the grown cities of the Halmfolk, under a red dwarf</p>
+        <p class="cap1 l-ja" lang="ja">赤色矮星の下、ハルムの民が育てた街の上に広がるガラスの森</p>
+        <p class="cap1 l-tr" lang="tr">kızıl bir cücenin altında, Halm halkının büyüttüğü şehirlerin üstüne yayılmış camdan bir orman</p>
+      </article>
+      <article class="world w-knot panel">
+        <div class="wbar" aria-hidden="true"></div>
+        <img class="px" src="public/art/worlds/knot.png" width="320" height="208" loading="lazy" alt="">
+        <h3><span class="l-en">The Knot</span><span class="l-ja" lang="ja">ノット</span><span class="l-tr" lang="tr">Düğüm</span></h3>
+        <p class="cap1 l-en">a Concord frigate hangs in the tangle, still playing its admiral's broadcast</p>
+        <p class="cap1 l-ja" lang="ja">もつれに挟まったコンコードのフリゲートが、いまも提督の放送を流し続けている</p>
+        <p class="cap1 l-tr" lang="tr">yumağa sıkışmış bir Concord fırkateyni, amiralinin yayınını hâlâ çalıyor</p>
+      </article>
+      <article class="world w-verrin panel">
+        <div class="wbar" aria-hidden="true"></div>
+        <img class="px" src="public/art/worlds/verrin.png" width="320" height="208" loading="lazy" alt="">
+        <h3><span class="l-en">Verrin</span><span class="l-ja" lang="ja">ヴェリン</span><span class="l-tr" lang="tr">Verrin</span></h3>
+        <p class="cap1 l-en">an ocean under a kilometre of ice, kept warm below by vents</p>
+        <p class="cap1 l-ja" lang="ja">一キロの氷の下の海。下では噴出孔が水を温めている</p>
+        <p class="cap1 l-tr" lang="tr">bir kilometre buzun altında, dipteki bacaların ısıttığı bir okyanus</p>
+      </article>
+      <article class="world w-carcanet panel">
+        <div class="wbar" aria-hidden="true"></div>
+        <img class="px" src="public/art/worlds/carcanet.png" width="320" height="208" loading="lazy" alt="">
+        <h3><span class="l-en">Carcanet</span><span class="l-ja" lang="ja">カーカネット</span><span class="l-tr" lang="tr">Carcanet</span></h3>
+        <p class="cap1 l-en">a moon of foundries that the hive wore like a shell</p>
+        <p class="cap1 l-ja" lang="ja">巣が殻のようにまとった、鋳造所の衛星</p>
+        <p class="cap1 l-tr" lang="tr">kovanın kabuk gibi giydiği, dökümhanelerle dolu bir ay</p>
+      </article>
+      <article class="world w-sunder panel">
+        <div class="wbar" aria-hidden="true"></div>
+        <img class="px" src="public/art/worlds/sunder.png" width="320" height="208" loading="lazy" alt="">
+        <h3><span class="l-en">Sunder</span><span class="l-ja" lang="ja">サンダー</span><span class="l-tr" lang="tr">Sunder</span></h3>
+        <p class="cap1 l-en">a hot world close to a white star, where everything is sunfed</p>
+        <p class="cap1 l-ja" lang="ja">白い恒星に近い灼熱の星。何もかもが陽喰い</p>
+        <p class="cap1 l-tr" lang="tr">beyaz bir yıldıza yakın, her şeyin güneşbesili olduğu sıcak bir dünya</p>
+      </article>
+      <article class="world w-ninth panel">
+        <div class="wbar" aria-hidden="true"></div>
+        <img class="px" src="public/art/worlds/ninth-light.png" width="320" height="208" loading="lazy" alt="">
+        <h3><span class="l-en">Ninth Light</span><span class="l-ja" lang="ja">第九の光</span><span class="l-tr" lang="tr">Dokuzuncu Işık</span></h3>
+        <p class="cap1 l-en">dead planets stacked under a young sun</p>
+        <p class="cap1 l-ja" lang="ja">若い太陽の下に積み重なった、死んだ惑星たち</p>
+        <p class="cap1 l-tr" lang="tr">genç bir güneşin altında üst üste yığılmış ölü gezegenler</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="heralds" aria-labelledby="heralds-h">
+  <div class="wrap heralds">
+    <figure class="shot2 panel">
+      <img class="px" src="public/shots/1x/the-six.png" width="320" height="180" loading="lazy" alt="A boss bar named THE SIX across the top of a frozen mess hall; Hesper fires at four crew grown into one body." data-alt-ja="凍った食堂の上部に「THE SIX」のボスゲージ。ヘスパーが、一つの体に育った四人の乗員を撃つ。" data-alt-tr="Donmuş bir yemekhanenin üstünde THE SIX adlı bir patron çubuğu; Hesper tek bir bedene dönüşmüş dört mürettebata ateş ediyor.">
+      <figcaption class="cap"><span class="l-en">The Knot: the Six</span><span class="l-ja" lang="ja">ノット：シックス</span><span class="l-tr" lang="tr">Düğüm: Altılar</span></figcaption>
+    </figure>
+    <div>
+      <div class="sec-head">
+        <h2 id="heralds-h" class="pix"><span class="l-en">Heralds</span><span class="l-ja" lang="ja">ヘラルド</span><span class="l-tr" lang="tr">Haberciler</span></h2>
+        <p class="l-en">Each world keeps a Herald, a shepherd the hive grew there. Most slept through the cold. Something warm is waking them.</p>
+        <p class="l-ja" lang="ja">どの世界にも、巣がそこで育てた羊飼い、ヘラルドがいます。ほとんどは寒さの中で眠っていました。何か温かいものが、それを起こしています。</p>
+        <p class="l-tr" lang="tr">Her dünyanın bir Habercisi var, kovanın orada büyüttüğü bir çoban. Çoğu soğukta uyudu. Sıcak bir şey onları uyandırıyor.</p>
+      </div>
+      <ol class="hlist">
+        <li><span class="n" aria-hidden="true">1</span><h3><span class="l-en">The Pollard</span><span class="l-ja" lang="ja">ポラード</span><span class="l-tr" lang="tr">Budak</span><span class="where"><span class="l-en">Halm</span><span class="l-ja" lang="ja">ハルム</span><span class="l-tr" lang="tr">Halm</span></span></h3>
+          <p class="cap1 l-en">rooted in the grove, glass limbs thawing and growing back when cut</p><p class="cap1 l-ja" lang="ja">林に根を張り、溶けかけたガラスの枝は切られても生え戻る</p><p class="cap1 l-tr" lang="tr">koruya kök salmış; eriyen cam dalları kesilince yeniden çıkar</p></li>
+        <li><span class="n" aria-hidden="true">2</span><h3><span class="l-en">The Six</span><span class="l-ja" lang="ja">シックス</span><span class="l-tr" lang="tr">Altılar</span><span class="where"><span class="l-en">The Knot</span><span class="l-ja" lang="ja">ノット</span><span class="l-tr" lang="tr">Düğüm</span></span></h3>
+          <p class="cap1 l-en">what the hive made of Survey Six's crew of four, guns in every hand</p><p class="cap1 l-ja" lang="ja">第六測量隊の四人の乗員から巣が作ったもの。どの手にも銃</p><p class="cap1 l-tr" lang="tr">kovanın Altıncı Keşif'in dört kişilik ekibinden yaptığı şey; her elinde bir silah</p></li>
+        <li><span class="n" aria-hidden="true">3</span><h3><span class="l-en">The Undertow</span><span class="l-ja" lang="ja">アンダートウ</span><span class="l-tr" lang="tr">Çekinti</span><span class="where"><span class="l-en">Verrin</span><span class="l-ja" lang="ja">ヴェリン</span><span class="l-tr" lang="tr">Verrin</span></span></h3>
+          <p class="cap1 l-en">a flesh eel in a flooded trench of vents</p><p class="cap1 l-ja" lang="ja">噴出孔の沈んだ海溝に棲む、肉のウナギ</p><p class="cap1 l-tr" lang="tr">bacalarla dolu, su basmış bir hendekte yaşayan etten bir yılan balığı</p></li>
+        <li><span class="n" aria-hidden="true">4</span><h3><span class="l-en">The Gantry</span><span class="l-ja" lang="ja">ガントリー</span><span class="l-tr" lang="tr">Gezer Vinç</span><span class="where"><span class="l-en">Carcanet</span><span class="l-ja" lang="ja">カーカネット</span><span class="l-tr" lang="tr">Carcanet</span></span></h3>
+          <p class="cap1 l-en">an assembly gantry on rails, plating over a sunfed heart</p><p class="cap1 l-ja" lang="ja">レールの上の組立クレーン。装甲の下に陽喰いの心臓</p><p class="cap1 l-tr" lang="tr">raylar üstünde bir montaj vinci; zırhın altında güneşbesili bir kalp</p></li>
+        <li><span class="n" aria-hidden="true">5</span><h3><span class="l-en">The Lamplighters</span><span class="l-ja" lang="ja">点灯夫たち</span><span class="l-tr" lang="tr">Lambacılar</span><span class="where"><span class="l-en">Sunder</span><span class="l-ja" lang="ja">サンダー</span><span class="l-tr" lang="tr">Sunder</span></span></h3>
+          <p class="cap1 l-en">three figures who kindle everything they touch</p><p class="cap1 l-ja" lang="ja">触れるものすべてに火を灯す三つの人影</p><p class="cap1 l-tr" lang="tr">dokundukları her şeyi tutuşturan üç siluet</p></li>
+        <li><span class="n" aria-hidden="true">6</span><h3><span class="l-en">The Sexton</span><span class="l-ja" lang="ja">墓守</span><span class="l-tr" lang="tr">Zangoç</span><span class="where"><span class="l-en">Ninth Light</span><span class="l-ja" lang="ja">第九の光</span><span class="l-tr" lang="tr">Dokuzuncu Işık</span></span></h3>
+          <p class="cap1 l-en">it tends the stacked dead planets and rings its bells</p><p class="cap1 l-ja" lang="ja">積み重なった死んだ惑星を世話し、鐘を鳴らす</p><p class="cap1 l-tr" lang="tr">yığılmış ölü gezegenlere bakar, çanlarını çalar</p></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<div class="vein glint" aria-hidden="true"></div>
+
+<section id="people" aria-labelledby="people-h">
+  <div class="wrap">
+    <div class="sec-head"><h2 id="people-h" class="pix"><span class="l-en">Who's out there</span><span class="l-ja" lang="ja">そこにいる者たち</span><span class="l-tr" lang="tr">Orada kimler var</span></h2></div>
+    <div class="people">
+      <article class="person panel">
+        <div class="face"><img class="px" src="public/art/portrait_hesper.png" width="48" height="48" loading="lazy" alt="Portrait of Hesper Lind: a tired, steady face above a survey suit with a cyan collar light." data-alt-ja="ヘスパー・リンドの肖像。疲れた、しかし落ち着いた顔。襟にシアンの灯りがつく測量服。" data-alt-tr="Hesper Lind'in portresi: yorgun ama sakin bir yüz; yakasında camgöbeği bir ışık yanan keşif giysisi."></div>
+        <div>
+          <p class="l-en"><strong class="who">Hesper Lind</strong>, cartographer of Survey Seven, the <em>Plumbline</em>. She woke on Halm with her left arm gone at the shoulder and another in its place: black glass veined with dull gold. She calls it the Graft.</p>
+          <p class="l-ja" lang="ja"><strong class="who">ヘスパー・リンド</strong> 第七測量隊プラムライン号の地図描き。ハルムで目覚めると左腕は肩からなく、代わりに鈍い金の筋が走る黒いガラスの腕がついていた。彼女はそれを接ぎ木と呼ぶ。</p>
+          <p class="l-tr" lang="tr"><strong class="who">Hesper Lind</strong>, Yedinci Keşif'in, <em>Plumbline</em>'ın haritacısı. Halm'da uyandığında sol kolu omuzdan yoktu; yerinde soluk altın damarlı, kapkara camdan bir kol vardı. Ona Aşı diyor.</p>
+        </div>
+      </article>
+      <article class="person panel">
+        <div class="face"><div class="bob" role="img" aria-label="Bob, a small steel teardrop of a drone" data-alt-ja="ボブ。鋼のしずく形の小さなドローン。" data-alt-tr="Bob, çelikten küçük bir damla biçiminde dron."></div></div>
+        <div>
+          <p class="l-en"><strong class="who">Bob</strong>, the <em>Plumbline</em>'s survey drone, a steel teardrop shaped like a plumb bob. It finds hollow walls, flies through vents and presses switches. Its readout sometimes says a word. Usually NO.</p>
+          <p class="l-ja" lang="ja"><strong class="who">ボブ</strong> プラムライン号の測量ドローン。測量用の錘の形をした鋼のしずく。空洞の壁を見つけ、通気口を抜け、スイッチを押す。小さな表示窓がたまに一語だけ出す。たいてい「NO.」。</p>
+          <p class="l-tr" lang="tr"><strong class="who">Bob</strong>, <em>Plumbline</em>'ın keşif dronu, çekül biçiminde çelik bir damla. Boş duvarları bulur, deliklerden geçer, düğmelere basar. Küçük ekranı bazen tek bir kelime yazar. Genellikle NO.</p>
+        </div>
+      </article>
+      <article class="person panel">
+        <div class="face"><img class="px" src="public/art/portrait_mott.png" width="48" height="48" loading="lazy" alt="Portrait of Old Mott: goggles pushed up on his forehead, a grey beard and a wide grin." data-alt-ja="オールド・モットの肖像。額に上げたゴーグル、灰色のひげ、満面の笑み。" data-alt-tr="Yaşlı Mott'un portresi: alnına itilmiş gözlük, gri sakal ve geniş bir sırıtış."></div>
+        <div>
+          <p class="l-en"><strong class="who">Old Mott</strong>, trader, keeps a stall in the Knot and turns up in other worlds, always somewhere you arrive second. He buys Aurum, sells patches and guns, calls Hesper kiddo, and won't say how he got there.</p>
+          <p class="l-ja" lang="ja"><strong class="who">オールド・モット</strong> 商人。ノットに店を構え、ほかの世界にも現れる。いつも、あなたが二番目に着く場所に。オーラムを買い、パッチと銃を売り、ヘスパーを嬢ちゃんと呼ぶ。どうやって来たのかは言わない。</p>
+          <p class="l-tr" lang="tr"><strong class="who">Yaşlı Mott</strong>, tüccar. Düğüm'de bir tezgâhı var ve başka dünyalarda da çıkar karşına, hep ikinci vardığın bir yerde. Aurum alır, yama ve silah satar, Hesper'e evlat der ve oraya nasıl geldiğini söylemez.</p>
+        </div>
+      </article>
+      <article class="person panel">
+        <div class="face"><img class="px" src="public/art/portrait_warden.png" width="48" height="48" loading="lazy" alt="One of the Worn: a tall face of violet glass with gold seams like mended cracks, antlers rising from its crown and small faces in the bark around its chin." data-alt-ja="纏われし者の一人。金の継ぎ目が走る紫のガラスの長い顔、頭頂から伸びる枝角、あごのまわりの樹皮に小さな顔たち。" data-alt-tr="Giyilmişlerden biri: onarılmış çatlaklar gibi altın dikişli, mor camdan uzun bir yüz; tepesinden yükselen boynuzlar ve çenesinin çevresindeki kabukta küçük yüzler."></div>
+        <div>
+          <p class="l-en"><strong class="who">The Worn</strong>, whole peoples the hive ate and never finished digesting, still awake in the glass. They want the strands to stay cold. They help Hesper as far as that goes.</p>
+          <p class="l-ja" lang="ja"><strong class="who">纏われし者</strong> 巣が食べて消化しきれなかった民そのもの。意識はいまもガラスの中で目覚めている。ストランドが冷たいままであることを望み、その限りでヘスパーを助ける。</p>
+          <p class="l-tr" lang="tr"><strong class="who">Giyilmişler</strong>, kovanın yiyip de sindiremediği bütün halklar; zihinleri hâlâ camın içinde uyanık. İpliklerin soğuk kalmasını isterler ve Hesper'e o kadarına kadar yardım ederler.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="screens" aria-labelledby="screens-h">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="screens-h" class="pix"><span class="l-en">Screenshots</span><span class="l-ja" lang="ja">スクリーンショット</span><span class="l-tr" lang="tr">Ekran görüntüleri</span></h2>
+    </div>
+    <div class="grid" id="gallery">
+      <a href="public/shots/halm-anchor.png" data-shot="halm-anchor"><img class="px" src="public/shots/1x/halm-anchor.png" width="320" height="180" loading="lazy" alt="Hesper beside a survey beacon at the foot of the strand, under a huge red dwarf above a forest of glass trees." data-alt-ja="ガラスの木々の森の上に巨大な赤色矮星。ストランドのふもとの測量ビーコンのそばに立つヘスパー。" data-alt-tr="Cam ağaçlardan bir ormanın üstünde kocaman bir kızıl cücenin altında, ipliğin dibinde bir keşif fenerinin yanında Hesper."><span class="cap"><span class="l-en">Halm, the glass forest</span><span class="l-ja" lang="ja">ハルム、ガラスの森</span><span class="l-tr" lang="tr">Halm, cam orman</span></span></a>
+      <a href="public/shots/overfeed.png" data-shot="overfeed"><img class="px" src="public/shots/1x/overfeed.png" width="320" height="180" loading="lazy" alt="A sunfed enemy bursts in a ball of fire over the glass forest; the prompt reads OVERFEED IT." data-alt-ja="ガラスの森の上で、陽喰いの敵が火の玉になって破裂する。表示は「OVERFEED IT」。" data-alt-tr="Cam ormanın üstünde güneşbesili bir düşman ateş topuna dönüp patlıyor; ekrandaki yazı OVERFEED IT."><span class="cap"><span class="l-en">Overfeed: a sunfed enemy bursts</span><span class="l-ja" lang="ja">過剰供給：陽喰いの敵が破裂する</span><span class="l-tr" lang="tr">Aşırı besle: güneşbesili düşman patlıyor</span></span></a>
+      <a href="public/shots/bob.png" data-shot="bob"><img class="px" src="public/shots/1x/bob.png" width="320" height="180" loading="lazy" alt="Bob, the survey drone, inside a vent in a wall of an icy cavern; the prompt reads HOLD LB: FLY BOB THROUGH THE VENT." data-alt-ja="氷の洞窟の壁の通気口の中にいる測量ドローンのボブ。表示は「HOLD LB: FLY BOB THROUGH THE VENT」。" data-alt-tr="Buzlu bir mağaranın duvarındaki havalandırmanın içinde keşif dronu Bob; ekrandaki yazı HOLD LB: FLY BOB THROUGH THE VENT."><span class="cap"><span class="l-en">Bob in the vent</span><span class="l-ja" lang="ja">通気口のボブ</span><span class="l-tr" lang="tr">Bob havalandırmada</span></span></a>
+      <a href="public/shots/frigate.png" data-shot="frigate"><img class="px" src="public/shots/1x/frigate.png" width="320" height="180" loading="lazy" alt="A Concord frigate wrapped in black strands, filling the Knot's sky; Hesper stands on the floor below." data-alt-ja="黒いストランドに巻かれたコンコードのフリゲートが、ノットの空いっぱいに浮かぶ。その下の床にヘスパー。" data-alt-tr="Siyah ipliklere sarılmış bir Concord fırkateyni Düğüm'ün gökyüzünü dolduruyor; aşağıdaki zeminde Hesper."><span class="cap"><span class="l-en">The Knot: a Concord frigate</span><span class="l-ja" lang="ja">ノット：コンコードのフリゲート</span><span class="l-tr" lang="tr">Düğüm: bir Concord fırkateyni</span></span></a>
+      <a href="public/shots/quench-platform.png" data-shot="quench-platform"><img class="px" src="public/shots/1x/quench-platform.png" width="320" height="180" loading="lazy" alt="Hesper on top of a creature hanging from a thread that she has frozen into glass, a step up; the prompt reads KINDLE IT, QUENCH IT, CLIMB ON." data-alt-ja="糸にぶら下がった生き物をガラスに凍らせ、その上に乗るヘスパー。表示は「KINDLE IT, QUENCH IT, CLIMB ON」。" data-alt-tr="İpte sallanan bir yaratığı cama dondurup üstüne çıkan Hesper; ekrandaki yazı KINDLE IT, QUENCH IT, CLIMB ON."><span class="cap"><span class="l-en">Kindle it, quench it, climb on</span><span class="l-ja" lang="ja">点火して冷却、上に乗れ</span><span class="l-tr" lang="tr">Tutuştur, söndür, üstüne çık</span></span></a>
+      <a href="public/shots/the-six.png" data-shot="the-six"><img class="px" src="public/shots/1x/the-six.png" width="320" height="180" loading="lazy" alt="A boss bar named THE SIX across the top of a frozen mess hall; Hesper fires at four crew grown into one body." data-alt-ja="凍った食堂の上部に「THE SIX」のボスゲージ。ヘスパーが、一つの体に育った四人の乗員を撃つ。" data-alt-tr="Donmuş bir yemekhanenin üstünde THE SIX adlı bir patron çubuğu; Hesper tek bir bedene dönüşmüş dört mürettebata ateş ediyor."><span class="cap"><span class="l-en">The Knot: the Six</span><span class="l-ja" lang="ja">ノット：シックス</span><span class="l-tr" lang="tr">Düğüm: Altılar</span></span></a>
+      <a href="public/shots/map.png" data-shot="map"><img class="px" src="public/shots/1x/map.png" width="320" height="180" loading="lazy" alt="The map screen zoomed in on Halm: rooms, doors, beacons and finds drawn in thin blue lines, with MAP 78% and ITEMS 4/7 at the bottom." data-alt-ja="ハルムを拡大した地図画面。部屋、扉、ビーコン、発見物が細い青線で描かれ、下に MAP 78% と ITEMS 4/7。" data-alt-tr="Halm'a yakınlaştırılmış harita ekranı: odalar, kapılar, fenerler ve buluntular ince mavi çizgilerle çizilmiş; altta MAP 78% ve ITEMS 4/7."><span class="cap"><span class="l-en">Halm, the map</span><span class="l-ja" lang="ja">ハルムの地図</span><span class="l-tr" lang="tr">Halm haritası</span></span></a>
+      <a href="public/shots/strand.png" data-shot="strand"><img class="px" src="public/shots/1x/strand.png" width="320" height="180" loading="lazy" alt="Hesper hopping along ledges down the outside of a huge twist of black glass, with golden sunfed knots to work and VERRIN in the corner." data-alt-ja="巨大な黒いガラスのねじれの外側を、足場を跳びながら降りるヘスパー。点火して使う金色の結び目と、隅に「VERRIN」。" data-alt-tr="Kocaman bir kara cam bükümünün dışında çıkıntılardan sekerek inen Hesper; üzerinde çalışılacak altın renkli güneşbesili düğümler ve köşede VERRIN."><span class="cap"><span class="l-en">The strand, the Knot to Verrin</span><span class="l-ja" lang="ja">ストランド、ノットからヴェリンへ</span><span class="l-tr" lang="tr">İplik, Düğüm'den Verrin'e</span></span></a>
+      <a href="public/shots/hollow-bell.png" data-shot="hollow-bell"><img class="px" src="public/shots/1x/hollow-bell.png" width="320" height="180" loading="lazy" alt="Under the ice of Verrin, Hesper looks up at the Hollow Bell, a violet glass bell hung in a ribbed cavern." data-alt-ja="ヴェリンの氷の下、あばら骨のような洞窟に吊られた紫のガラスの鐘、うつろの鐘を見上げるヘスパー。" data-alt-tr="Verrin'in buzunun altında, kaburga gibi kemerli bir mağarada asılı mor camdan çan olan Oyuk Çan'a bakan Hesper."><span class="cap"><span class="l-en">Verrin, the Hollow Bell</span><span class="l-ja" lang="ja">ヴェリン、うつろの鐘</span><span class="l-tr" lang="tr">Verrin, Oyuk Çan</span></span></a>
+      <a href="public/shots/gantry.png" data-shot="gantry"><img class="px" src="public/shots/1x/gantry.png" width="320" height="180" loading="lazy" alt="THE GANTRY in its foundry: a steel gantry frame above a press, with Hesper's Charge Mortar shell bursting on it." data-alt-ja="鋳造所の「THE GANTRY」。プレスの上の鋼のガントリー枠に、ヘスパーのチャージ・モーターの砲弾が炸裂する。" data-alt-tr="Dökümhanede THE GANTRY: bir presin üstünde çelik bir vinç çerçevesi; Hesper'in Charge Mortar mermisi üzerinde patlıyor."><span class="cap"><span class="l-en">Carcanet, the Gantry</span><span class="l-ja" lang="ja">カーカネット、ガントリー</span><span class="l-tr" lang="tr">Carcanet, Gezer Vinç</span></span></a>
+    </div>
+  </div>
+</section>
+
+<div class="vein ember" aria-hidden="true"></div>
+
+<section id="facts" aria-labelledby="facts-h">
+  <div class="wrap">
+    <div class="sec-head"><h2 id="facts-h" class="pix"><span class="l-en">Facts</span><span class="l-ja" lang="ja">概要</span><span class="l-tr" lang="tr">Bilgiler</span></h2></div>
+    <div class="sheet panel">
+      <dl>
+        <dt><span class="l-en">Developer</span><span class="l-ja" lang="ja">開発</span><span class="l-tr" lang="tr">Geliştirici</span></dt><dd><span class="l-en">Gand, an independent studio in Istanbul and Tokyo (est. 2025)</span><span class="l-ja" lang="ja">Gand（イスタンブールと東京のインディースタジオ、2025年設立）</span><span class="l-tr" lang="tr">Gand, İstanbul ve Tokyo'da bağımsız bir stüdyo (2025'te kuruldu)</span></dd>
+        <dt><span class="l-en">Publisher</span><span class="l-ja" lang="ja">販売</span><span class="l-tr" lang="tr">Yayıncı</span></dt><dd><span class="l-en">Gand (self-published)</span><span class="l-ja" lang="ja">Gand（セルフパブリッシング）</span><span class="l-tr" lang="tr">Gand (kendi yayını)</span></dd>
+        <dt><span class="l-en">Store</span><span class="l-ja" lang="ja">ストア</span><span class="l-tr" lang="tr">Mağaza</span></dt><dd><span class="if-soon"><span class="l-en">Steam, app 5461390</span><span class="l-ja" lang="ja">Steam、アプリ 5461390</span><span class="l-tr" lang="tr">Steam, uygulama 5461390</span></span><a class="if-live" data-steam="store"><span class="l-en">Steam, app 5461390</span><span class="l-ja" lang="ja">Steam、アプリ 5461390</span><span class="l-tr" lang="tr">Steam, uygulama 5461390</span></a></dd>
+        <dt><span class="l-en">Genre</span><span class="l-ja" lang="ja">ジャンル</span><span class="l-tr" lang="tr">Tür</span></dt><dd><span class="l-en">Metroidvania, action platformer, sci-fi</span><span class="l-ja" lang="ja">メトロイドヴァニア、アクションプラットフォーマー、SF</span><span class="l-tr" lang="tr">Metroidvania, aksiyon platform, bilimkurgu</span></dd>
+        <dt><span class="l-en">Setting</span><span class="l-ja" lang="ja">舞台</span><span class="l-tr" lang="tr">Evren</span></dt><dd><span class="l-en">The HELIOBANE universe, seven years after HELIOBANE</span><span class="l-ja" lang="ja">ヘリオベインの世界、ヘリオベインから七年後</span><span class="l-tr" lang="tr">HELIOBANE evreni, HELIOBANE'den yedi yıl sonra</span></dd>
+        <dt><span class="l-en">Platforms</span><span class="l-ja" lang="ja">対応</span><span class="l-tr" lang="tr">Platformlar</span></dt><dd><span class="l-en">Windows, macOS and Linux (64-bit), SteamOS / Steam Deck (native Linux build)</span><span class="l-ja" lang="ja">Windows、macOS、Linux（64ビット）、SteamOS / Steam Deck（ネイティブLinux版）</span><span class="l-tr" lang="tr">Windows, macOS ve Linux (64 bit), SteamOS / Steam Deck (yerel Linux sürümü)</span></dd>
+        <dt><span class="l-en">Engine</span><span class="l-ja" lang="ja">エンジン</span><span class="l-tr" lang="tr">Motor</span></dt><dd><span class="l-en">Godot 4.7 (GDScript), GL Compatibility renderer</span><span class="l-ja" lang="ja">Godot 4.7（GDScript）、GL Compatibilityレンダラー</span><span class="l-tr" lang="tr">Godot 4.7 (GDScript), GL Compatibility oluşturucu</span></dd>
+        <dt><span class="l-en">Players</span><span class="l-ja" lang="ja">プレイ人数</span><span class="l-tr" lang="tr">Oyuncu</span></dt><dd><span class="l-en">Single-player</span><span class="l-ja" lang="ja">1人</span><span class="l-tr" lang="tr">Tek oyunculu</span></dd>
+        <dt><span class="l-en">Release</span><span class="l-ja" lang="ja">発売</span><span class="l-tr" lang="tr">Çıkış</span></dt><dd><span class="l-en">Coming soon</span><span class="l-ja" lang="ja">近日公開</span><span class="l-tr" lang="tr">Yakında</span></dd>
+        <dt><span class="l-en">Demo</span><span class="l-ja" lang="ja">体験版</span><span class="l-tr" lang="tr">Demo</span></dt><dd><span class="if-soon"><span class="l-en">Free, Steam app 5461420: Halm, the first world</span><span class="l-ja" lang="ja">無料、Steamアプリ 5461420：最初の世界ハルム</span><span class="l-tr" lang="tr">Ücretsiz, Steam uygulaması 5461420: ilk dünya Halm</span></span><a class="if-live" data-steam="demo"><span class="l-en">Free, Steam app 5461420: Halm, the first world</span><span class="l-ja" lang="ja">無料、Steamアプリ 5461420：最初の世界ハルム</span><span class="l-tr" lang="tr">Ücretsiz, Steam uygulaması 5461420: ilk dünya Halm</span></a></dd>
+        <dt><span class="l-en">Price</span><span class="l-ja" lang="ja">価格</span><span class="l-tr" lang="tr">Fiyat</span></dt><dd><span class="l-en">To be announced</span><span class="l-ja" lang="ja">未定</span><span class="l-tr" lang="tr">Açıklanacak</span></dd>
+        <dt><span class="l-en">Languages</span><span class="l-ja" lang="ja">言語</span><span class="l-tr" lang="tr">Diller</span></dt><dd><span class="l-en">English, Japanese, Turkish (text); English and Japanese voice</span><span class="l-ja" lang="ja">日本語、英語、トルコ語（テキスト）／日本語、英語（音声）</span><span class="l-tr" lang="tr">İngilizce, Japonca, Türkçe (metin); İngilizce ve Japonca (ses)</span></dd>
+        <dt><span class="l-en">Controls</span><span class="l-ja" lang="ja">操作</span><span class="l-tr" lang="tr">Kontroller</span></dt><dd><span class="l-en">Gamepad first; keyboard; full remapping</span><span class="l-ja" lang="ja">パッド優先、キーボード、すべて割り当て変更可能</span><span class="l-tr" lang="tr">Önce kumanda; klavye; her şey yeniden atanabilir</span></dd>
+        <dt><span class="l-en">Picture</span><span class="l-ja" lang="ja">画面</span><span class="l-tr" lang="tr">Görüntü</span></dt><dd><span class="l-en">320×180, 32 colours, 60 updates a second</span><span class="l-ja" lang="ja">320×180、32色、毎秒60回の更新</span><span class="l-tr" lang="tr">320×180, 32 renk, saniyede 60 güncelleme</span></dd>
+        <dt><span class="l-en">Press kit</span><span class="l-ja" lang="ja">プレスキット</span><span class="l-tr" lang="tr">Basın kiti</span></dt><dd><a href="press-kit/">farstrand.gand.games/press-kit/</a></dd>
+      </dl>
+    </div>
+    <!-- TODO (lead): press-kit/ does not exist yet; sync the press kit from farstrand-press-kit before the site goes live. -->
+    <p class="links">
+      <span class="if-soon dim"><span class="l-en">Steam</span><span class="l-ja" lang="ja">Steam</span><span class="l-tr" lang="tr">Steam</span></span><a class="if-live" data-steam="store">Steam</a>
+      <a href="https://heliobane.gand.games/"><span class="l-en">HELIOBANE</span><span class="l-ja" lang="ja">ヘリオベイン</span><span class="l-tr" lang="tr">HELIOBANE</span></a>
+      <a href="https://gand.games/">Gand Games</a>
+      <a href="press-kit/"><span class="l-en">Press kit</span><span class="l-ja" lang="ja">プレスキット</span><span class="l-tr" lang="tr">Basın kiti</span></a>
+      <a href="privacy/"><span class="l-en">Privacy</span><span class="l-ja" lang="ja">プライバシー</span><span class="l-tr" lang="tr">Gizlilik</span></a>
+    </p>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="FARSTRAND"><img class="px" src="public/art/hesper-icon.png" width="16" height="32" alt=""><span>FARSTRAND</span></a>
+    <p>© 2026 Gand.</p>
+  </div>
+</footer>
+
+<dialog class="viewer" id="viewer" aria-labelledby="v-cap">
+  <div class="v-in">
+    <button type="button" class="v-btn v-close" data-v="close" aria-label="Close"><svg width="16" height="16" viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M0 0h2v1h1v1h2V1h1V0h2v2H7v1H6v2h1v1h1v2H6V7H5V6H3v1H2v1H0V6h1V5h1V3H1V2H0z"/></svg></button>
+    <img id="v-img" class="px" src="data:," alt="" width="640" height="360">
+    <div class="v-bar">
+      <p id="v-cap"></p>
+      <button type="button" class="v-btn" data-v="prev" aria-label="Previous"><svg width="16" height="16" viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M5 0h2v8H5V7H4V6H3V5H2V3h1V2h1V1h1z"/></svg></button>
+      <button type="button" class="v-btn" data-v="next" aria-label="Next"><svg width="16" height="16" viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M1 0h2v1h1v1h1v1h1v2H5v1H4v1H3v1H1z"/></svg></button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+(function(){
+  'use strict';
+  var root = document.documentElement;
+  function $(s, c){ return (c || document).querySelector(s); }
+  function $$(s, c){ return Array.prototype.slice.call((c || document).querySelectorAll(s)); }
+  var mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+  function still(){ return !!(mq && mq.matches); }
+
+  /* ── Steam: the store page is not public yet. Set STEAM_LIVE = true to switch every
+        "Coming to Steam" over to the live links (the URLs below carry the Steamworks UTM tags). ── */
+  var STEAM_LIVE = false;
+  var STEAM = {
+    store: 'https://store.steampowered.com/app/5461390/Farstrand/?utm_source=farstrand.gand.games&utm_medium=web&utm_campaign=site&utm_content=farstrand',
+    demo: 'https://store.steampowered.com/app/5461420/?utm_source=farstrand.gand.games&utm_medium=web&utm_campaign=site&utm_content=farstrand'
+  };
+  if (STEAM_LIVE) {
+    root.classList.add('steam-live');
+    $$('a[data-steam]').forEach(function(a){ a.href = STEAM[a.getAttribute('data-steam')]; });
+  }
+
+  /* ── language: EN / 日本語 / TÜRKÇE ── */
+  var LANGS = ['en', 'ja', 'tr'];
+  var TITLES = {
+    en: 'FARSTRAND · a sci-fi metroidvania, seven years after HELIOBANE',
+    ja: 'FARSTRAND · ヘリオベインから七年後のSFメトロイドヴァニア',
+    tr: "FARSTRAND · HELIOBANE'den yedi yıl sonra geçen bir bilimkurgu metroidvania"
+  };
+  var UI = {
+    en: { close: 'Close', prev: 'Previous', next: 'Next', heat: 'HEAT' },
+    ja: { close: '閉じる', prev: '前へ', next: '次へ', heat: '熱' },
+    tr: { close: 'Kapat', prev: 'Önceki', next: 'Sonraki', heat: 'ISI' }
+  };
+  var lang = 'en';
+  var altEn = [];
+  $$('[data-alt-ja]').forEach(function(el){
+    var attr = el.tagName === 'IMG' ? 'alt' : 'aria-label';
+    altEn.push([el, attr, el.getAttribute(attr)]);
+  });
+  var hooks = [];  /* called after every language change */
+  function setLang(l, save){
+    lang = LANGS.indexOf(l) < 0 ? 'en' : l;
+    root.setAttribute('data-lang', lang);
+    root.setAttribute('lang', lang);
+    document.title = TITLES[lang];
+    altEn.forEach(function(p){
+      var v = lang === 'en' ? p[2] : p[0].getAttribute('data-alt-' + lang);
+      p[0].setAttribute(p[1], v === null || v === '' ? p[2] : v);
+    });
+    $$('[data-set-lang]').forEach(function(b){
+      b.setAttribute('aria-pressed', String(b.getAttribute('data-set-lang') === lang));
+    });
+    ['close', 'prev', 'next'].forEach(function(k){
+      var b = $('[data-v=' + k + ']'); if (b) b.setAttribute('aria-label', UI[lang][k]);
+    });
+    hooks.forEach(function(f){ f(); });
+    if (save) { try { localStorage.setItem('fs-lang', lang); } catch(e){} }
+  }
+  var want = null;
+  var q = /[?&]lang=(en|ja|tr)\b/.exec(location.search);
+  if (q) want = q[1];
+  if (!want) { try { want = localStorage.getItem('fs-lang'); } catch(e){} }
+  if (!want) {
+    var nav = (navigator.language || '').toLowerCase();
+    if (/^ja\b/.test(nav)) want = 'ja'; else if (/^tr\b/.test(nav)) want = 'tr';
+  }
+  $$('[data-set-lang]').forEach(function(b){
+    b.addEventListener('click', function(){ setLang(b.getAttribute('data-set-lang'), true); });
+  });
+
+  /* ── logo drop (CSS does nothing under reduced motion) ── */
+  var logo = $('.logo[data-anim]');
+  if (logo) logo.classList.add('go');
+
+  /* ── trailer: until public/trailer.mp4 exists, show the still only ── */
+  var video = $('#trailer-video');
+  function noTrailer(){
+    root.classList.add('no-trailer');
+    video.removeAttribute('controls');
+  }
+  if (video && window.fetch) {
+    fetch('public/trailer.mp4', { method: 'HEAD' }).then(function(r){
+      var type = r.headers.get('content-type') || '';
+      if (!r.ok || type.indexOf('video') !== 0) noTrailer();
+    }).catch(noTrailer);
+  }
+
+  /* ── the heat ladder (GDD §6; the same rules as sim/heat_ladder.gd) ── */
+  var dlg = $('#viewer');
+  var demo = $('#demo'), visible = false;
+  if (demo) (function(){
+    var CAP = 3, heat = 0, mat = 'flesh';
+    var pips = $$('.pip', demo), hesper = $('#hesper'), enemy = $('#enemy'), fx = $('#fx'), lampEl = $('#lamp'), nudgeEl = $('#nudge');
+    var x = 64, dir = 1, tick = 0, pose = 0, blink = 0, burst = 0, fxT = 0, fxKind = '', fxAt = '', nudgeT = 0, nudgeKey = '', lamp = 0;
+    var flash = [0, 0, 0];
+    var raf = 0, last = 0, acc = 0;
+
+    function baseKey(){ return mat === 'glass' ? 'frozen' : (mat === 'sunfed' ? 'sunfed' : ''); }
+    function showNudge(key){
+      nudgeKey = key;
+      var li = key ? $('#nudges [data-n=' + key + ']') : null;
+      nudgeEl.innerHTML = li ? li.innerHTML : '';
+    }
+    function say(key, ms){ nudgeT = ms ? Math.round(ms / 16.667) : 0; showNudge(key); }
+    function heatText(){ $('#heat-sr').textContent = UI[lang].heat + ' ' + heat + '/' + CAP; }
+
+    /* The Graft takes the enemy first (graft.gd); when the enemy has nothing to give (glass, or gone
+       in a burst) it reaches for the lamp-heart, the toy's one heat source: +1 pip, then it is dim for 3 s. */
+    function drain(){
+      if (lamp > 0) return;
+      var before = heat;
+      heat = Math.min(CAP, heat + 1);
+      if (heat > before) flash[before] = 18;
+      heatText();
+      lamp = 180; fxKind = 'frost'; fxAt = 'at-lamp'; fxT = 16;
+      if (before === CAP) say('full', 2600);
+    }
+
+    function act(kind){
+      if (burst > 0 && kind === 'kindle') return;
+      pose = 14;
+      if (kind === 'kindle' && heat < 1) { blink = 40; say('noheat', 2400); return; }
+      var to, dh;
+      if (kind === 'quench') {
+        if (burst > 0 || mat === 'glass') { drain(); return; }  /* nothing colder in the enemy */
+        to = mat === 'sunfed' ? 'flesh' : 'glass'; dh = 1;
+      } else {
+        if (mat === 'glass') { to = 'flesh'; dh = -1; }
+        else if (mat === 'flesh') { to = 'sunfed'; dh = -1; }
+        else { to = 'burst'; dh = -1; }
+      }
+      var before = heat;
+      heat = Math.max(0, Math.min(CAP, heat + dh));
+      for (var i = Math.min(before, heat); i < Math.max(before, heat); i++) flash[i] = 18;
+      heatText();
+      fxAt = '';
+      fxKind = to === 'burst' ? 'burst' : (kind === 'quench' ? 'frost' : 'thaw');
+      fxT = to === 'burst' ? 32 : 16;
+      if (to === 'burst') { burst = 84; mat = 'flesh'; say('burst'); return; }
+      mat = to;
+      if (kind === 'quench' && dh > 0 && before === CAP) say('full', 2600); else say(baseKey());
+    }
+
+    function step(){
+      tick++;
+      if (still()) { x = 80; dir = 1; }
+      else if (mat !== 'glass' && burst <= 0) {
+        x += dir * (mat === 'sunfed' ? 0.75 : 0.5);
+        if (x > 104) { x = 104; dir = -1; } else if (x < 58) { x = 58; dir = 1; }
+      }
+      if (pose > 0) pose--;
+      if (blink > 0) blink--;
+      if (lamp > 0) lamp--;
+      if (fxT > 0) { fxT--; if (fxT === 0) fxKind = ''; }
+      for (var i = 0; i < 3; i++) if (flash[i] > 0) flash[i]--;
+      if (nudgeT > 0 && --nudgeT === 0) showNudge(baseKey());
+      if (burst > 0 && --burst === 0) { mat = 'flesh'; showNudge(''); }
+    }
+
+    function render(){
+      var m = still();
+      pips.forEach(function(p, i){
+        var f = i < heat ? 1 : 0;
+        if (!m && flash[i] > 0 && Math.floor(flash[i] / 3) % 2 === 0) f = 2;
+        else if (!m && blink > 0 && f === 0 && Math.floor(blink / 4) % 2 === 0) f = 3;
+        p.style.setProperty('--f', f);
+      });
+      var gone = burst > 0;
+      enemy.classList.toggle('gone', gone);
+      enemy.classList.toggle('flip', dir < 0);
+      var row = mat === 'glass' ? 1 : (mat === 'sunfed' ? 2 + (Math.floor(tick / 12) % 2) : 0);
+      enemy.style.setProperty('--x', Math.round(x) - 1);
+      enemy.style.setProperty('--fx', (m || mat === 'glass') ? 0 : Math.floor(tick / 7.5) % 4);
+      enemy.style.setProperty('--fy', m && row === 3 ? 2 : row);
+      hesper.classList.toggle('graft', pose > 0);
+      hesper.style.setProperty('--f', pose > 0 ? (pose > 11 ? 0 : (pose > 8 ? 1 : 2)) : (m ? 0 : Math.floor(tick / 15) % 4));
+      var lt = tick % (lamp > 0 ? 90 : 60);
+      lampEl.style.setProperty('--f', (lamp > 0 ? 0 : 1) + (!m && (lt < 5 || (lt >= 10 && lt < 15)) ? 3 : 0));
+      fx.className = 'sprite fx' + (fxKind && !m ? ' ' + fxKind + (fxAt ? ' ' + fxAt : '') : '');
+      if (fxKind) {
+        fx.style.setProperty('--x', Math.round(x) + (fxKind === 'burst' ? 0 : 0));
+        fx.style.setProperty('--f', fxKind === 'burst' ? Math.min(7, Math.floor((32 - fxT) / 4)) : Math.min(3, Math.floor((16 - fxT) / 4)));
+      }
+    }
+
+    function frame(now){
+      if (!visible || document.hidden) { raf = 0; return; }
+      acc += Math.min(50, now - last); last = now;
+      while (acc >= 16.667) { acc -= 16.667; step(); }
+      render();
+      raf = requestAnimationFrame(frame);
+    }
+    function start(){ if (!raf && visible) { last = performance.now(); acc = 0; raf = requestAnimationFrame(frame); } }
+
+    $$('[data-act]', demo).forEach(function(b){
+      b.addEventListener('click', function(){ act(b.getAttribute('data-act')); render(); });
+    });
+    document.addEventListener('keydown', function(ev){
+      if (!visible || ev.ctrlKey || ev.metaKey || ev.altKey || ev.repeat || (dlg && dlg.open)) return;
+      var t = ev.target, tag = t && t.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || (t && t.isContentEditable)) return;
+      var k = (ev.key || '').toLowerCase();
+      if (k === 'q') act('quench'); else if (k === 'k') act('kindle'); else return;
+      render();
+    });
+    document.addEventListener('visibilitychange', start);
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function(es){
+        es.forEach(function(e){ visible = e.isIntersecting; if (visible) start(); });
+      }).observe(demo);
+    } else { visible = true; start(); }
+    hooks.push(function(){ heatText(); showNudge(nudgeKey); });
+    heatText(); render();
+  })();
+
+  /* ── screenshot viewer ── */
+  (function(){
+    if (!dlg || typeof dlg.showModal !== 'function') return;
+    var links = $$('#gallery a[data-shot]');
+    var img = $('#v-img'), cap = $('#v-cap'), bar = $('.v-bar');
+    var idx = 0, opener = null;
+
+    /* Whole-pixel scaling only: the 320x180 file at the largest whole multiple that fits,
+       the 1920x1080 file when that is x6, and below x1 (a very narrow screen) a plain fit. */
+    function fit(){
+      var w = window.innerWidth - 28, h = window.innerHeight - 150;
+      var k = Math.floor(Math.min(w / 320, h / 180));
+      var name = links[idx].getAttribute('data-shot');
+      img.className = 'px';
+      if (k >= 6) { img.src = 'public/shots/' + name + '.png'; img.style.width = '1920px'; img.style.height = '1080px'; }
+      else {
+        img.src = 'public/shots/1x/' + name + '.png';
+        var s = k >= 1 ? k * 320 : Math.max(160, Math.min(w, h * 16 / 9));
+        img.style.width = s + 'px'; img.style.height = (s * 9 / 16) + 'px';
+      }
+      bar.style.width = 'min(100%, ' + (parseFloat(img.style.width) + 4) + 'px)';
+    }
+    function label(){
+      var c = links[idx].querySelector('.cap');
+      cap.textContent = (c.querySelector('.l-' + lang) || c).textContent + '   ' + (idx + 1) + '/' + links.length;
+    }
+    function show(i){
+      idx = (i + links.length) % links.length;
+      fit();
+      img.alt = links[idx].querySelector('img').alt;
+      label();
+    }
+    links.forEach(function(a, i){
+      a.addEventListener('click', function(ev){
+        if (ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.button > 0) return;
+        ev.preventDefault(); opener = a; show(i); dlg.showModal();
+      });
+    });
+    dlg.addEventListener('click', function(ev){
+      var b = ev.target.closest('[data-v]');
+      if (b) { var v = b.getAttribute('data-v'); if (v === 'close') dlg.close(); else show(idx + (v === 'next' ? 1 : -1)); return; }
+      if (ev.target === dlg || ev.target.classList.contains('v-in')) dlg.close();
+    });
+    dlg.addEventListener('keydown', function(ev){
+      if (ev.key === 'ArrowRight') { ev.preventDefault(); show(idx + 1); }
+      else if (ev.key === 'ArrowLeft') { ev.preventDefault(); show(idx - 1); }
+      else if (ev.key === 'Escape') { ev.preventDefault(); dlg.close(); }
+    });
+    dlg.addEventListener('close', function(){ var a = links[idx] || opener; if (a) a.focus(); });
+    window.addEventListener('resize', function(){ if (dlg.open) fit(); });
+    hooks.push(function(){ if (dlg.open) { img.alt = links[idx].querySelector('img').alt; label(); } });
+  })();
+
+  setLang(want, false);
+})();
+</script>
+</body>
+</html>

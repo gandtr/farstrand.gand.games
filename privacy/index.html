@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy policy · FARSTRAND</title>
+<meta name="description" content="Privacy policy for FARSTRAND by Gand: local saves and Steam services.">
+<link rel="canonical" href="https://farstrand.gand.games/privacy/">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="../public/favicon.ico" sizes="16x16 32x32 48x48 64x64">
+<link rel="icon" href="../public/favicon-64.png" type="image/png" sizes="64x64">
+<style>
+@font-face{font-family:"Public Pixel";src:url(../public/fonts/PublicPixel.woff2) format("woff2");font-display:swap}
+@font-face{font-family:"Fira Sans Condensed";src:url(../public/fonts/FiraSansCondensed-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Fira Sans Condensed";src:url(../public/fonts/FiraSansCondensed-SemiBold.woff2) format("woff2");font-weight:600;font-display:swap}
+:root{
+  --void:#0b0b1a; --night:#1a1c2c; --steel1:#2b2f4a; --steel2:#3e4a6b; --steel4:#8aa4d6; --ice:#cfe0ff;
+  --umber0:#1b1410; --umber2:#6b3e12; --umber3:#a8641a; --amber:#e09a2a; --pale:#fff3a8; --cyan:#20e0ff;
+  --px:"Public Pixel","Fira Sans Condensed",ui-monospace,monospace;
+  --body:"Fira Sans Condensed","Arial Narrow",sans-serif;
+}
+*{box-sizing:border-box}
+html{background:var(--void);color:var(--ice)}
+body{margin:0;font:18px/1.6 var(--body);overflow-x:hidden}
+.bar{height:22px;background:url(../public/art/vein-frost.png) repeat-x 0 0/320px 22px;image-rendering:pixelated}
+main{max-width:760px;margin:0 auto;padding:40px 16px 64px}
+a{color:var(--amber)}
+a:hover{color:var(--pale)}
+a:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.back{font:8px/16px var(--px);text-transform:uppercase;text-decoration:none}
+h1{font:24px/32px var(--px);color:var(--ice);margin:24px 0 8px;text-transform:uppercase;overflow-wrap:anywhere}
+h2{font:16px/24px var(--px);color:var(--amber);margin:40px 0 8px;text-transform:uppercase}
+strong{font-weight:600;color:#fff}
+.meta{color:var(--steel4);margin:0 0 24px}
+.lead{font-size:21px;color:#fff}
+.paths{overflow-wrap:anywhere}
+.paths code{font:15px/1.5 ui-monospace,monospace;color:var(--pale)}
+ul{padding-left:1.2em}
+li{margin:4px 0}
+.todo{margin:16px 0;padding:10px 14px;border:2px dashed var(--amber);background:var(--umber0);color:var(--pale)}
+footer{border-top:2px solid var(--steel2);margin-top:48px;padding-top:16px;color:var(--steel4);font-size:16px}
+</style>
+</head>
+<body>
+<div class="bar" aria-hidden="true"></div>
+<main>
+<a class="back" href="../">← FARSTRAND</a>
+<h1>Privacy policy</h1>
+<p class="meta">FARSTRAND by Gand · Effective 17 October 2026</p>
+
+<p class="lead">Saves and settings stay on your device. FARSTRAND has no ads, analytics or tracking, and the game does not send data to any server run by Gand. Steam, which runs the game, communicates with Valve as described below.</p>
+
+<p>This policy covers FARSTRAND on Steam, for Windows, macOS, Linux and the Steam Deck: the full game and the free demo. FARSTRAND is made and published by Gand, an independent studio in Istanbul and Tokyo.</p>
+<p class="todo">TODO (lead): this assumes Steam is the only storefront at launch. If FARSTRAND ships anywhere else (itch.io, Epic, GOG), add a section for that store's sign-in, purchase and achievement handling, as HELIOBANE's policy does for Epic.</p>
+
+<h2>What stays on your device</h2>
+<ul>
+  <li><strong>Saves and settings</strong>: your three save slots, your options and the record of your achievements are written to files on your own device. We never receive them.</li>
+  <li><strong>Achievement unlocks</strong>: the game tells Steam when you earn an achievement. If Steam has not confirmed one, the game sends it again later, the next time Steam reports your stats or the next time you launch.</li>
+  <li><strong>Technical files</strong>: the same folder holds the engine's log files and shader cache. They stay on your device.</li>
+</ul>
+<p class="paths">The folder is <code>%APPDATA%\Gand\Farstrand\</code> on Windows, <code>~/Library/Application Support/Gand/Farstrand/</code> on macOS, and <code>~/.local/share/Gand/Farstrand/</code> on Linux and the Steam Deck. The free demo keeps its own folder, <code>Farstrand-Demo</code> in the same place, so a demo save never touches the full game's.</p>
+
+<h2>Steam</h2>
+<p>FARSTRAND runs through Steam. Achievements (the full game has them, the demo does not) and, for the full game, Steam Cloud copies of your saves, settings and achievement record are handled by Valve under the <a href="https://store.steampowered.com/privacy_agreement/">Steam Privacy Policy</a>. The game starts in your Steam language (English, Japanese or Turkish) until you pick one in the options. We receive only the anonymous, aggregate statistics Steam gives every developer.</p>
+<p class="todo">TODO (lead): steam/README.md of the game plans Steam Cloud for the full game only, and no Steamworks app existed at game commit 2e08e64. Confirm that Cloud is switched on at launch, or cut the Cloud wording above.</p>
+
+<h2>The demo's wishlist button</h2>
+<p>At the end of the free demo a button opens the full game's Steam page, in the Steam overlay or in your browser. That is only a link. The game sends nothing when you press it.</p>
+
+<h2>Purchases</h2>
+<p>Steam handles payment. We never see your name, email address or payment details.</p>
+
+<h2>Stores and crash reports</h2>
+<p>Valve may collect information when you download, update or run the game through Steam, for example crash reports and diagnostics you have agreed to share with them. That happens under their own privacy policy, not through the game. Any crash reports they pass on to us contain technical data about the crash only.</p>
+
+<h2>Children</h2>
+<p>FARSTRAND is not directed at children under 13. Steam account services are subject to Valve's privacy policy and account requirements.</p>
+
+<h2>Changes</h2>
+<p>If the game changes how it handles data, we will update this page and the date above before that version is released.</p>
+
+<h2>Contact</h2>
+<p>Questions about privacy: <a href="mailto:contact@gand.games?subject=FARSTRAND%20privacy">contact@gand.games</a></p>
+
+<footer>© 2026 <a href="https://gand.games/">Gand</a> · <a href="../">farstrand.gand.games</a></footer>
+</main>
+</body>
+</html>

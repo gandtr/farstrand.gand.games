@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://farstrand.gand.games/sitemap.xml
