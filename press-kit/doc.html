@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FARSTRAND Press Kit</title>
+<meta name="description" content="A sci-fi metroidvania set seven years after HELIOBANE: map six worlds on frozen star roads with an arm that moves heat.">
+<link rel="canonical" href="https://farstrand.gand.games/press-kit/doc.html">
+<meta name="color-scheme" content="dark">
+<meta property="og:title" content="FARSTRAND Press Kit">
+<meta property="og:description" content="Seven years after HELIOBANE, the roads between the stars have frozen into glass.">
+<meta property="og:image" content="https://farstrand.gand.games/press-kit/social/og_1200x630.png">
+<link rel="icon" href="icons/farstrand_icon_64.png">
+<style>
+/* FARSTRAND press page: the game's 32-colour master palette (assets/palette.hex at 2e08e64), as the site's tokens. */
+@font-face{font-family:"Public Pixel";src:url("fonts/PublicPixel.ttf") format("truetype");font-display:swap}
+@font-face{font-family:"PixelMplus12";src:url("fonts/PixelMplus12-ja.woff2") format("woff2");font-display:swap}
+@font-face{font-family:"Fira Sans Condensed";src:url("fonts/FiraSansCondensed-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Fira Sans Condensed";src:url("fonts/FiraSansCondensed-Italic.woff2") format("woff2");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"Fira Sans Condensed";src:url("fonts/FiraSansCondensed-SemiBold.woff2") format("woff2");font-weight:600;font-display:swap}
+:root{
+  --black:#000000;--void:#0b0b1a;--night:#1a1c2c;--steel1:#2b2f4a;--steel2:#3e4a6b;--steel3:#5b6ea0;--steel4:#8aa4d6;--ice:#cfe0ff;--white:#ffffff;
+  --umber2:#6b3e12;--umber3:#a8641a;--amber:#e09a2a;--gold:#ffd24a;--pale:#fff3a8;--blood0:#3b0d14;--blood1:#7a1a1a;--red:#c8321e;--cyan:#20e0ff;
+  --px:"Public Pixel","Fira Sans Condensed",ui-monospace,monospace;
+  --body:"Fira Sans Condensed","Arial Narrow",sans-serif;
+  --ja-px:"PixelMplus12","Hiragino Sans","Noto Sans JP","Yu Gothic",sans-serif;
+  --ja-body:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic","Meiryo",sans-serif;
+  --k:2;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{background:var(--void);color:var(--ice);-webkit-text-size-adjust:100%;scrollbar-color:var(--steel3) var(--night)}
+body{margin:0;font:400 18px/1.6 var(--body);overflow-x:hidden}
+html[data-lang=ja] body{font-family:var(--ja-body);font-size:16px;line-height:1.85}
+img{max-width:100%;height:auto}
+.px{image-rendering:pixelated;image-rendering:crisp-edges}
+::selection{background:var(--gold);color:var(--void)}
+a{color:var(--amber);text-underline-offset:4px;text-decoration-thickness:2px}
+a:hover{color:var(--pale)}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+p{margin:0 0 1em;max-width:66ch}
+h1,h2,h3{margin:0;font-weight:400}
+strong,b{font-weight:600;color:var(--white)}
+.wrap{max-width:1360px;margin:0 auto;padding:24px 16px 72px}
+/* one language of the three is shown */
+html:not([data-lang=en]) .l-en{display:none!important}
+html:not([data-lang=ja]) .l-ja{display:none!important}
+html:not([data-lang=tr]) .l-tr{display:none!important}
+.pix{font-family:var(--px);font-size:16px;line-height:1.6;overflow-wrap:anywhere}
+.pix:lang(ja){font-family:var(--ja-px);font-size:24px;line-height:1.4}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;font:8px/1.6 var(--px);color:var(--steel4);letter-spacing:.04em}
+.lang{display:inline-flex;gap:6px;flex-wrap:wrap}
+.lang button{font:600 14px/1 var(--body);letter-spacing:.06em;background:var(--night);color:var(--steel4);border:2px solid var(--steel2);padding:10px 12px;cursor:pointer}
+.lang button:lang(ja){font:400 15px/1 var(--ja-body)}
+.lang button[aria-pressed=true]{color:var(--void);background:var(--gold);border-color:var(--gold)}
+header{text-align:center;margin:32px 0 26px}
+header .logo{display:block;margin:0 auto;width:920px;max-width:100%}
+header .sub{margin:18px auto 0;max-width:34em;color:var(--steel4);font-size:16px;line-height:1.7}
+header .sub:lang(ja){font-size:24px}
+.hero{margin:0 auto;width:960px;max-width:100%;border:2px solid var(--black);box-shadow:0 0 0 2px var(--steel2)}
+.hero img{display:block;width:960px;max-width:none}
+section{margin-top:56px}
+h2.pix{font-size:24px;line-height:1.35;color:var(--ice);text-shadow:0 3px 0 var(--steel1);margin-bottom:22px}
+h2.pix:lang(ja){font-size:24px}
+h2.pix::after{content:"";display:block;width:96px;height:4px;margin-top:12px;background:linear-gradient(90deg,var(--amber) 0 32px,var(--umber3) 32px 64px,var(--umber2) 64px 96px)}
+h2 .n{color:var(--umber3);margin-right:14px}
+h3.pix{font-size:16px;color:var(--gold);margin:0 0 10px}
+h3.pix:lang(ja){font-size:24px}
+.panel{background:var(--night);border:2px solid var(--black);box-shadow:inset 2px 2px 0 var(--steel3),inset -2px -2px 0 var(--steel1);padding:18px 20px}
+.panel p{margin:0}
+.cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:36px;align-items:start}
+table.facts{width:100%;border-collapse:collapse;background:var(--night);font-size:16px}
+table.facts th,table.facts td{border:1px solid var(--steel1);padding:8px 12px;text-align:left;vertical-align:top;overflow-wrap:anywhere}
+table.facts th{color:var(--steel4);font-weight:400;width:34%}
+table.narrow{max-width:640px}
+.pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-bottom:26px}
+ul.feat{list-style:none;margin:0;padding:0}
+ul.feat li{position:relative;padding-left:24px;margin-bottom:9px;max-width:72ch}
+ul.feat li::before{content:"";position:absolute;left:2px;top:.6em;width:8px;height:8px;background:var(--gold);box-shadow:2px 2px 0 var(--umber3)}
+video{display:block;width:100%;max-width:960px;background:var(--black);border:2px solid var(--steel2)}
+.dl-line{margin-top:10px;max-width:none}
+.note{margin-top:14px;color:var(--steel4);font-size:16px}
+code{font:14px ui-monospace,monospace;color:var(--steel4)}
+.shots{display:grid;grid-template-columns:repeat(auto-fill,320px);justify-content:space-between;gap:16px}
+.shots figure{margin:0;background:var(--night);border:2px solid var(--steel1);width:324px}
+.shots img{display:block;width:320px;height:180px;max-width:none}
+.shots figcaption{font-size:14px;color:var(--steel4);padding:6px 10px}
+.art{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start}
+.art a.k{display:block;border:2px solid var(--steel1)}
+.art a.k img{display:block;max-width:none;width:calc(var(--w) * var(--k) * 1px);height:auto}
+.art a.k.tall img{width:calc(var(--w) * 1px)}
+.dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(380px,100%),1fr));gap:14px;margin-top:18px}
+.dl a.card{display:block;border:2px solid var(--steel1);background:var(--night);padding:14px;color:var(--ice);text-decoration:none}
+.dl a.card:hover,.dl a.card:focus-visible{border-color:var(--gold)}
+.dl .t{display:block;font:8px/1.6 var(--px);color:var(--gold);margin-bottom:6px}
+.dl .d{font-size:15px;color:var(--steel4)}
+.zip{display:inline-block;margin-top:12px;font:8px/1.8 var(--px);padding:16px 20px;background:var(--gold);color:var(--void);text-decoration:none;box-shadow:4px 4px 0 var(--umber3)}
+.zip:lang(ja){font:16px/1.8 var(--ja-px)}
+.zip:hover,.zip:focus-visible{background:var(--pale);color:var(--void)}
+footer{margin-top:64px;padding-top:16px;border-top:2px solid var(--steel1);font-size:14px;color:var(--steel3)}
+@media (max-width:1040px){:root{--k:2}.hero,.hero img{width:640px}header .logo{width:460px}.cols{grid-template-columns:1fr}.pillars{grid-template-columns:1fr}}
+@media (max-width:700px){:root{--k:1}.hero,.hero img{width:320px}header .logo{width:230px}body{font-size:17px}h2.pix{font-size:16px}h2.pix:lang(ja){font-size:24px}
+  .shots{justify-content:center}.shots figure{width:324px;max-width:100%}.wrap{padding:16px 16px 56px}table.facts{font-size:15px}table.facts th{width:38%}}
+.pix:lang(tr){font-family:var(--body);font-weight:600;letter-spacing:.02em}
+h2.pix:lang(tr){font-size:30px;line-height:1.3}
+h3.pix:lang(tr){font-size:21px}
+header .sub:lang(tr){font-size:22px;line-height:1.5;font-weight:400}
+@media (max-width:700px){h2.pix:lang(tr){font-size:24px}}
+@media print{.lang{display:none}}
+
+</style>
+<script>
+  (function () {
+    var q = new URLSearchParams(location.search).get("lang");
+    var nav = (navigator.language || "").slice(0, 2);
+    var l = ["en", "ja", "tr"].indexOf(q) >= 0 ? q : (nav === "ja" || nav === "tr" ? nav : "en");
+    document.documentElement.dataset.lang = l;
+    document.documentElement.lang = l;
+  })();
+</script>
+</head>
+<body>
+<div class="wrap">
+  <div class="bar"><span>GAND · PRESS KIT</span><span class="lang" role="group" aria-label="Language"><button type="button" data-set="en">ENGLISH</button><button type="button" data-set="ja" lang="ja">日本語</button><button type="button" data-set="tr" lang="tr">TÜRKÇE</button></span></div>
+  <header>
+    <img class="logo px" src="logo/farstrand_lockup_4x.png" width="920" height="232" alt="FARSTRAND, A HELIOBANE METROIDVANIA">
+    <p class="l-en sub pix">Seven years after HELIOBANE, the roads between the stars have frozen into glass.</p><p class="l-ja sub pix" lang="ja">ヘリオベインから七年。星々を結ぶ道は、凍ってガラスになった。</p><p class="l-tr sub pix" lang="tr">HELIOBANE&#x27;den yedi yıl sonra, yıldızlar arasındaki yollar donup cama döndü.</p>
+  </header>
+  <div class="hero"><img class="px" src="key-art/key_art_no_logo.png" width="1920" height="1080" alt="FARSTRAND key art: Hesper Lind on a ridge of black glass, her glass arm veined with gold, Bob at her shoulder, a red dwarf behind her and a thin strand rising into the dark" data-alt-ja="FARSTRAND のキーアート：黒いガラスの尾根に立つヘスパー・リンド。金の筋が走るガラスの腕、肩のそばのボブ、背後の赤色矮星、闇へ伸びる細いストランド" data-alt-tr="FARSTRAND ana görseli: kara cam bir kayalıkta Hesper Lind, altın damarlı cam kolu, omzunun yanında Bob, arkasında kızıl bir cüce ve karanlığa yükselen ince bir iplik"></div>
+<section id="fact"><h2 class="pix"><span class="n">01</span><span class="l-en">FACT SHEET</span><span class="l-ja" lang="ja">ファクトシート</span><span class="l-tr" lang="tr">Bilgi sayfası</span></h2><div class="cols"><div><table class="facts l-en"><tr><th>Developer</th><td>Gand, an independent studio in Istanbul and Tokyo (est. 2025)</td></tr>
+<tr><th>Publisher</th><td>Gand (self-published)</td></tr>
+<tr><th>Store</th><td><a href="https://store.steampowered.com/app/5461390/">Steam, app 5461390</a></td></tr>
+<tr><th>Genre</th><td>Metroidvania, action platformer, sci-fi</td></tr>
+<tr><th>Setting</th><td>The HELIOBANE universe, seven years after HELIOBANE</td></tr>
+<tr><th>Platforms</th><td>Windows, macOS and Linux (64-bit), SteamOS / Steam Deck (native Linux build)</td></tr>
+<tr><th>Engine</th><td>Godot 4.7 (GDScript), GL Compatibility renderer</td></tr>
+<tr><th>Players</th><td>Single-player</td></tr>
+<tr><th>Release</th><td>Coming soon</td></tr>
+<tr><th>Demo</th><td>Free, <a href="https://store.steampowered.com/app/5461420/">Steam app 5461420</a>: Halm, the first world</td></tr>
+<tr><th>Price</th><td>To be announced</td></tr>
+<tr><th>Languages</th><td>English, Japanese, Turkish (text); English and Japanese voice</td></tr>
+<tr><th>Controls</th><td>Gamepad first; keyboard; full remapping</td></tr>
+<tr><th>Picture</th><td>320×180, 32 colours, 60 updates a second</td></tr>
+<tr><th>Press kit</th><td><a href="https://farstrand.gand.games/press-kit/">farstrand.gand.games/press-kit/</a></td></tr>
+<tr><th>Website</th><td><a href="https://farstrand.gand.games">farstrand.gand.games</a></td></tr>
+<tr><th>Press contact</th><td><a href="mailto:contact@gand.games">contact@gand.games</a></td></tr></table><table class="facts l-ja" lang="ja"><tr><th>開発</th><td>Gand（イスタンブールと東京のインディースタジオ、2025年設立）</td></tr>
+<tr><th>販売</th><td>Gand（セルフパブリッシング）</td></tr>
+<tr><th>ストア</th><td><a href="https://store.steampowered.com/app/5461390/">Steam、アプリ 5461390</a></td></tr>
+<tr><th>ジャンル</th><td>メトロイドヴァニア、アクションプラットフォーマー、SF</td></tr>
+<tr><th>舞台</th><td>ヘリオベインの世界、ヘリオベインから七年後</td></tr>
+<tr><th>対応</th><td>Windows、macOS、Linux（64ビット）、SteamOS / Steam Deck（ネイティブLinux版）</td></tr>
+<tr><th>エンジン</th><td>Godot 4.7（GDScript）、GL Compatibilityレンダラー</td></tr>
+<tr><th>プレイ人数</th><td>1人</td></tr>
+<tr><th>発売</th><td>近日公開</td></tr>
+<tr><th>体験版</th><td>無料、<a href="https://store.steampowered.com/app/5461420/">Steamアプリ 5461420</a>：最初の世界ハルム</td></tr>
+<tr><th>価格</th><td>未定</td></tr>
+<tr><th>言語</th><td>日本語、英語、トルコ語（テキスト）／日本語、英語（音声）</td></tr>
+<tr><th>操作</th><td>パッド優先、キーボード、すべて割り当て変更可能</td></tr>
+<tr><th>画面</th><td>320×180、32色、毎秒60回の更新</td></tr>
+<tr><th>プレスキット</th><td><a href="https://farstrand.gand.games/press-kit/">farstrand.gand.games/press-kit/</a></td></tr>
+<tr><th>公式サイト</th><td><a href="https://farstrand.gand.games">farstrand.gand.games</a></td></tr>
+<tr><th>取材窓口</th><td><a href="mailto:contact@gand.games">contact@gand.games</a></td></tr></table><table class="facts l-tr" lang="tr"><tr><th>Geliştirici</th><td>Gand, İstanbul ve Tokyo&#x27;da bağımsız bir stüdyo (2025&#x27;te kuruldu)</td></tr>
+<tr><th>Yayıncı</th><td>Gand (kendi yayını)</td></tr>
+<tr><th>Mağaza</th><td><a href="https://store.steampowered.com/app/5461390/">Steam, uygulama 5461390</a></td></tr>
+<tr><th>Tür</th><td>Metroidvania, aksiyon platform, bilimkurgu</td></tr>
+<tr><th>Evren</th><td>HELIOBANE evreni, HELIOBANE&#x27;den yedi yıl sonra</td></tr>
+<tr><th>Platformlar</th><td>Windows, macOS ve Linux (64 bit), SteamOS / Steam Deck (yerel Linux sürümü)</td></tr>
+<tr><th>Motor</th><td>Godot 4.7 (GDScript), GL Compatibility oluşturucu</td></tr>
+<tr><th>Oyuncu</th><td>Tek oyunculu</td></tr>
+<tr><th>Çıkış</th><td>Yakında</td></tr>
+<tr><th>Demo</th><td>Ücretsiz, <a href="https://store.steampowered.com/app/5461420/">Steam uygulaması 5461420</a>: ilk dünya Halm</td></tr>
+<tr><th>Fiyat</th><td>Açıklanacak</td></tr>
+<tr><th>Diller</th><td>İngilizce, Japonca, Türkçe (metin); İngilizce ve Japonca (ses)</td></tr>
+<tr><th>Kontroller</th><td>Önce kumanda; klavye; her şey yeniden atanabilir</td></tr>
+<tr><th>Görüntü</th><td>320×180, 32 renk, saniyede 60 güncelleme</td></tr>
+<tr><th>Basın kiti</th><td><a href="https://farstrand.gand.games/press-kit/">farstrand.gand.games/press-kit/</a></td></tr>
+<tr><th>Web sitesi</th><td><a href="https://farstrand.gand.games">farstrand.gand.games</a></td></tr>
+<tr><th>Basın iletişimi</th><td><a href="mailto:contact@gand.games">contact@gand.games</a></td></tr></table></div><div><p class="l-en">FARSTRAND is a sci-fi metroidvania set seven years after HELIOBANE. The sun is still going out, and the only roads off its worlds are the ones the hive grew between the stars, frozen now into glass. Hesper Lind, cartographer of the seventh survey, wakes on Halm with an arm of black glass that takes heat and gives it back. Freeze the hive&#x27;s creatures into platforms, grow its buds into bridges, overfeed it until it bursts, and draw the map of six worlds nobody came back from. It stands on its own; HELIOBANE players will hear an old radio in the glass.</p><p class="l-ja" lang="ja">FARSTRANDは、ヘリオベインから七年後を舞台にしたSFメトロイドヴァニアです。太陽はいまも消えかけていて、その世界から出る道は、巣が星々のあいだに育てた道だけ。その道はいま、凍ってガラスになっています。第七測量隊の地図描き、ヘスパー・リンドはハルムで目を覚まします。熱を抜き、熱を返す、黒いガラスの腕とともに。巣の生き物を凍らせて足場に、芽を育てて橋に、与えすぎて破裂させ、誰も帰らなかった六つの世界の地図を描いてください。これだけで遊べますが、ヘリオベインを遊んだ人には、ガラスの中に懐かしい無線が聞こえるはずです。</p><p class="l-tr" lang="tr">FARSTRAND, HELIOBANE&#x27;den yedi yıl sonra geçen bir bilimkurgu metroidvania. Güneş hâlâ sönüyor ve dünyalarından çıkan tek yollar, kovanın yıldızlar arasında büyüttüğü yollar; şimdi donup cama dönmüşler. Yedinci keşif ekibinin haritacısı Hesper Lind, Halm&#x27;da ısıyı alıp geri veren kapkara camdan bir kolla uyanıyor. Kovanın yaratıklarını dondurup platforma, tomurcuklarını büyütüp köprüye çevir, patlayana dek besle ve kimsenin dönmediği altı dünyanın haritasını çiz. Tek başına oynanır; HELIOBANE oynayanlar camın içinde eski bir telsiz duyacak.</p></div></div></section>
+<section id="feat"><h2 class="pix"><span class="n">02</span><span class="l-en">FEATURES</span><span class="l-ja" lang="ja">特徴</span><span class="l-tr" lang="tr">Özellikler</span></h2><div class="pillars"><div class="panel"><div class="l-en"><h3 class="pix">The Graft moves heat</h3><p>Umberflesh comes in three states: sunfed, flesh and glass. Quench takes a step of heat out, Kindle puts one back, and the arm holds only so much. Freeze an enemy and stand on it, or feed it until it bursts.</p></div><div class="l-ja" lang="ja"><h3 class="pix">接ぎ木は熱を動かす</h3><p>アンバーフレッシュには三つの状態があります。陽喰い、肉、ガラス。冷却は熱をひと段階抜き、点火はひと段階戻します。腕が抱えられる熱には限りがあります。敵を凍らせて上に立つか、与えすぎて破裂させるか。</p></div><div class="l-tr" lang="tr"><h3 class="pix">Aşı ısıyı taşır</h3><p>Umberflesh üç halde bulunur: güneşbesili, et ve cam. Söndür bir basamak ısı alır, Tutuştur bir basamak geri koyar, kol da ancak bu kadarını tutar. Bir düşmanı dondur ve üstüne çık, ya da patlayana dek besle.</p></div></div><div class="panel"><div class="l-en"><h3 class="pix">The map is her work</h3><p>Hesper is a surveyor. Rooms are pencilled in as you enter them and inked when you rest at a beacon. The old marks scratched into the glass are the hint system, and you can turn them off.</p></div><div class="l-ja" lang="ja"><h3 class="pix">地図は彼女の仕事</h3><p>ヘスパーは測量士です。部屋は入ると鉛筆書きで描かれ、ビーコンで休むとペン入れされます。ガラスに刻まれた古い印がヒントで、切ることもできます。</p></div><div class="l-tr" lang="tr"><h3 class="pix">Harita onun işi</h3><p>Hesper bir haritacı. Odalar girdiğinde kurşun kalemle çizilir, bir fenerde dinlendiğinde mürekkeplenir. Cama kazınmış eski işaretler ipucu sistemi; istersen kapatırsın.</p></div></div><div class="panel"><div class="l-en"><h3 class="pix">Built for a pad and the Deck</h3><p>Every screen was made at 1280×800 with a pad in hand: on a Steam Deck the 320×180 picture fills the screen at exactly four times size. Everything can be remapped.</p></div><div class="l-ja" lang="ja"><h3 class="pix">パッドとSteam Deckのために</h3><p>すべての画面を、パッドを手に1280×800で作りました。Steam Deckでは320×180の画面がちょうど4倍で全面に映ります。すべて割り当て変更可能です。</p></div><div class="l-tr" lang="tr"><h3 class="pix">Kumanda ve Deck için</h3><p>Her ekran elde bir kumandayla, 1280×800&#x27;de tasarlandı: Steam Deck&#x27;te 320×180&#x27;lik görüntü ekranı tam dört kat büyüklükte doldurur. Her şey yeniden atanabilir.</p></div></div></div><ul class="feat l-en"><li>A metroidvania across six worlds and a hub, with a Herald in each world</li><li>The Graft: Quench and Kindle work on enemies, walls and buds; Overfeed bursts a sunfed enemy</li><li>Nine guns in three damage types, a weapon wheel, and Aurum to spend at Old Mott&#x27;s stall</li><li>Bob the drone: Soundings, vents, switches, and later a swap</li><li>A map that draws real rooms in pencil until you rest at a beacon, with an old-marks hint system you can turn off</li><li>Story, Normal and Hard, plus four assists you can turn on one at a time: damage taken, boss telegraphs, hazards, healing drops</li><li>320×180 pixels, 32 colours, tracker music, 60 updates a second</li><li>Pad first, made for the Steam Deck: its 1280×800 screen shows the game at exactly four times size. Everything is remappable</li><li>English, Japanese and Turkish text. The prologue is narrated in all three; Old Mott, Josef Kell and the Worn speak English and Japanese</li></ul><ul class="feat l-ja" lang="ja"><li>六つの世界にまたがるメトロイドヴァニア。それぞれにヘラルドがいて、戻ってくるハブがある</li><li>接ぎ木：冷却と点火は敵にも壁にも芽にも効き、過剰に与えると陽喰いの敵が破裂する</li><li>三種類のダメージにわたる9丁の銃、武器ホイール、オールド・モットの店で使うオーラム</li><li>ドローンのボブ：探響、通気口、スイッチ、そしてのちに入れ替え</li><li>ビーコンで休むまで鉛筆書きの、本物の部屋を描く地図。切れる「古い印」のヒント</li><li>ストーリー、ノーマル、ハード。加えて、ひとつずつ切り替えられる四つのアシスト：被ダメージ、ボスの予兆、ハザード、回復ドロップ</li><li>320×180ピクセル、32色、トラッカー音楽、毎秒60回の更新</li><li>パッド優先、Steam Deck向けに設計：1280×800の画面にちょうど4倍で映り、黒帯はなし。すべて割り当て変更可能</li><li>日本語、英語、トルコ語のテキスト。プロローグは三言語すべてでナレーション付き。オールド・モット、ヨーゼフ・ケル、纏われし者たちは日本語と英語で話します</li></ul><ul class="feat l-tr" lang="tr"><li>Altı dünyaya yayılan bir metroidvania: her birinde bir Haberci, dönüp gelinecek bir merkez</li><li>Aşı: Söndür ve Tutuştur düşmanlarda, duvarlarda ve tomurcuklarda işe yarar; Aşırı Besle güneşbesili bir düşmanı patlatır</li><li>Üç hasar türünde 9 silah, bir silah çarkı ve Yaşlı Mott&#x27;un tezgâhında harcanacak Aurum</li><li>Dron Bob: İskandil, delikler, düğmeler ve sonradan bir yer değiştirme</li><li>Bir fenerde dinlenene kadar kurşun kalemle çizilen, gerçek odaları gösteren harita; kapatılabilen eski işaretler ipucu sistemi</li><li>Hikâye, Normal ve Zor; ayrıca tek tek açılabilen dört yardım: alınan hasar, patron uyarıları, tehlikeler, düşmanlardan düşen iyileştirme öğeleri</li><li>320×180 piksel, 32 renk, tracker müziği, saniyede 60 güncelleme</li><li>Önce kumanda düşünülerek, Steam Deck için tasarlandı: 1280×800 ekranı oyunu tam dört kat büyüklükte ve siyah çubuk olmadan gösterir. Her şey yeniden atanabilir</li><li>İngilizce, Türkçe ve Japonca metin. Prolog üç dilde seslendirilmiş; Yaşlı Mott, Josef Kell ve Giyilmişler İngilizce ve Japonca konuşur</li></ul></section>
+<section id="trailer"><h2 class="pix"><span class="n">03</span><span class="l-en">TRAILER</span><span class="l-ja" lang="ja">トレーラー</span><span class="l-tr" lang="tr">Fragman</span></h2><video controls preload="none" poster="video/poster.jpg"><source src="video/farstrand-trailer.mp4" type="video/mp4"><source src="../public/trailer.mp4" type="video/mp4"><track kind="captions" srclang="en" label="English" src="video/farstrand-trailer.en.vtt"></video><p class="dl-line"><span class="l-en"><a href="video/farstrand-trailer.mp4" download>Download the trailer</a> (87 s, 1920×1080, 60 fps, H.264, 52 MB) · <a href="video/farstrand-trailer.en.srt" download>English captions (.srt)</a></span><span class="l-ja" lang="ja"><a href="video/farstrand-trailer.mp4" download>トレーラーをダウンロード</a> (87秒、1920×1080、60fps、H.264、52 MB。画面内の文字と音声は英語) · <a href="video/farstrand-trailer.en.srt" download>英語字幕（.srt）</a></span><span class="l-tr" lang="tr"><a href="video/farstrand-trailer.mp4" download>Fragmanı indir</a> (87 sn, 1920×1080, 60 fps, H.264, 52 MB. Ekrandaki yazılar ve ses İngilizce) · <a href="video/farstrand-trailer.en.srt" download>İngilizce altyazı (.srt)</a></span></p></section>
+<section id="history"><h2 class="pix"><span class="n">04</span><span class="l-en">HISTORY</span><span class="l-ja" lang="ja">経緯</span><span class="l-tr" lang="tr">Geçmiş</span></h2><p class="l-en">FARSTRAND is Gand&#x27;s second game in the HELIOBANE universe, after the shoot &#x27;em up HELIOBANE. It started on 25 September 2026 from one brief: a metroidvania in the same universe, across several planets, in HELIOBANE&#x27;s art style, playable on the Steam Deck from the first build. A short proof of concept on Halm came first; the full game followed in four milestones.</p><p class="l-ja" lang="ja">FARSTRANDは、シューティングゲーム『ヘリオベイン』に続く、Gandのヘリオベイン世界の二作目です。2026年9月25日、ひとつの企画から始まりました。同じ世界で、いくつもの惑星をまたぎ、ヘリオベインの絵柄で、最初のビルドからSteam Deckで遊べるメトロイドヴァニアを。まずハルムの短い試作を作り、四つのマイルストーンでゲーム全体を仕上げました。</p><p class="l-tr" lang="tr">FARSTRAND, Gand&#x27;ın shoot &#x27;em up HELIOBANE&#x27;den sonra HELIOBANE evrenindeki ikinci oyunu. 25 Eylül 2026&#x27;da tek bir fikirle başladı: aynı evrende, birkaç gezegene yayılan, HELIOBANE&#x27;in çizim tarzında ve ilk sürümden beri Steam Deck&#x27;te oynanabilen bir metroidvania. Önce Halm&#x27;da kısa bir prototip yapıldı; oyunun tamamı dört aşamada geldi.</p></section>
+<section id="shots"><h2 class="pix"><span class="n">05</span><span class="l-en">SCREENSHOTS</span><span class="l-ja" lang="ja">スクリーンショット</span><span class="l-tr" lang="tr">Ekran görüntüleri</span></h2><p class="l-en note">Real in-game frames at the game's own 320×180; click for the 1920×1080 (×6) file. The demo's eight are in <code>steam-screenshots/demo/</code>, spares and native 320×180 copies in <code>screenshots/</code>.</p><p class="l-ja note" lang="ja">すべて実際のゲーム画面（320×180）。クリックで 1920×1080（6倍）の画像を開きます。体験版の8枚は <code>steam-screenshots/demo/</code>、予備と等倍の 320×180 版は <code>screenshots/</code> にあります。</p><p class="l-tr note" lang="tr">Oyunun kendi 320×180 çözünürlüğünde gerçek oyun görüntüleri; 1920×1080 (6 kat) dosya için tıkla. Demonun sekizi <code>steam-screenshots/demo/</code> içinde, yedekler ve 320×180 özgün kopyalar <code>screenshots/</code> içinde.</p><div class="shots"><figure><a href="screenshots/01_halm_anchor.png"><img class="px" src="screenshots/native/01_halm_anchor.png" width="320" height="180" loading="lazy" alt="Halm" data-alt-ja="ハルム" data-alt-tr="Halm"></a><figcaption aria-hidden="true"><span class="l-en">Halm</span><span class="l-ja" lang="ja">ハルム</span><span class="l-tr" lang="tr">Halm</span></figcaption></figure>
+<figure><a href="screenshots/02_quench_platform.png"><img class="px" src="screenshots/native/02_quench_platform.png" width="320" height="180" loading="lazy" alt="Quench · The Knot" data-alt-ja="冷却 · ノット" data-alt-tr="Söndür · Düğüm"></a><figcaption aria-hidden="true"><span class="l-en">Quench · The Knot</span><span class="l-ja" lang="ja">冷却 · ノット</span><span class="l-tr" lang="tr">Söndür · Düğüm</span></figcaption></figure>
+<figure><a href="screenshots/03_kindle_bridge.png"><img class="px" src="screenshots/native/03_kindle_bridge.png" width="320" height="180" loading="lazy" alt="Kindle · Halm" data-alt-ja="点火 · ハルム" data-alt-tr="Tutuştur · Halm"></a><figcaption aria-hidden="true"><span class="l-en">Kindle · Halm</span><span class="l-ja" lang="ja">点火 · ハルム</span><span class="l-tr" lang="tr">Tutuştur · Halm</span></figcaption></figure>
+<figure><a href="screenshots/04_overfeed_burst.png"><img class="px" src="screenshots/native/04_overfeed_burst.png" width="320" height="180" loading="lazy" alt="Overfeed · Verrin" data-alt-ja="過剰供給 · ヴェリン" data-alt-tr="Aşırı Besle · Verrin"></a><figcaption aria-hidden="true"><span class="l-en">Overfeed · Verrin</span><span class="l-ja" lang="ja">過剰供給 · ヴェリン</span><span class="l-tr" lang="tr">Aşırı Besle · Verrin</span></figcaption></figure>
+<figure><a href="screenshots/05_the_undertow.png"><img class="px" src="screenshots/native/05_the_undertow.png" width="320" height="180" loading="lazy" alt="The Undertow · Verrin" data-alt-ja="アンダートウ · ヴェリン" data-alt-tr="Çekinti · Verrin"></a><figcaption aria-hidden="true"><span class="l-en">The Undertow · Verrin</span><span class="l-ja" lang="ja">アンダートウ · ヴェリン</span><span class="l-tr" lang="tr">Çekinti · Verrin</span></figcaption></figure>
+<figure><a href="screenshots/06_old_mott.png"><img class="px" src="screenshots/native/06_old_mott.png" width="320" height="180" loading="lazy" alt="Old Mott · The Knot" data-alt-ja="オールド・モット · ノット" data-alt-tr="Yaşlı Mott · Düğüm"></a><figcaption aria-hidden="true"><span class="l-en">Old Mott · The Knot</span><span class="l-ja" lang="ja">オールド・モット · ノット</span><span class="l-tr" lang="tr">Yaşlı Mott · Düğüm</span></figcaption></figure>
+<figure><a href="screenshots/07_sunder_alidade.png"><img class="px" src="screenshots/native/07_sunder_alidade.png" width="320" height="180" loading="lazy" alt="Sunder" data-alt-ja="サンダー" data-alt-tr="Sunder"></a><figcaption aria-hidden="true"><span class="l-en">Sunder</span><span class="l-ja" lang="ja">サンダー</span><span class="l-tr" lang="tr">Sunder</span></figcaption></figure>
+<figure><a href="screenshots/08_the_sexton.png"><img class="px" src="screenshots/native/08_the_sexton.png" width="320" height="180" loading="lazy" alt="The Sexton · Ninth Light" data-alt-ja="墓守 · 第九の光" data-alt-tr="Zangoç · Dokuzuncu Işık"></a><figcaption aria-hidden="true"><span class="l-en">The Sexton · Ninth Light</span><span class="l-ja" lang="ja">墓守 · 第九の光</span><span class="l-tr" lang="tr">Zangoç · Dokuzuncu Işık</span></figcaption></figure>
+<figure><a href="screenshots/09_bob_vent.png"><img class="px" src="screenshots/native/09_bob_vent.png" width="320" height="180" loading="lazy" alt="Bob · Halm" data-alt-ja="ボブ · ハルム" data-alt-tr="Bob · Halm"></a><figcaption aria-hidden="true"><span class="l-en">Bob · Halm</span><span class="l-ja" lang="ja">ボブ · ハルム</span><span class="l-tr" lang="tr">Bob · Halm</span></figcaption></figure>
+<figure><a href="screenshots/10_the_gantry.png"><img class="px" src="screenshots/native/10_the_gantry.png" width="320" height="180" loading="lazy" alt="The Gantry · Carcanet" data-alt-ja="ガントリー · カーカネット" data-alt-tr="Gezer Vinç · Carcanet"></a><figcaption aria-hidden="true"><span class="l-en">The Gantry · Carcanet</span><span class="l-ja" lang="ja">ガントリー · カーカネット</span><span class="l-tr" lang="tr">Gezer Vinç · Carcanet</span></figcaption></figure>
+<figure><a href="screenshots/11_ninth_light_baseline.png"><img class="px" src="screenshots/native/11_ninth_light_baseline.png" width="320" height="180" loading="lazy" alt="Ninth Light" data-alt-ja="第九の光" data-alt-tr="Dokuzuncu Işık"></a><figcaption aria-hidden="true"><span class="l-en">Ninth Light</span><span class="l-ja" lang="ja">第九の光</span><span class="l-tr" lang="tr">Dokuzuncu Işık</span></figcaption></figure>
+<figure><a href="screenshots/12_network_map.png"><img class="px" src="screenshots/native/12_network_map.png" width="320" height="180" loading="lazy" alt="The map" data-alt-ja="地図" data-alt-tr="Harita"></a><figcaption aria-hidden="true"><span class="l-en">The map</span><span class="l-ja" lang="ja">地図</span><span class="l-tr" lang="tr">Harita</span></figcaption></figure></div></section>
+<section id="art"><h2 class="pix"><span class="n">06</span><span class="l-en">ART &amp; LOGOS</span><span class="l-ja" lang="ja">アートとロゴ</span><span class="l-tr" lang="tr">Sanat ve logolar</span></h2><div class="art"><a href="key-art/key_art.png" class="k" style="--w:320;--h:180"><img class="px" src="key-art/key_art_no_logo.png" width="320" height="180" loading="lazy" alt="Key art: Hesper Lind on a ridge of black glass, a red dwarf behind her" data-alt-ja="キーアート：赤色矮星を背にした黒いガラスの尾根のヘスパー・リンド" data-alt-tr="Ana görsel: arkasında kızıl bir cüceyle kara cam bir kayalıkta Hesper Lind"></a>
+<a href="key-art/key_art_road.png" class="k" style="--w:320;--h:180"><img class="px" src="key-art/key_art_road_no_logo.png" width="320" height="180" loading="lazy" alt="Key art: the Plumbline riding a frozen strand, Aurel going out behind it" data-alt-ja="キーアート：凍ったストランドを行くプラムライン号。背後で消えかけるオーレル" data-alt-tr="Ana görsel: donmuş bir ipliğin üstünde Plumbline; arkasında sönen Aurel"></a>
+<a href="key-art/key_art_mott.png" class="k" style="--w:320;--h:180"><img class="px" src="key-art/key_art_mott.png" width="320" height="180" loading="lazy" alt="Key art: Old Mott at his stall in the Knot, the Magpie behind him" data-alt-ja="キーアート：ノットの店先のオールド・モット。後ろにマグパイ号" data-alt-tr="Ana görsel: Düğüm&#x27;deki tezgâhında Yaşlı Mott; arkasında Magpie"></a>
+<a href="key-art/key_art_vertical.png" class="k tall" style="--w:240;--h:360"><img class="px" src="key-art/key_art_vertical.png" width="240" height="360" loading="lazy" alt="Vertical key art with the FARSTRAND logo" data-alt-ja="FARSTRAND ロゴ入りの縦長キーアート" data-alt-tr="FARSTRAND logolu dikey ana görsel"></a></div><div class="dl"><a class="card" href="key-art/key_art_4k.png"><span class="t">KEY-ART</span><span class="d"><span class="l-en">1920×1080, 3840×2160, no-logo and vertical versions; the road; Old Mott&#x27;s stall</span><span class="l-ja" lang="ja">1920×1080、3840×2160、ロゴなし、縦長版、道、オールド・モットの店</span><span class="l-tr" lang="tr">1920×1080, 3840×2160, logosuz ve dikey sürümler; yol; Yaşlı Mott&#x27;un tezgâhı</span></span></a><a class="card" href="logo/farstrand_lockup_8x.png"><span class="t">LOGO</span><span class="d"><span class="l-en">Transparent PNG at ×1 to ×8, the lockup, on dark</span><span class="l-ja" lang="ja">透過 PNG（等倍〜8倍）、ロックアップ、暗色背景版</span><span class="l-tr" lang="tr">1×&#x27;ten 8×&#x27;e şeffaf PNG, logo altı satırıyla sürüm, koyu zeminde</span></span></a><a class="card" href="icons/farstrand_icon_512.png"><span class="t">ICONS</span><span class="d"><span class="l-en">App icon 32–512 px, .ico, community icon</span><span class="l-ja" lang="ja">アプリアイコン 32〜512px、.ico、コミュニティアイコン</span><span class="l-tr" lang="tr">Uygulama simgesi 32–512 px, .ico, topluluk simgesi</span></span></a><a class="card" href="social/og_1200x630.png"><span class="t">SOCIAL</span><span class="d"><span class="l-en">1200×630 link card, 1200×675 card</span><span class="l-ja" lang="ja">1200×630 リンクカード、1200×675 カード</span><span class="l-tr" lang="tr">1200×630 bağlantı kartı, 1200×675 kart</span></span></a><a class="card" href="steam/main_capsule.png"><span class="t">STEAM</span><span class="d"><span class="l-en">Store and library capsules, hero, logo, icons, events, demo set</span><span class="l-ja" lang="ja">ストア・ライブラリ用カプセル、ヒーロー、ロゴ、アイコン、イベント、体験版用</span><span class="l-tr" lang="tr">Mağaza ve kütüphane kapsülleri, hero, logo, simgeler, etkinlik, demo seti</span></span></a><a class="card" href="video/farstrand-trailer.mp4"><span class="t">VIDEO</span><span class="d"><span class="l-en">Trailer, poster, thumbnail, captions</span><span class="l-ja" lang="ja">トレーラー、ポスター、サムネイル、字幕</span><span class="l-tr" lang="tr">Fragman, poster, küçük resim, altyazı</span></span></a></div><p class="l-en note">Pixel art is scaled by whole numbers only. If you resize, use nearest-neighbour, or start from the ×1 files.</p><p class="l-ja note" lang="ja">ドット絵は整数倍でのみ拡大しています。サイズを変える場合はニアレストネイバー法で、または等倍ファイルからどうぞ。</p><p class="l-tr note" lang="tr">Piksel sanat yalnızca tam sayı katlarıyla büyütülür. Yeniden boyutlandırırsan en yakın komşu yöntemini kullan ya da 1× dosyalardan başla.</p><p><a class="zip" href="farstrand-press-kit_2026-10-17.zip" download><span class="l-en">DOWNLOAD EVERYTHING (.ZIP)</span><span class="l-ja" lang="ja">すべてダウンロード（ZIP）</span><span class="l-tr" lang="tr">Hepsini indir (.zip)</span></a></p></section>
+<section id="contact"><h2 class="pix"><span class="n">07</span><span class="l-en">CONTACT</span><span class="l-ja" lang="ja">連絡先</span><span class="l-tr" lang="tr">İletişim</span></h2><table class="facts narrow"><tr><th><span class="l-en">Email</span><span class="l-ja" lang="ja">Email</span><span class="l-tr" lang="tr">Email</span></th><td><a href="mailto:contact@gand.games">contact@gand.games</a></td></tr><tr><th><span class="l-en">Website</span><span class="l-ja" lang="ja">公式サイト</span><span class="l-tr" lang="tr">Web sitesi</span></th><td><a href="https://farstrand.gand.games">farstrand.gand.games</a></td></tr><tr><th>Steam</th><td><a href="https://store.steampowered.com/app/5461390/">FARSTRAND</a> · <a href="https://store.steampowered.com/app/5461420/">FARSTRAND Demo</a></td></tr><tr><th>HELIOBANE</th><td><a href="https://heliobane.gand.games">heliobane.gand.games</a></td></tr><tr><th>Gand Games</th><td><a href="https://gand.games">gand.games</a></td></tr><tr><th>Mastodon</th><td><a href="https://mastodon.social/@gandtr" rel="me">@gandtr@mastodon.social</a></td></tr></table></section>
+  <footer><div class="l-en">FARSTRAND © 2026 Gand. Everything in this kit may be used for coverage, previews, reviews and storefront listings.</div><div class="l-ja" lang="ja">FARSTRAND © 2026 Gand. このキットの素材は、記事、プレビュー、レビュー、ストア掲載に自由にお使いいただけます。</div><div class="l-tr" lang="tr">FARSTRAND © 2026 Gand. Bu kitteki her şey haber, ön izleme, inceleme ve mağaza listeleri için kullanılabilir.</div></footer>
+</div>
+<script>
+  (function () {
+    var root = document.documentElement;
+    var titles = {"en": "FARSTRAND Press Kit", "ja": "FARSTRAND プレスキット", "tr": "FARSTRAND Basın Kiti"};
+    var btns = document.querySelectorAll(".lang button");
+    var imgs = document.querySelectorAll("img[data-alt-ja]");
+    imgs.forEach(function (i) { i.dataset.altEn = i.getAttribute("alt"); });
+    function set(l) {
+      root.dataset.lang = l;
+      root.lang = l;
+      document.title = titles[l];
+      btns.forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.set === l)); });
+      imgs.forEach(function (i) { var a = i.dataset["alt" + l.charAt(0).toUpperCase() + l.slice(1)]; if (a) i.setAttribute("alt", a); });
+    }
+    btns.forEach(function (b) { b.addEventListener("click", function () { set(b.dataset.set); }); });
+    set(root.dataset.lang || "en");
+  })();
+</script>
+</body>
+</html>
