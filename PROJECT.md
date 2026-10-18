@@ -39,7 +39,7 @@ public/
   art/key_art.png           the hero, 320x180 (an exact x6 of press-kit key_art_no_logo.png); key_art_vertical.png
                             240x360 for phones (x5); key_art_road.png 320x180 for #after (the Plumbline on the strand)
   art/                      also game art copied unchanged (logo, portraits, Bob, Hesper, fx, glyphs, lamp-heart, six
-                            strand-end views in worlds/), icon-32.png (press-kit icon, the header brand) and the
+                            the world views in worlds/: each world's far layer under its mid, the Knot's under its frigate vista), icon-32.png (press-kit icon, the header brand) and the
                             pieces built here (frost-vein bars, toy sprites and stage)
   fonts/                    Public Pixel (CC0), Fira Sans Condensed (OFL), PixelMplus12 subset (M+ licence)
 ```
@@ -138,7 +138,7 @@ python3 -m unittest discover -s tests  # the font test fails if a glyph is missi
 - Key art, screenshots, icons: `farstrand-press-kit/press-kit/` (key art and icons at commit `fe8bae5`, the twelve
   screenshots at `6ebd27b`; their README says how they are made). The trailer: `farstrand-trailer` commit `c990f98` (v3.2)
   (`output/farstrand-trailer.mp4`, `output/farstrand-trailer.srt`, `review/poster.jpg`).
-- Facts and art: the game at commit `2e08e64` (the world views at `0f664e1`, the strand pass of 2026-10-18), from a `git archive` snapshot, never its working tree. No patch was
+- Facts and art: the game at commit `2e08e64` (the world views at `0f664e1`: far + mid layers, Arda 2026-10-18), from a `git archive` snapshot, never its working tree. No patch was
   needed, and no Godot was run: the build only reads PNG, JSON and the palette. The toy's rules are
   `sim/heat_ladder.gd`, `game/player/graft.gd`, `sim/material_state.gd`, `game/world/burst.gd`; its captions are
   `i18n/{en,ja,tr}.json` (`nudge.*`); the privacy facts are `steam/README.md`, `game/core/steam_service.gd`,

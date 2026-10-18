@@ -51,12 +51,6 @@ COPIES = {
     "assets/sprites/fx_explode_m.png": "art/fx_explode_m.png",
     "assets/sprites/ui_glyphs_deck.png": "art/glyphs_deck.png",
     "assets/sprites/prop_lamp_heart.png": "art/lamp_heart.png",
-    "assets/backgrounds/bg_strand_end_halm.png": "art/worlds/halm.png",
-    "assets/backgrounds/bg_strand_end_knot.png": "art/worlds/knot.png",
-    "assets/backgrounds/bg_strand_end_verrin.png": "art/worlds/verrin.png",
-    "assets/backgrounds/bg_strand_end_carcanet.png": "art/worlds/carcanet.png",
-    "assets/backgrounds/bg_strand_end_sunder.png": "art/worlds/sunder.png",
-    "assets/backgrounds/bg_strand_end_ninth_light.png": "art/worlds/ninth-light.png",
 }
 
 # assets/enemies/material_tint.gdshader: brightness picks a step of a four-colour ramp
@@ -194,6 +188,31 @@ def site_bits(game: Path) -> None:
             shutil.copy(HELIOBANE_ART / src, PUB / "art" / dst)
 
 
+# the six worlds of #worlds: each world's own far layer (centre 320x208 of 384x208) with a transparent layer over it:
+# its mid (centre crop), or for the Knot the frigate vista its caption names (bg_knot_frigate, 640 wide, x 160..480).
+# The strand ends were used before; their strand filled the middle of every picture (Arda, 2026-10-18).
+WORLD_VIEWS = {"halm": ("halm", "bg_halm_mid", None), "knot": ("knot", "bg_knot_frigate", 160),
+               "verrin": ("verrin", "bg_verrin_mid", None), "carcanet": ("carcanet", "bg_carcanet_mid", None),
+               "sunder": ("sunder", "bg_sunder_mid", None), "ninth-light": ("ninth", "bg_ninth_mid", None)}
+
+
+def world_views(game: Path, pal: set) -> None:
+    def centre(im, x=None):
+        x = (im.width - 320) // 2 if x is None else x
+        return im.crop((x, 0, x + 320, 208))
+
+    for slug, (w, over, ox) in WORLD_VIEWS.items():
+        far = Image.open(game / f"assets/backgrounds/bg_{w}_far.png").convert("RGBA")
+        top = Image.open(game / f"assets/backgrounds/{over}.png").convert("RGBA")
+        assert far.height == top.height == 208, (w, far.size, top.size)
+        img = centre(far)
+        img.alpha_composite(centre(top, ox))
+        dst = PUB / f"art/worlds/{slug}.png"
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        save_png(img, dst)
+        print(f"  world {slug:12s} bg_{w}_far + {over}, off-palette colours {off_palette(Image.open(dst), pal)}")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--game", required=True, type=Path, help="snapshot of the game (git archive 2e08e64)")
@@ -207,6 +226,7 @@ def main() -> None:
         shutil.copy(game / src, PUB / dst)
         bad = off_palette(Image.open(PUB / dst), pal)
         print(f"  copy {dst}" + (f"  ({bad} off-palette colours)" if bad else ""))
+    world_views(game, pal)
     kit = a.press_kit.resolve()
     press_kit_art(kit)
     build_shots(kit / "steam-screenshots", kit / "screenshots")
