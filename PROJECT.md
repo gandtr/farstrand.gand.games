@@ -138,7 +138,7 @@ python3 -m unittest discover -s tests  # the font test fails if a glyph is missi
 - Key art, screenshots, icons: `farstrand-press-kit/press-kit/` (key art and icons at commit `fe8bae5`, the twelve
   screenshots at `6ebd27b`; their README says how they are made). The trailer: `farstrand-trailer` commit `c990f98` (v3.2)
   (`output/farstrand-trailer.mp4`, `output/farstrand-trailer.srt`, `review/poster.jpg`).
-- Facts and art: the game at commit `2e08e64`, from a `git archive` snapshot, never its working tree. No patch was
+- Facts and art: the game at commit `2e08e64` (the world views at `0f664e1`, the strand pass of 2026-10-18), from a `git archive` snapshot, never its working tree. No patch was
   needed, and no Godot was run: the build only reads PNG, JSON and the palette. The toy's rules are
   `sim/heat_ladder.gd`, `game/player/graft.gd`, `sim/material_state.gd`, `game/world/burst.gd`; its captions are
   `i18n/{en,ja,tr}.json` (`nudge.*`); the privacy facts are `steam/README.md`, `game/core/steam_service.gd`,
