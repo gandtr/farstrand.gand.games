@@ -52,7 +52,7 @@ copy. Not checked: Safari and Firefox (Chrome only), a real touch device, a scre
 ## TODOs left in the pages
 
 Visible (privacy page, dashed boxes): Steam Cloud wording to confirm; other storefronts if any. In `index.html`, as HTML
-comments (nothing visible): the trailer's `uploadDate` (left out on purpose); the demo link under the Steam button; `press-kit/`.
+comments (nothing visible): the demo link under the Steam button.
 `python3 -m unittest discover -s tests -v` prints them all.
 
 ## Open for the lead
@@ -60,8 +60,7 @@ comments (nothing visible): the trailer's `uploadDate` (left out on purpose); th
 1. **Steam**: set `STEAM_LIVE = true` in the script when the store page is public (one line; the UTM URLs are in the
    `STEAM` object above it). The demo line under the button stays plain text until you link it.
 2. **Trailer** is in (`public/trailer.mp4` 50 MB, v3.2, `trailer-poster.jpg`, `trailer.en.vtt`; encode lines in `PROJECT.md`). The
-   JSON-LD `VideoObject` has **no `uploadDate`** yet; add the real publication instant with its timezone when the
-   trailer is published (the test accepts it missing and checks it once present). The page names only an English
+   JSON-LD `VideoObject`'s `uploadDate` is the go-live instant, 2026-10-18T12:32:37+09:00 (the test checks it). The page names only an English
    caption track; if the trailer gets Japanese or Turkish captions, give me the files.
 3. **Key art, icons, screenshots** are the press kit's now (hero: `key_art_no_logo` at x3 to x6, the tall one on
    phones; `key_art_road` in `#after`; the twelve store screenshots, plus `halm_map` and `the_six` from the spares; icons

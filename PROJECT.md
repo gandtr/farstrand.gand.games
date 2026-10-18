@@ -179,8 +179,8 @@ ffmpeg -i $T/output/farstrand-trailer.srt public/trailer.en.vtt
 The `<video>` in `#trailer` has `preload="none"`, native controls, the poster and an English captions `<track>` (13
 cues). The script sends a `HEAD` for `trailer.mp4` and falls back to a still (the key art) with a "Trailer coming"
 label when it is missing or not served as `video/*` (checked both ways). The JSON-LD `trailer` VideoObject names
-these files and has **no `uploadDate` yet**: put the real publication instant (with its timezone) there when the
-site and the trailer are live; `tests/test_site.py` accepts its absence and, once present, checks it.
+these files with `uploadDate` 2026-10-18T12:32:37+09:00, the go-live instant; `tests/test_site.py` checks it has a
+timezone and is past.
 
 ## Rebuilding
 

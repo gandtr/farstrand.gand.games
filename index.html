@@ -29,12 +29,10 @@
 <link rel="icon" href="public/favicon-64.png" type="image/png" sizes="64x64">
 <link rel="apple-touch-icon" href="public/apple-touch-icon.png" sizes="256x256">
 <link rel="preload" href="public/fonts/PublicPixel.woff2" as="font" type="font/woff2" crossorigin>
-<!-- TODO (lead): the trailer's VideoObject below has no uploadDate on purpose (Google wants one): add
-     "uploadDate":"YYYY-MM-DDThh:mm:ss+09:00" with the real publication instant once the site and trailer are live.
-     tests/test_site.py accepts its absence and prints this note. sameAs points at the Steam page: fine once the
-     page is public, a dead link until then. -->
+<!-- The trailer's uploadDate is the instant the site went live with trailer v3.2. sameAs points at the Steam
+     page: fine once the page is public, a dead link until then. -->
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"VideoGame","name":"FARSTRAND","url":"https://farstrand.gand.games/","sameAs":["https://store.steampowered.com/app/5461390/"],"description":"A sci-fi metroidvania set seven years after HELIOBANE: map six worlds on frozen star roads with an arm that moves heat.","image":"https://farstrand.gand.games/public/og-farstrand.png","genre":["Metroidvania","Action platformer","Science fiction"],"playMode":"SinglePlayer","gamePlatform":["PC","Mac","Steam Deck"],"operatingSystem":"Windows, macOS, Linux, SteamOS","applicationCategory":"Game","inLanguage":["en","ja","tr"],"author":{"@type":"Organization","name":"Gand","url":"https://gand.tr/"},"publisher":{"@type":"Organization","name":"Gand","url":"https://gand.games/"},"trailer":{"@type":"VideoObject","name":"FARSTRAND trailer","description":"Seven years after HELIOBANE, the roads between the stars have frozen into glass. The FARSTRAND trailer.","thumbnailUrl":"https://farstrand.gand.games/public/trailer-poster.jpg","contentUrl":"https://farstrand.gand.games/public/trailer.mp4","duration":"PT2M10S","inLanguage":"en"}}
+{"@context":"https://schema.org","@type":"VideoGame","name":"FARSTRAND","url":"https://farstrand.gand.games/","sameAs":["https://store.steampowered.com/app/5461390/"],"description":"A sci-fi metroidvania set seven years after HELIOBANE: map six worlds on frozen star roads with an arm that moves heat.","image":"https://farstrand.gand.games/public/og-farstrand.png","genre":["Metroidvania","Action platformer","Science fiction"],"playMode":"SinglePlayer","gamePlatform":["PC","Mac","Steam Deck"],"operatingSystem":"Windows, macOS, Linux, SteamOS","applicationCategory":"Game","inLanguage":["en","ja","tr"],"author":{"@type":"Organization","name":"Gand","url":"https://gand.tr/"},"publisher":{"@type":"Organization","name":"Gand","url":"https://gand.games/"},"trailer":{"@type":"VideoObject","name":"FARSTRAND trailer","description":"Seven years after HELIOBANE, the roads between the stars have frozen into glass. The FARSTRAND trailer.","thumbnailUrl":"https://farstrand.gand.games/public/trailer-poster.jpg","contentUrl":"https://farstrand.gand.games/public/trailer.mp4","duration":"PT2M10S","uploadDate":"2026-10-18T12:32:37+09:00","inLanguage":"en"}}
 </script>
 <style>
 /* FARSTRAND · the game's 32-colour master palette (assets/palette.hex at 2e08e64) */
@@ -745,7 +743,6 @@ dialog.viewer::backdrop{background:rgb(0 0 0 / .92)}
         <dt><span class="l-en">Press kit</span><span class="l-ja" lang="ja">プレスキット</span><span class="l-tr" lang="tr">Basın kiti</span></dt><dd><a href="press-kit/">farstrand.gand.games/press-kit/</a></dd>
       </dl>
     </div>
-    <!-- TODO (lead): press-kit/ does not exist yet; sync the press kit from farstrand-press-kit before the site goes live. -->
     <p class="links">
       <span class="if-soon dim"><span class="l-en">Steam</span><span class="l-ja" lang="ja">Steam</span><span class="l-tr" lang="tr">Steam</span></span><a class="if-live" data-steam="store">Steam</a>
       <a href="https://heliobane.gand.games/"><span class="l-en">HELIOBANE</span><span class="l-ja" lang="ja">ヘリオベイン</span><span class="l-tr" lang="tr">HELIOBANE</span></a>
