@@ -22,13 +22,13 @@ Nothing here is committed, pushed or deployed; DNS is untouched.
 
 ## How it was made, how to rebuild
 
-Everything is made from a snapshot of the game at commit `2e08e64` (`git archive`, never the working tree; no Godot
+Everything is made from a snapshot of the game at commit `0f664e1` (facts checked at `2e08e64`) (`git archive`, never the working tree; no Godot
 was run), the press kit's key art, screenshots and icons (`farstrand-press-kit/press-kit/`), the trailer
 (`farstrand-trailer`, encode lines in `PROJECT.md`) and the lead's copy (`farstrand-press-kit/copy/`):
 
 ```sh
 SNAP=<empty dir>
-git -C ~/projects/games/farstrand/farstrand archive 2e08e64 | tar -x -C $SNAP
+git -C ~/projects/games/farstrand/farstrand archive 0f664e1 | tar -x -C $SNAP
 python3 tools/build_media.py --game $SNAP     # art, key art and shots (x6 -> native), icons, toy sprites, stage
 python3 tools/build_extras.py --game $SNAP    # frost-vein bars, temporary social card
 tools/subset_fonts.sh $SNAP                   # Public Pixel with Turkish, PixelMplus12 for the Japanese in index.html

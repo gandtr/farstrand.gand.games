@@ -186,7 +186,7 @@ timezone and is past.
 
 ```sh
 SNAP=<empty dir>
-git -C ~/projects/games/farstrand/farstrand archive 2e08e64 | tar -x -C $SNAP
+git -C ~/projects/games/farstrand/farstrand archive 0f664e1 | tar -x -C $SNAP
 python3 tools/build_media.py --game $SNAP        # art, key art, shots, icons, toy sprites (prints each exact-scale and palette check)
                                                  #   --press-kit DIR if the press kit is not at ~/projects/games/farstrand/farstrand-press-kit/press-kit
 python3 tools/build_extras.py --game $SNAP       # veins, temporary social card
