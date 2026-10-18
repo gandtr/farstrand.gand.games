@@ -5,7 +5,7 @@ Everything in this kit may be used for coverage, previews, reviews and storefron
 **"FARSTRAND, a game by Gand (https://farstrand.gand.games)"**. Press contact: contact@gand.games.
 
 The press page is `doc.html` (English, 日本語 and Türkçe in one file). The whole kit is also one archive:
-`farstrand-press-kit_2026-10-17.zip`.
+`farstrand-press-kit_2026-10-18.zip`.
 
 ## Folders
 
@@ -20,7 +20,7 @@ The press page is `doc.html` (English, 日本語 and Türkçe in one file). The 
 | `steam/` | Steam capsules, library images, icons and event images; `steam/demo/` for the demo. Sizes in `steam/ASSETS.md` |
 | `icons/` | app icon 32–512 px, native 16 to 48 px, `.ico`, 184 px community icon |
 | `social/` | `og_1200x630.png` link card, `card_1200x675.png` |
-| `video/` | the trailer (87 s, 1920×1080, 60 fps, H.264), English captions (`.srt`, `.vtt`), poster, thumbnail |
+| `video/` | the trailer (130 s, 1920×1080, 60 fps, H.264), English captions (`.srt`, `.vtt`), poster, thumbnail |
 | `fonts/` | Public Pixel (CC0), the game's pixel font; Fira Sans Condensed (OFL) and PixelMplus12 (M+ licence), used by `doc.html` |
 
 ## About the images

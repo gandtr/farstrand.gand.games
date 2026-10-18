@@ -36,9 +36,10 @@ Steam makes.
 
 ## Demo (5461420)
 
-Same slots, with **DEMO** in the game's gold title font in the corner of the capsules and the library capsule and
-header. The hero, page background and icons are the full game's (Steam forbids text on the hero). The demo's
-library logo reads FARSTRAND with DEMO under its right end, outlined so it holds over any hero.
+Same slots and the full game's art with no text but the logo: Steam allows nothing else on a capsule and draws
+its own DEMO badge in the top corner. So on the header, main, vertical and library capsules and the library header
+the logo sits at the bottom, clear of that badge (Arda, 2026-10-18); the small capsule's logo is at the bottom
+already, so it is the full game's file. The hero, page background, library logo and icons are the full game's.
 
 | File | Steamworks slot | Size |
 |---|---|---|
@@ -49,7 +50,7 @@ library logo reads FARSTRAND with DEMO under its right end, outlined so it holds
 | `steam/demo/library_capsule.png` | Library Capsule | 600×900 |
 | `steam/demo/library_header.png` | Library Header | 920×430 |
 | `steam/demo/library_hero.png` | Library Hero (same as the full game's) | 3840×1240 |
-| `steam/demo/library_logo.png` | Library Logo (FARSTRAND, DEMO under it) | 1280×720 |
+| `steam/demo/library_logo.png` | Library Logo (same as the full game's) | 1280×720 |
 | page background, icons | reuse the full game's files | |
 
 ## What is on them

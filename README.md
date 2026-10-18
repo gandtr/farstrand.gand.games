@@ -46,7 +46,7 @@ html-validate@9 clean on both pages; the unit tests green; every `public/` refer
 800, 768, 720, 640, 560, 420, 390, 375, 360 and 320 px in EN, JA and TR: no horizontal scroll from 360 up (320: no
 overflow either, but pictures show at a fraction), every pixel image at a whole-number scale from 360 up; the heat
 ladder with mouse and with `Q`/`K` (all rungs, all captions); the viewer with mouse, arrows and Escape; the trailer
-present (87 s, captions load) and missing (the fallback); `prefers-reduced-motion`; the Steam switch flipped on a
+present (130 s, captions load) and missing (the fallback); `prefers-reduced-motion`; the Steam switch flipped on a
 copy. Not checked: Safari and Firefox (Chrome only), a real touch device, a screen reader, any network but loopback.
 
 ## TODOs left in the pages
@@ -59,7 +59,7 @@ comments (nothing visible): the trailer's `uploadDate` (left out on purpose); th
 
 1. **Steam**: set `STEAM_LIVE = true` in the script when the store page is public (one line; the UTM URLs are in the
    `STEAM` object above it). The demo line under the button stays plain text until you link it.
-2. **Trailer** is in (`public/trailer.mp4` 29 MB, `trailer-poster.jpg`, `trailer.en.vtt`; encode lines in `PROJECT.md`). The
+2. **Trailer** is in (`public/trailer.mp4` 50 MB, v3.2, `trailer-poster.jpg`, `trailer.en.vtt`; encode lines in `PROJECT.md`). The
    JSON-LD `VideoObject` has **no `uploadDate`** yet; add the real publication instant with its timezone when the
    trailer is published (the test accepts it missing and checks it once present). The page names only an English
    caption track; if the trailer gets Japanese or Turkish captions, give me the files.

@@ -136,7 +136,7 @@ python3 -m unittest discover -s tests  # the font test fails if a glyph is missi
   `8354593` (lockup `AS THE SUN GOES OUT`, which replaced `A HELIOBANE METROIDVANIA`, and tagline 1 approved by Arda
   on 2026-10-17).
 - Key art, screenshots, icons: `farstrand-press-kit/press-kit/` (key art and icons at commit `fe8bae5`, the twelve
-  screenshots at `6ebd27b`; their README says how they are made). The trailer: `farstrand-trailer` commit `b0182a7`
+  screenshots at `6ebd27b`; their README says how they are made). The trailer: `farstrand-trailer` commit `c990f98` (v3.2)
   (`output/farstrand-trailer.mp4`, `output/farstrand-trailer.srt`, `review/poster.jpg`).
 - Facts and art: the game at commit `2e08e64`, from a `git archive` snapshot, never its working tree. No patch was
   needed, and no Godot was run: the build only reads PNG, JSON and the palette. The toy's rules are
@@ -164,19 +164,19 @@ page is public. JSON-LD `sameAs` already names the Steam page.
 
 ## Trailer
 
-`farstrand-trailer/output/farstrand-trailer.mp4` (87.2 s, 1920x1080 at 60 fps) re-encoded for the web, its
+`farstrand-trailer/output/farstrand-trailer.mp4` (130.4 s, 1920x1080 at 60 fps) re-encoded for the web, its
 `review/poster.jpg` copied, its `.srt` converted:
 
 ```sh
 T=../farstrand-trailer
 ffmpeg -i $T/output/farstrand-trailer.mp4 -map 0:v -map 0:a -c:v libx264 -profile:v high \
   -pix_fmt yuv420p -preset slow -crf 20 -tune animation -c:a aac -b:a 160k \
-  -movflags +faststart public/trailer.mp4                  # 29 MB
+  -movflags +faststart public/trailer.mp4                  # 50 MB
 cp $T/review/poster.jpg public/trailer-poster.jpg
 ffmpeg -i $T/output/farstrand-trailer.srt public/trailer.en.vtt
 ```
 
-The `<video>` in `#trailer` has `preload="none"`, native controls, the poster and an English captions `<track>` (eight
+The `<video>` in `#trailer` has `preload="none"`, native controls, the poster and an English captions `<track>` (13
 cues). The script sends a `HEAD` for `trailer.mp4` and falls back to a still (the key art) with a "Trailer coming"
 label when it is missing or not served as `video/*` (checked both ways). The JSON-LD `trailer` VideoObject names
 these files and has **no `uploadDate` yet**: put the real publication instant (with its timezone) there when the
@@ -218,7 +218,7 @@ only under a Python without fontTools; run it with `/usr/bin/python3` too); ever
 width), every pixel image's scale at 22 widths (whole numbers), the toy with mouse and the `Q` and `K` keys (every
 rung of the ladder, the lamp-heart and every caption, and that keys do nothing off screen), the viewer with mouse,
 arrows and Escape (focus returns to the current thumbnail; x4, x5, x3, x1 and the x6 file at 1440, 1920, 1280, 390 and
-2560 px), the trailer present (87.2 s, 1920x1080, eight caption cues) and missing (the still and the label), and
+2560 px), the trailer present (130.4 s, 1920x1080, 13 caption cues) and missing (the still and the label), and
 `prefers-reduced-motion` (no animation, the toy holds still). Full-page screenshots were read at 1440 in all three
 languages and at 360 and 390.
 
