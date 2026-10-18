@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Geliştirici | Gand, İstanbul ve Tokyo'da bağımsız bir stüdyo (2025'te kuruldu) |
+| Geliştirici | Gand, Tokyo'da bağımsız bir stüdyo (2026'da kuruldu) |
 | Yayıncı | Gand (kendi yayını) |
 | Mağaza | Steam, uygulama 5461390 https://store.steampowered.com/app/5461390/ |
 | Tür | Metroidvania, aksiyon platform, bilimkurgu |

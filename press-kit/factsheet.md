@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Developer | Gand, an independent studio in Istanbul and Tokyo (est. 2025) |
+| Developer | Gand, an independent studio in Tokyo (est. 2026) |
 | Publisher | Gand (self-published) |
 | Store | Steam, app 5461390: https://store.steampowered.com/app/5461390/ |
 | Genre | Metroidvania, action platformer, sci-fi |
