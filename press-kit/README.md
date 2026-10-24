@@ -5,7 +5,7 @@ Everything in this kit may be used for coverage, previews, reviews and storefron
 **"FARSTRAND, a game by Gand (https://farstrand.gand.games)"**. Press contact: contact@gand.games.
 
 The press page is `doc.html` (English, 日本語 and Türkçe in one file). The whole kit is also one archive:
-`farstrand-press-kit_2026-10-18.zip`.
+`farstrand-press-kit_2026-10-24.zip`.
 
 ## Folders
 
