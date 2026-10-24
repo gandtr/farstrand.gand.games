@@ -85,9 +85,11 @@ em{font-style:italic}
 html:not([data-lang=en]) .l-en{display:none!important}
 html:not([data-lang=ja]) .l-ja{display:none!important}
 html:not([data-lang=tr]) .l-tr{display:none!important}
-/* Steam: the store page is not public yet (see STEAM_LIVE in the script). */
+/* Steam: the store page is public (STEAM_LIVE in the script); the demo's is not yet (DEMO_LIVE). */
 html:not(.steam-live) .if-live{display:none!important}
 html.steam-live .if-soon{display:none!important}
+html:not(.demo-live) .if-demo-live{display:none!important}
+html.demo-live .if-demo-soon{display:none!important}
 
 /* Pixel type sits on its 8 px grid; the Japanese face sits on 12. */
 .pix{font-family:var(--px);font-size:16px;line-height:1.5;letter-spacing:0;text-transform:uppercase;overflow-wrap:anywhere}
@@ -735,7 +737,7 @@ dialog.viewer::backdrop{background:rgb(0 0 0 / .92)}
         <dt><span class="l-en">Engine</span><span class="l-ja" lang="ja">エンジン</span><span class="l-tr" lang="tr">Motor</span></dt><dd><span class="l-en">Godot 4.7 (GDScript), GL Compatibility renderer</span><span class="l-ja" lang="ja">Godot 4.7（GDScript）、GL Compatibilityレンダラー</span><span class="l-tr" lang="tr">Godot 4.7 (GDScript), GL Compatibility oluşturucu</span></dd>
         <dt><span class="l-en">Players</span><span class="l-ja" lang="ja">プレイ人数</span><span class="l-tr" lang="tr">Oyuncu</span></dt><dd><span class="l-en">Single-player</span><span class="l-ja" lang="ja">1人</span><span class="l-tr" lang="tr">Tek oyunculu</span></dd>
         <dt><span class="l-en">Release</span><span class="l-ja" lang="ja">発売</span><span class="l-tr" lang="tr">Çıkış</span></dt><dd><span class="l-en">Coming soon</span><span class="l-ja" lang="ja">近日公開</span><span class="l-tr" lang="tr">Yakında</span></dd>
-        <dt><span class="l-en">Demo</span><span class="l-ja" lang="ja">体験版</span><span class="l-tr" lang="tr">Demo</span></dt><dd><span class="if-soon"><span class="l-en">Free, Steam app 5461420: Halm, the first world</span><span class="l-ja" lang="ja">無料、Steamアプリ 5461420：最初の世界ハルム</span><span class="l-tr" lang="tr">Ücretsiz, Steam uygulaması 5461420: ilk dünya Halm</span></span><a class="if-live" data-steam="demo"><span class="l-en">Free, Steam app 5461420: Halm, the first world</span><span class="l-ja" lang="ja">無料、Steamアプリ 5461420：最初の世界ハルム</span><span class="l-tr" lang="tr">Ücretsiz, Steam uygulaması 5461420: ilk dünya Halm</span></a></dd>
+        <dt><span class="l-en">Demo</span><span class="l-ja" lang="ja">体験版</span><span class="l-tr" lang="tr">Demo</span></dt><dd><span class="if-demo-soon"><span class="l-en">Free, Steam app 5461420: Halm, the first world</span><span class="l-ja" lang="ja">無料、Steamアプリ 5461420：最初の世界ハルム</span><span class="l-tr" lang="tr">Ücretsiz, Steam uygulaması 5461420: ilk dünya Halm</span></span><a class="if-demo-live" data-steam="demo"><span class="l-en">Free, Steam app 5461420: Halm, the first world</span><span class="l-ja" lang="ja">無料、Steamアプリ 5461420：最初の世界ハルム</span><span class="l-tr" lang="tr">Ücretsiz, Steam uygulaması 5461420: ilk dünya Halm</span></a></dd>
         <dt><span class="l-en">Price</span><span class="l-ja" lang="ja">価格</span><span class="l-tr" lang="tr">Fiyat</span></dt><dd><span class="l-en">To be announced</span><span class="l-ja" lang="ja">未定</span><span class="l-tr" lang="tr">Açıklanacak</span></dd>
         <dt><span class="l-en">Languages</span><span class="l-ja" lang="ja">言語</span><span class="l-tr" lang="tr">Diller</span></dt><dd><span class="l-en">English, Japanese, Turkish (text); English and Japanese voice</span><span class="l-ja" lang="ja">日本語、英語、トルコ語（テキスト）／日本語、英語（音声）</span><span class="l-tr" lang="tr">İngilizce, Japonca, Türkçe (metin); İngilizce ve Japonca (ses)</span></dd>
         <dt><span class="l-en">Controls</span><span class="l-ja" lang="ja">操作</span><span class="l-tr" lang="tr">Kontroller</span></dt><dd><span class="l-en">Gamepad first; keyboard; full remapping</span><span class="l-ja" lang="ja">パッド優先、キーボード、すべて割り当て変更可能</span><span class="l-tr" lang="tr">Önce kumanda; klavye; her şey yeniden atanabilir</span></dd>
@@ -782,17 +784,18 @@ dialog.viewer::backdrop{background:rgb(0 0 0 / .92)}
   var mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
   function still(){ return !!(mq && mq.matches); }
 
-  /* ── Steam: the store page is not public yet. Set STEAM_LIVE = true to switch every
-        "Coming to Steam" over to the live links (the URLs below carry the Steamworks UTM tags). ── */
-  var STEAM_LIVE = false;
+  /* ── Steam: the store page is public (Coming Soon since 2026-10-24), so every "Coming to Steam" is a live
+        link (the URLs below carry the Steamworks UTM tags). The demo's page is not public yet: set DEMO_LIVE = true
+        when it is, and the fact sheet's Demo row becomes a link too. ── */
+  var STEAM_LIVE = true;
+  var DEMO_LIVE = false;
   var STEAM = {
     store: 'https://store.steampowered.com/app/5461390/Farstrand/?utm_source=farstrand.gand.games&utm_medium=web&utm_campaign=site&utm_content=farstrand',
     demo: 'https://store.steampowered.com/app/5461420/?utm_source=farstrand.gand.games&utm_medium=web&utm_campaign=site&utm_content=farstrand'
   };
-  if (STEAM_LIVE) {
-    root.classList.add('steam-live');
-    $$('a[data-steam]').forEach(function(a){ a.href = STEAM[a.getAttribute('data-steam')]; });
-  }
+  if (STEAM_LIVE) root.classList.add('steam-live');
+  if (DEMO_LIVE) root.classList.add('demo-live');
+  $$('a[data-steam]').forEach(function(a){ a.href = STEAM[a.getAttribute('data-steam')]; });
 
   /* ── language: EN / 日本語 / TÜRKÇE ── */
   var LANGS = ['en', 'ja', 'tr'];

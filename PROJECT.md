@@ -154,10 +154,11 @@ Carcanet, Sunder, Ninth Light, their Heralds and Old Mott are named as the copy 
 
 ## Steam
 
-The store page is not public, so the hero button is a non-interactive
-`<span class="btn soon" aria-disabled="true">` ("Coming to Steam"). **To switch it on, set `STEAM_LIVE = true`
-in the script**: the live `a[data-steam]` links (hero button, the Store and Demo rows of the fact sheet, the Links row)
-appear and the `soon` ones go. The two URLs, both with the Steamworks UTM tags, are in the `STEAM` object right
+The store page is public (Coming Soon, 2026-10-24) and `STEAM_LIVE = true` in the script: the live
+`a[data-steam="store"]` links (hero "Wishlist on Steam", the Store row of the fact sheet, the Links row) show and the
+`soon` ones ("Coming to Steam") are hidden. The demo's page is not public yet, so the fact sheet's Demo row has its
+own switch, **`DEMO_LIVE`** (classes `if-demo-soon` / `if-demo-live`, root class `demo-live`): set it to `true` when
+the demo's page is public. The two URLs, both with the Steamworks UTM tags, are in the `STEAM` object right
 above it: `https://store.steampowered.com/app/5461390/Farstrand/?utm_source=farstrand.gand.games&utm_medium=web&utm_campaign=site&utm_content=farstrand`
 and the demo's `.../app/5461420/?...`. "Free demo coming to Steam" under the button is plain text until the demo
 page is public. JSON-LD `sameAs` already names the Steam page.

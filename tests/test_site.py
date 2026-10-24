@@ -114,9 +114,10 @@ class SiteTests(unittest.TestCase):
         en, ja, tr = count("l-en"), count("l-ja"), count("l-tr")
         self.assertEqual((en, ja, tr), (en, en, en), "every EN element has its JA and TR twin")
 
-    def test_steam_switch_is_off_and_carries_the_tags(self):
+    def test_steam_switch_is_on_and_carries_the_tags(self):
         s = (ROOT / "index.html").read_text()
-        self.assertIn("var STEAM_LIVE = false;", s)
+        self.assertIn("var STEAM_LIVE = true;", s)   # the store page is public (Coming Soon, 2026-10-24)
+        self.assertIn("var DEMO_LIVE = false;", s)   # the demo's page is not public yet
         self.assertIn("store.steampowered.com/app/5461390/Farstrand/?utm_source=farstrand.gand.games&utm_medium=web&utm_campaign=site&utm_content=farstrand", s)
         self.assertIn("store.steampowered.com/app/5461420/", s)
 
