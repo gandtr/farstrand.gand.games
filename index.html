@@ -90,6 +90,8 @@ html:not(.steam-live) .if-live{display:none!important}
 html.steam-live .if-soon{display:none!important}
 html:not(.demo-live) .if-demo-live{display:none!important}
 html.demo-live .if-demo-soon{display:none!important}
+/* The Amiga demo on itch.io: hidden until the itch page is public (ITCH_LIVE). */
+html:not(.itch-live) .if-itch-live{display:none!important}
 
 /* Pixel type sits on its 8 px grid; the Japanese face sits on 12. */
 .pix{font-family:var(--px);font-size:16px;line-height:1.5;letter-spacing:0;text-transform:uppercase;overflow-wrap:anywhere}
@@ -313,6 +315,14 @@ html.no-trailer .tv .still{display:grid;place-items:center;position:relative;bac
 .world p:lang(ja){font-size:15px}
 .w-halm{--ramp:var(--r-halm)}.w-knot{--ramp:var(--r-knot)}.w-verrin{--ramp:var(--r-verrin)}
 .w-carcanet{--ramp:var(--r-carcanet)}.w-sunder{--ramp:var(--r-sunder)}.w-ninth{--ramp:var(--r-ninth)}
+
+/* amiga */
+.amiga{display:grid;grid-template-columns:auto 1fr;gap:40px;align-items:center}
+.amiga img{display:block;width:640px;height:512px;border:0}
+.amiga figcaption{margin-top:8px;color:var(--steel4)}
+.amiga .lead{margin-bottom:28px}
+@media (max-width:1100px){.amiga{grid-template-columns:1fr}}
+@media (max-width:700px){.amiga img{width:320px;height:256px}}
 
 /* heralds */
 #heralds{background:var(--black)}
@@ -721,6 +731,22 @@ dialog.viewer::backdrop{background:rgb(0 0 0 / .92)}
   </div>
 </section>
 
+<section id="amiga" class="if-itch-live" aria-labelledby="amiga-h">
+  <div class="wrap">
+    <div class="sec-head"><h2 id="amiga-h" class="pix"><span class="l-en">On the Amiga</span><span class="l-ja" lang="ja">Amiga版</span><span class="l-tr" lang="tr">Amiga'da</span></h2></div>
+    <div class="amiga">
+      <figure>
+        <a href="public/shots/amiga-pollard.png"><img class="px" src="public/shots/1x/amiga-pollard.png" width="320" height="256" loading="lazy" alt="The Amiga build, in the Pollard's grove: Hesper faces the glass-limbed Herald; the prompt reads IT THAWS. QUENCH IT, THEN SHATTER IT." data-alt-ja="Amiga版、ポラードの林。ガラスの枝を持つヘラルドと向き合うヘスパー。表示は「IT THAWS. QUENCH IT, THEN SHATTER IT」。" data-alt-tr="Amiga sürümü, Budak'ın korusunda: Hesper cam dallı Haberci'nin karşısında; ekrandaki yazı IT THAWS. QUENCH IT, THEN SHATTER IT."></a>
+        <figcaption><span class="l-en">Amiga, Halm: the Pollard</span><span class="l-ja" lang="ja">Amiga版、ハルム：ポラード</span><span class="l-tr" lang="tr">Amiga, Halm: Budak</span></figcaption>
+      </figure>
+      <div>
+        <p class="lead"><span class="l-en">The free Amiga demo: Halm, the first world, for AGA Amigas. One build runs on a stock A1200, one on a fast one, and the Windows, macOS and Linux downloads come with an emulator and need no Amiga ROMs.</span><span class="l-ja" lang="ja">Amiga版の無料体験版は、最初の世界ハルム。AGA搭載のAmiga向けで、素のA1200で動くビルドと高速機向けのビルドがあります。Windows・macOS・Linux版はエミュレーター同梱で、AmigaのROMはいりません。</span><span class="l-tr" lang="tr">Ücretsiz Amiga demosu: ilk dünya Halm, AGA Amiga'lar için. Bir sürümü kutudan çıktığı gibi bir A1200'de, öteki hızlı bir Amiga'da çalışır; Windows, macOS ve Linux indirmeleri bir emülatörle gelir ve Amiga ROM'u gerektirmez.</span></p>
+        <a class="btn" href="https://coze.itch.io/farstrand-amiga"><span class="l-en">Amiga demo on itch.io</span><span class="l-ja" lang="ja">itch.ioでAmiga体験版</span><span class="l-tr" lang="tr">itch.io'da Amiga demosu</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <div class="vein ember" aria-hidden="true"></div>
 
 <section id="facts" aria-labelledby="facts-h">
@@ -747,6 +773,7 @@ dialog.viewer::backdrop{background:rgb(0 0 0 / .92)}
     </div>
     <p class="links">
       <span class="if-soon dim"><span class="l-en">Steam</span><span class="l-ja" lang="ja">Steam</span><span class="l-tr" lang="tr">Steam</span></span><a class="if-live" data-steam="store">Steam</a>
+      <a class="if-itch-live" href="https://coze.itch.io/farstrand-amiga"><span class="l-en">Amiga demo (itch.io)</span><span class="l-ja" lang="ja">Amiga体験版（itch.io）</span><span class="l-tr" lang="tr">Amiga demosu (itch.io)</span></a>
       <a href="https://heliobane.gand.games/"><span class="l-en">HELIOBANE</span><span class="l-ja" lang="ja">ヘリオベイン</span><span class="l-tr" lang="tr">HELIOBANE</span></a>
       <a href="https://gand.games/">Gand Games</a>
       <a href="press-kit/"><span class="l-en">Press kit</span><span class="l-ja" lang="ja">プレスキット</span><span class="l-tr" lang="tr">Basın kiti</span></a>
@@ -789,12 +816,14 @@ dialog.viewer::backdrop{background:rgb(0 0 0 / .92)}
         when it is, and the fact sheet's Demo row becomes a link too. ── */
   var STEAM_LIVE = true;
   var DEMO_LIVE = false;
+  var ITCH_LIVE = false;  /* the Amiga demo's itch.io page (coze.itch.io/farstrand-amiga): true when Arda publishes it */
   var STEAM = {
     store: 'https://store.steampowered.com/app/5461390/Farstrand/?utm_source=farstrand.gand.games&utm_medium=web&utm_campaign=site&utm_content=farstrand',
     demo: 'https://store.steampowered.com/app/5461420/?utm_source=farstrand.gand.games&utm_medium=web&utm_campaign=site&utm_content=farstrand'
   };
   if (STEAM_LIVE) root.classList.add('steam-live');
   if (DEMO_LIVE) root.classList.add('demo-live');
+  if (ITCH_LIVE) root.classList.add('itch-live');
   $$('a[data-steam]').forEach(function(a){ a.href = STEAM[a.getAttribute('data-steam')]; });
 
   /* ── language: EN / 日本語 / TÜRKÇE ── */

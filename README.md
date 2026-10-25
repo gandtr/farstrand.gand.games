@@ -60,6 +60,9 @@ comments (nothing visible): the demo link under the Steam button.
 1. **Steam**: `STEAM_LIVE = true` since 2026-10-24 (the store page is public as Coming Soon). Set `DEMO_LIVE = true`
    when the demo's page is public: the fact sheet's Demo row becomes a link (the UTM URLs are in the `STEAM` object).
    The demo line under the button stays plain text until you link it.
+   `ITCH_LIVE` (off) shows the Amiga demo section (`#amiga`: one line, the Amiga build's Pollard shot
+   `public/shots/amiga-pollard.png` and its 1x, a button to https://coze.itch.io/farstrand-amiga) and the Links row's
+   itch.io link: set it to `true` when Arda publishes the itch page.
 2. **Trailer** is in (`public/trailer.mp4` 50 MB, v3.2, `trailer-poster.jpg`, `trailer.en.vtt`; encode lines in `PROJECT.md`). The
    JSON-LD `VideoObject`'s `uploadDate` is the go-live instant, 2026-10-18T12:32:37+09:00 (the test checks it). The page names only an English
    caption track; if the trailer gets Japanese or Turkish captions, give me the files.

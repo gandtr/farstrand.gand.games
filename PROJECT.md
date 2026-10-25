@@ -158,7 +158,14 @@ The store page is public (Coming Soon, 2026-10-24) and `STEAM_LIVE = true` in th
 `a[data-steam="store"]` links (hero "Wishlist on Steam", the Store row of the fact sheet, the Links row) show and the
 `soon` ones ("Coming to Steam") are hidden. The demo's page is not public yet, so the fact sheet's Demo row has its
 own switch, **`DEMO_LIVE`** (classes `if-demo-soon` / `if-demo-live`, root class `demo-live`): set it to `true` when
-the demo's page is public. The two URLs, both with the Steamworks UTM tags, are in the `STEAM` object right
+the demo's page is public.
+
+**`ITCH_LIVE`** (off) does the same for the Amiga demo on itch.io (classes `if-itch-live`, root class `itch-live`): the
+`#amiga` section between the screenshots and the facts (the free Halm demo for AGA Amigas, stock and fast builds, the
+emulator bundles; the Amiga build's Pollard shot from farstrand-amiga's `docs/itch/shots/07-the-pollard.png`, re-shot
+at main 9917769 with the colour pass, stored as an exact x3 file and its 320x256 1x; shown x2, x1 on phones) and the
+Links row's itch.io link. The press kit lists its store links as plain text, so it names the Amiga demo only once the
+itch page is public. The two URLs, both with the Steamworks UTM tags, are in the `STEAM` object right
 above it: `https://store.steampowered.com/app/5461390/Farstrand/?utm_source=farstrand.gand.games&utm_medium=web&utm_campaign=site&utm_content=farstrand`
 and the demo's `.../app/5461420/?...`. "Free demo coming to Steam" under the button is plain text until the demo
 page is public. JSON-LD `sameAs` already names the Steam page.
