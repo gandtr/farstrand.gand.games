@@ -118,7 +118,7 @@ class SiteTests(unittest.TestCase):
         s = (ROOT / "index.html").read_text()
         self.assertIn("var STEAM_LIVE = true;", s)   # the store page is public (Coming Soon, 2026-10-24)
         self.assertIn("var DEMO_LIVE = false;", s)   # the demo's page is not public yet
-        self.assertIn("var ITCH_LIVE = false;", s)   # the Amiga demo's itch page is a draft
+        self.assertIn("var ITCH_LIVE = true;", s)    # the Amiga demo's itch page is public (2026-10-26)
         self.assertIn("store.steampowered.com/app/5461390/Farstrand/?utm_source=farstrand.gand.games&utm_medium=web&utm_campaign=site&utm_content=farstrand", s)
         self.assertIn("store.steampowered.com/app/5461420/", s)
 
