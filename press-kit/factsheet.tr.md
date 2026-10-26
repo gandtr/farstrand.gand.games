@@ -12,6 +12,7 @@
 | Oyuncu | Tek oyunculu |
 | Çıkış | Yakında |
 | Demo | Ücretsiz, Steam uygulaması 5461420: ilk dünya Halm https://store.steampowered.com/app/5461420/ |
+| Amiga demosu | itch.io'da ücretsiz: Amiga 1200 için Halm (AGA, standart ve hızlı sürüm); emülatörüyle birlikte Windows, macOS ve Linux için de |
 | Fiyat | Açıklanacak |
 | Diller | İngilizce, Japonca, Türkçe (metin); İngilizce ve Japonca (ses) |
 | Kontroller | Önce kumanda; klavye; her şey yeniden atanabilir |

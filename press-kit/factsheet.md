@@ -12,6 +12,7 @@
 | Players | Single-player |
 | Release | Coming soon |
 | Demo | Free, Steam app 5461420: Halm, the first world: https://store.steampowered.com/app/5461420/ |
+| Amiga demo | Free on itch.io: Halm on the Amiga 1200 (AGA, stock and fast builds), and for Windows, macOS and Linux with an emulator included |
 | Price | To be announced |
 | Languages | English, Japanese, Turkish (text); English and Japanese voice |
 | Controls | Gamepad first; keyboard; full remapping |
